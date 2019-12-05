@@ -32,6 +32,10 @@ RMI(Remote Method Invocation，远程方法调用)是用Java在JDK1.2中实现�
 - impl
 全称implement是用来实现接口的
 
+## Starters
+
+Starters是一系列极其方便的依赖描述，通过在你的项目中包含这些starter，你可以一站式获得你所需要的服务，而无需像以往那样copy各种示例配置及代码，然后调试，真正做到开箱即用；比如你想使用Spring JPA进行数据操作，只需要在你的项目依赖中引入spring-boot-starter-data-jpa即可
+
 ## Spring properties 配置文件
 
 通过配置文件，可以修改框架配置，或为框架提供数据，比如生成一个随机数，和框架配合后可以很方便的获取一个随机数，而不需要写更多的代码
