@@ -1,8 +1,15 @@
 ---
 title: Spring IOC 源码分析
 date: 2019-11-01 00:00:00
-tags: [java, note]
+author: vanliuzh
+top: true
+cover: false
+toc: true
+mathjax: false
+summary: IoC也称为依赖注⼊(dependency injection, DI)。它是⼀个对象定义依赖关系的过程，也就是说，对象只通过构造函数参数。⼯⼚⽅法的参数或对象实例构造或从⼯⼚⽅法返回后在对象实例上设置的属性来定义它们所使⽤的其他对象
 categories: Java
+tags: [Java, Note]
+reprintPolicy: cc_by
 ---
 
 Spring IOC 源码分析
@@ -23,6 +30,8 @@ bean是由Spring IoC容器实例化、组装和管理的对象。IoC容器设计
 
 ### 1、xml装配
 
+比较传统的装配
+
 1. xml编写
 
 - 关于bean的name和id，id是唯一标识，name是别名，一个bean可用有多个name
@@ -40,6 +49,11 @@ ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
 记得使用ClassPathXmlApplicationContext类创建上下文
 
 ### 2、@Configuration + @Bean
+
+用@Configuration注释类，表明这个类是一个Bean的定义源
+@Configuration允许调用同类中的其它@Bean方法来定义bean之间的关系，如下面的address中，调用了@Bean注释的user方法
+
+一个被 @Configuration 标注的类，相当于一个 applicationContext.xml 的配置文件，这句话的意思就是，xml能做到的事情，可以用@Configuration 标注一个类来做到，除了@Bean外，还有很多的注解来对应xml中的标签
 
 ```java
 @Configuration
@@ -61,6 +75,19 @@ public class AppConfig {
 
 比较常用的方式，记得ComponentScan配置正确的包的扫描范围，否则报错找不到`BeanDefinition`
 
+配置包扫描后，类被 @Component 注解标识后，类就被注入
+
+包扫描配置示例: `@ComponentScan(basePackages="com.learn.spring.bean")`
+
+spring boot的包扫描
+
+```java
+@ComponentScan(excludeFilters = { @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
+		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })
+```
+
+细心的人会发现，在我们单独使用这个注解的时候，需要配置扫描路径，而spring boot没有配置，其实注解只是标识，spring boot在自动装配中去做这个事情，它要取主启动类所在包及子包下的组件。就呼应了文档注释中的描述，也解释了为什么 SpringBoot 的启动器一定要在所有类的最外层
+
 特别注意：
 
 - 针对2和3的情况中，也就是用Java代码的方式装配，关于Configuration的作用
@@ -68,4 +95,13 @@ public class AppConfig {
 - 在Configuration注解后，获取的bean都是同一个，也就是从缓存获取的
 
 用@Configuration注解标注的类表明其主要目的是作为bean定义的源，@Configuration类允许通过调用同一类中的其他@Bean方法来定义bean之间的依赖关系
+
+{% blockquote %}
+补充 @Indexed 注解
+
+https://www.cnblogs.com/aflyun/p/11992101.html 发现有这么一个东西，@Indexed注解，默认@Component就被@Indexed注解的，说是用了@Indexed，打包项目后读取META-INT/spring.components，不做包扫描，提高性能，不过要配置开启才行（我测试了确实如此）这个东西作用大吗？难道它这个转换比IOC反射效率高吗？还是强在省去了扫描步骤，该反射还是逃不过的
+{% endblockquote %}
+
+
+
 

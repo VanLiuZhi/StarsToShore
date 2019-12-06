@@ -1,11 +1,18 @@
 ---
 title: Django 框架学习笔记
 date: 2018-10-22 00:00:00
-tags: [python, note, framework]
-categories: python编程
+author: vanliuzh
+top: true
+cover: true
+toc: true
+mathjax: false
+summary: 对文档阅读的大致补充，框架拥有功能的概述，详细内容查阅文档
+categories: Python编程
+tags: [Python, Note, FrameWork]
+reprintPolicy: cc_by
 ---
 
-django学习笔记
+django学习笔记 {% github_emoji tada %} {% github_emoji tada %}
 
 对文档阅读的大致补充，框架拥有功能的概述，详细内容查阅文档。
 
