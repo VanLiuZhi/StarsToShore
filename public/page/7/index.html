@@ -227,74 +227,11 @@
         </li>
         
         
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
-                <i class="fab fa-github-square fa-fw"></i>Fork Me
-            </a>
-        </li>
-        
     </ul>
 </div>
 
         </div>
 
-        
-            <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #0f9d58;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewBox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
         
     </nav>
 
@@ -334,8 +271,7 @@
 
 
 <script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
+    $('.bg-cover').css('background-image', 'url(/medias/banner/0.jpg)');
 </script>
 
 
@@ -354,12 +290,12 @@
                         <div class="dream">
     
     <div class="title center-align">
-        <i class="far fa-lightbulb"></i>&nbsp;&nbsp;我的梦想
+        <i class="far fa-lightbulb"></i>&nbsp;&nbsp;追寻星辰的彼岸
     </div>
     
     <div class="row">
         <div class="col l8 offset-l2 m10 offset-m1 s10 offset-s1 center-align text">
-            不是每个人都应该像我这样去建造一座水晶大教堂，但是每个人都应该拥有自己的梦想，设计自己的梦想，追求自己的梦想，实现自己的梦想。梦想是生命的灵魂，是心灵的灯塔，是引导人走向成功的信仰。有了崇高的梦想，只要矢志不渝地追求，梦想就会成为现实，奋斗就会变成壮举，生命就会创造奇迹。——罗伯·舒乐
+            <div class='my-dream-1'>胡适说，人生应该有梦，否则人生不是太不丰富吗？</div><div class='my-dream'>现在你们都有理想，但出了社会便可能不同了。那时各奔前程，各种打击，各种现实的考虑，都可能使得你把崇高的理想收敛起来。这就是现实在考验我们的道德力，我们的理想性，我们对真对善对美的追求是否迫切。在世界上每一个角落都是如此的。我们是否能撑得住，就在这个关头。现在是考验我们的时候了。 —— 殷海光《人生的意义》</div>
         </div>
     </div>
 </div>
@@ -384,6 +320,28 @@
     
     
     <div class="col s12" >
+        <div class="post-card" style="background-image: url('/medias/featureimages/7.jpg')">
+            <div class="post-body">
+                <div class="post-categories">
+                    
+                        
+                            <a href="/categories/Java/" class="category">Java</a>
+                        
+                    
+                </div>
+                <a href="/2019/11/01/Java/Spring-IOC/">
+                    <h3 class="post-title">Spring IOC 源码分析</h3>
+                </a>
+                <p class="post-description">IoC也称为依赖注⼊(dependency injection, DI)。它是⼀个对象定义依赖关系的过程，也就是说，对象只通过构造函数参数。⼯⼚⽅法的参数或对象实例构造或从⼯⼚⽅法返回后在对象实例上设置的属性来定义它们所使⽤的其他对象</p>
+                <a href="/2019/11/01/Java/Spring-IOC/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #FF5E3A 0%, #FF2A68 100%)" target="_blank">
+                    <i class="icon far fa-eye fa-fw"></i>阅读更多
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="col s12 m6" data-aos="zoom-in-up">
         <div class="post-card" style="background-image: url('/medias/featureimages/4.jpg')">
             <div class="post-body">
                 <div class="post-categories">
@@ -397,7 +355,7 @@
                     <h3 class="post-title">jar包结构讲解</h3>
                 </a>
                 <p class="post-description">jar包结构讲解，搞懂哪些META-INF/MANIFEST.MF是什么意思</p>
-                <a href="/2018/09/07/Java/java-jar/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #FF5E3A 0%, #FF2A68 100%)" target="_blank">
+                <a href="/2018/09/07/Java/java-jar/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #EF4DB6 0%, #C643FC 100%)" target="_blank">
                     <i class="icon far fa-eye fa-fw"></i>阅读更多
                 </a>
             </div>
@@ -419,7 +377,29 @@
                     <h3 class="post-title">Django 框架学习笔记</h3>
                 </a>
                 <p class="post-description">对文档阅读的大致补充，框架拥有功能的概述，详细内容查阅文档</p>
-                <a href="/2018/10/22/Python/Django/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #EF4DB6 0%, #C643FC 100%)" target="_blank">
+                <a href="/2018/10/22/Python/Django/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #1AD6FD 0%, #1D62F0 100%)" target="_blank">
+                    <i class="icon far fa-eye fa-fw"></i>阅读更多
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="col s12" data-aos="zoom-in-up">
+        <div class="post-card" style="background-image: url('/medias/featureimages/8.jpg')">
+            <div class="post-body">
+                <div class="post-categories">
+                    
+                        
+                            <a href="/categories/Java/" class="category">Java</a>
+                        
+                    
+                </div>
+                <a href="/2018/04/05/Java/base/">
+                    <h3 class="post-title">Java学习笔记</h3>
+                </a>
+                <p class="post-description">Java语言作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程</p>
+                <a href="/2018/04/05/Java/base/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #FFCC00 0%, #FF9500 100%)" target="_blank">
                     <i class="icon far fa-eye fa-fw"></i>阅读更多
                 </a>
             </div>
@@ -441,7 +421,7 @@
                     <h3 class="post-title">python 学习笔记</h3>
                 </a>
                 <p class="post-description">基础永远是重中之重，虽然在应用开发中，很少会去使用语言的一些特性，比如一些高级话题，描述符，元类。但是掌握这些可以帮助理解框架源代码，从更深</p>
-                <a href="/2018/10/23/Python/base/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #1AD6FD 0%, #1D62F0 100%)" target="_blank">
+                <a href="/2018/10/23/Python/base/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%)" target="_blank">
                     <i class="icon far fa-eye fa-fw"></i>阅读更多
                 </a>
             </div>
@@ -470,30 +450,23 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/22/PythonUtil/common_tool/">
+                    <a href="/2018/10/22/Python-threading/Python-threading/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="python常用方法">
+                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Python-threading 多线程">
                             
-                            <span class="card-title">python常用方法</span>
+                            <span class="card-title">Python-threading 多线程</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                记录python常用方法
+                                python多线程相关笔记
 
 
-获取文件所在目录
-import os
-
-path = os.path.dirname(os.path.abspath(__file__))
-print(path)
-
-dict扩展
-class AttrDict(
+线程使用标准库threading来创建线程。threading 库可以在单独的线程中执行任何的在 Python 中可以调用的对象。你可 以创建一个 Thread 对象并将你要执行的对象以 target 参数的
                             
                         </div>
                         <div class="publish-info">
@@ -522,6 +495,57 @@ class AttrDict(
                         
                         <a href="/tags/python/">
                             <span class="chip bg-color">python</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/10/22/ReadBook/Core-python-programming/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Core-python-programming 读书笔记">
+                            
+                            <span class="card-title">Core-python-programming 读书笔记</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Python 核心编程 读书笔记，节选部分内容
+
+
+CGICGI：
+对于静态资源（文件图片等，或者静态的HTML页面），利用web服务器就可以处理了（比如nginx），而动态资源（计算出来的数据）就要用CGI应用程序来处理。python可以
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-22
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/readbook/" class="post-category">
+                                    readbook
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/readbook/">
+                            <span class="chip bg-color">readbook</span>
                         </a>
                         
                     </div>
@@ -585,24 +609,20 @@ class AttrDict(
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/22/ReadBook/Core-python-programming/">
+                    <a href="/2018/10/22/Water/UseHexo/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Core-python-programming 读书笔记">
+                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="博客迁移">
                             
-                            <span class="card-title">Core-python-programming 读书笔记</span>
+                            <span class="card-title">博客迁移</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Python 核心编程 读书笔记，节选部分内容
-
-
-CGICGI：
-对于静态资源（文件图片等，或者静态的HTML页面），利用web服务器就可以处理了（比如nginx），而动态资源（计算出来的数据）就要用CGI应用程序来处理。python可以
+                                关于博客迁移，最开始是在有道上做笔记，学习记录，后来萌生了写类似博客网站的想法，于是用element-UI框架写了一个，整体的效果还不错，还有一个后台管理，使用Django作为web服务，每篇文章存储在数据库，但是想要的功能太多了，设计的功
                             
                         </div>
                         <div class="publish-info">
@@ -613,8 +633,8 @@ CGICGI：
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/readbook/" class="post-category">
-                                    readbook
+                                <a href="/categories/water/" class="post-category">
+                                    water
                                 </a>
                                 
                                 
@@ -625,8 +645,59 @@ CGICGI：
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/readbook/">
-                            <span class="chip bg-color">readbook</span>
+                        <a href="/tags/water/">
+                            <span class="chip bg-color">water</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2018/10/22/Web/Celery/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Celery 在 web 开发中的运用">
+                            
+                            <span class="card-title">Celery 在 web 开发中的运用</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Celery - Distributed Task Queue。要理解 Celery 本身不是任务队列，它是管理分布式任务队列的工具，或者换一种说法，它封装好了操作常见任务队列的各种操作，我们用它可以快速进行任务队列的使用与管理，当然你也可
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-22
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/web%E5%BC%80%E5%8F%91/" class="post-category">
+                                    web开发
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/note/">
+                            <span class="chip bg-color">note</span>
+                        </a>
+                        
+                        <a href="/tags/python/">
+                            <span class="chip bg-color">python</span>
                         </a>
                         
                     </div>
@@ -697,53 +768,6 @@ svn log –search liuzhi -l 100  -v .svn log –search liuzhi -l 100  查看特�
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/22/Water/UseHexo/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="博客迁移">
-                            
-                            <span class="card-title">博客迁移</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                关于博客迁移，最开始是在有道上做笔记，学习记录，后来萌生了写类似博客网站的想法，于是用element-UI框架写了一个，整体的效果还不错，还有一个后台管理，使用Django作为web服务，每篇文章存储在数据库，但是想要的功能太多了，设计的功
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-22
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/water/" class="post-category">
-                                    water
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/water/">
-                            <span class="chip bg-color">water</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
                     <a href="/2018/10/22/Web/Nginx/">
                         <div class="card-image">
                             
@@ -780,66 +804,12 @@ svn log –search liuzhi -l 100  -v .svn log –search liuzhi -l 100  查看特�
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/note/">
-                            <span class="chip bg-color">note</span>
-                        </a>
-                        
                         <a href="/tags/linux/">
                             <span class="chip bg-color">linux</span>
                         </a>
                         
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2018/10/22/Web/RabbitMQ/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="RabbitMQ 消息队列">
-                            
-                            <span class="card-title">RabbitMQ 消息队列</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                MQ全称为Message Queue, 消息队列（MQ）是一种应用程序对应用程序的通信方法。应用程序通过读写出入队列的消息（针对应用程序的数据）来通信，而无需专用连接来链接它们。
-
-
-概念需要了解一个协议：AMQP协议，协议的流程由消息发布
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-22
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/web%E5%BC%80%E5%8F%91/" class="post-category">
-                                    web开发
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
                         <a href="/tags/note/">
                             <span class="chip bg-color">note</span>
-                        </a>
-                        
-                        <a href="/tags/linux/">
-                            <span class="chip bg-color">linux</span>
                         </a>
                         
                     </div>
@@ -907,20 +877,23 @@ svn log –search liuzhi -l 100  -v .svn log –search liuzhi -l 100  查看特�
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2018/10/22/Web/Celery/">
+                    <a href="/2018/10/22/Web/RabbitMQ/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Celery 在 web 开发中的运用">
+                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="RabbitMQ 消息队列">
                             
-                            <span class="card-title">Celery 在 web 开发中的运用</span>
+                            <span class="card-title">RabbitMQ 消息队列</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Celery - Distributed Task Queue。要理解 Celery 本身不是任务队列，它是管理分布式任务队列的工具，或者换一种说法，它封装好了操作常见任务队列的各种操作，我们用它可以快速进行任务队列的使用与管理，当然你也可
+                                MQ全称为Message Queue, 消息队列（MQ）是一种应用程序对应用程序的通信方法。应用程序通过读写出入队列的消息（针对应用程序的数据）来通信，而无需专用连接来链接它们。
+
+
+概念需要了解一个协议：AMQP协议，协议的流程由消息发布
                             
                         </div>
                         <div class="publish-info">
@@ -943,12 +916,12 @@ svn log –search liuzhi -l 100  -v .svn log –search liuzhi -l 100  查看特�
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/note/">
-                            <span class="chip bg-color">note</span>
+                        <a href="/tags/linux/">
+                            <span class="chip bg-color">linux</span>
                         </a>
                         
-                        <a href="/tags/python/">
-                            <span class="chip bg-color">python</span>
+                        <a href="/tags/note/">
+                            <span class="chip bg-color">note</span>
                         </a>
                         
                     </div>
@@ -1155,13 +1128,13 @@ http actionHTTP协议中GET、POST和HEAD的介绍  200
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">年份</span>
-            <a href="http://www.liuzhidream.com" target="_blank">Liu Zhi</a>
+            <a href="https://www.liuzhidream.com" target="_blank">Liu Zhi</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">189.8k</span>&nbsp;字
+                class="white-color">190.7k</span>&nbsp;字
             
             
             
@@ -1228,15 +1201,19 @@ http actionHTTP协议中GET、POST和HEAD的介绍  200
             
             <br>
             
+            <span id="icp"><img src="/medias/icp.png" style="vertical-align: text-bottom;" />
+                <a href="" target="_blank">滇ICP19000681</a>
+            </span>
+            
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/VanLiuZhi" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:vanliuzhi@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -1246,7 +1223,7 @@ http actionHTTP协议中GET、POST和HEAD的介绍  200
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1441765847" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1441765847" data-position="top" data-delay="50">
         <i class="fab fa-qq"></i>
     </a>
 

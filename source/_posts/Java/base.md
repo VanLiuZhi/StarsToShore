@@ -501,6 +501,8 @@ Java中的所有方法都是通过动态绑定来实现多态的。
 
 当使用多态方式调用方法时，首先检查父类中是否有该方法，如果没有，则编译错误；如果有，再去调用子类的同名方法。
 
+动态链接: 当父类中的一个方法只有在父类中定义而在子类中没有重写的情况下，才可以被父类类型的引用调用； 对于父类中定义的方法，如果子类中重写了该方法，那么父类类型的引用将会调用子类中的这个方法，这就是动态连接。
+
 协变返回类型: 在Java1.4及以前，子类方法如果要覆盖超类的某个方法，必须具有完全相同的方法签名，包括返回值也必须完全一样。Java5.0放宽了这一限制，只要子类方法与超类方法具有相同的方法签名，或者子类方法的返回值是超类方法的子类型，就可以覆盖。
 
 "协变返回(covariant return)"，仅在subclass（子类）的返回类型是superclass（父类）返回类型的extension（继承）时才被容许。
@@ -532,6 +534,91 @@ Java中的所有方法都是通过动态绑定来实现多态的。
 
 虽然及其的啰嗦，这也是先入为主的影响吧，如果你先学的python，你会觉得这是理所当然的。
 {% endblockquote %}
+
+
+多态和普通引用代码举例
+
+```java
+package polymoph;
+
+public class SupperParents {
+    public void supperFunc() {
+        System.out.println("supperFunc");
+    }
+}
+
+
+
+package polymoph;
+
+public class Parents extends SupperParents {
+
+    public String name = "123456";
+    public String name2 = "qweasd";
+
+    public void func1() {
+        System.out.println("parents func1");
+    }
+
+    public void parentsFunc1() {
+        System.out.println("parents parentsFunc1");
+    }
+}
+
+
+
+package polymoph;
+
+public class Children extends Parents {
+
+    public String name = "123";
+    public String name1 = "mnb";
+
+    @Override
+    public void func1() {
+        System.out.println("children func1");
+    }
+
+    public void func2() {
+        System.out.println("children func2");
+    }
+
+    public static void main(String[] args) {
+        /**
+         * 多态 方法 向上转型
+         * 1. 对于方法，只能调用父类中定义的，如果这个方法子类重写了，实际执行使用子类的，如func1
+         * 2. 如果方法子类没有，调用父类的，如parentsFunc1
+         * 3. 不能调用只有子类才有的方法，如func2
+         *
+         * 多态 属性
+         * 1. 属性则不会这样，只能调用父类的属性，name属性子父类都有，使用父类的
+         * 2. 子类才有的属性，父类无法调用，如name1
+         */
+        Parents children = new Children();
+        children.func1(); // children func1
+        children.parentsFunc1(); // parents parentsFunc1
+        // children.func2(); 无法调用
+        System.out.println(children.name); // 123456
+        // System.out.println(children.name1); 无法调用
+        children.supperFunc();
+        // Parents 继承类 SupperParents 的方法，情况参照 2，你就把supperFunc当成是 Parents 类的方法，
+        // 因为supperFunc是Parents通过继承得到的
+        
+        /**
+         * 使用对象自身的引用的情况就简单多了，自己有的属性和方法就调用自己的，否则看父类有没有
+         */
+        Children children1 = new Children();
+        children1.func1(); // children func1
+        children1.parentsFunc1(); // parents parentsFunc1
+        children1.func2(); // children func2
+        children1.supperFunc(); // Parents 继承类的方法
+        System.out.println(children1.name); // 123
+        System.out.println(children1.name1); // mnb
+        System.out.println(children1.name2); // qweasd
+    }
+}
+```
+
 
 ### Class类
 
