@@ -12135,3 +12135,5 @@
 {"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":11359,"level":20,"msg":"Rendering HTML index: \u001b[35mindex.html\u001b[39m","time":"2019-12-07T07:26:13.115Z","v":0}
 {"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":11359,"level":20,"msg":"Rendering HTML tag: \u001b[35mtags/linux/index.html\u001b[39m","time":"2019-12-07T07:26:16.331Z","v":0}
 {"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":11359,"level":20,"msg":"Rendering HTML post: \u001b[35m2019/04/05/Java/IDEA/index.html\u001b[39m","time":"2019-12-07T07:26:16.511Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":11359,"level":30,"msg":"Farewell","time":"2019-12-07T07:27:29.804Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":11359,"level":20,"msg":"Database saved","time":"2019-12-07T07:27:29.881Z","v":0}

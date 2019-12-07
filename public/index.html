@@ -283,13 +283,6 @@
 
 <div class="carousel carousel-slider center index-cover" data-indicators="true" style="margin-top: -64px;">
     
-        <div id="prev-cover" class="left waves-effect carousel-control">
-            <i class="icon fa fa-angle-left"></i>
-        </div>
-        <div id="next-cover" class="right waves-effect carousel-control">
-            <i class="icon fa fa-angle-right"></i>
-        </div>
-    
 
     <div class="carousel-item red white-text bg-cover about-cover">
         <div class="container">
@@ -410,37 +403,16 @@
         coverSlider.carousel({
             duration: Number('120'),
             fullWidth: true,
-            indicators: 'true' === 'true'
+            indicators: 'false' === 'true'
         });
 
         let carouselIntervalId;
         
-        // Loop to call the next cover article picture.
-        let autoCarousel = function() {
-            carouselIntervalId = setInterval(function () {
-                coverSlider.carousel('next');
-            }, 5000);
-        };
-        autoCarousel();
-        
 
         let restartPlay = function () {
             
-            clearInterval(carouselIntervalId);
-            autoCarousel();
-            
         };
 
-        
-        // prev and next cover post.
-        $('#prev-cover').click(function () {
-            coverSlider.carousel('prev');
-            restartPlay();
-        });
-        $('#next-cover').click(function () {
-            coverSlider.carousel('next');
-            restartPlay();
-        });
         
     });
 </script>
@@ -473,134 +445,6 @@
 
                     
 
-                    
-                    <div id="recommend-sections" class="recommend">
-                        
-
-
-
-
-
-<div class="title"><i class="far fa-thumbs-up"></i>&nbsp;&nbsp;推荐文章</div>
-
-<div class="row">
-
-    
-    
-    <div class="col s12" >
-        <div class="post-card" style="background-image: url('/medias/featureimages/7.jpg')">
-            <div class="post-body">
-                <div class="post-categories">
-                    
-                        
-                            <a href="/categories/Java/" class="category">Java</a>
-                        
-                    
-                </div>
-                <a href="/2019/11/01/Java/Spring-IOC/">
-                    <h3 class="post-title">Spring IOC 源码分析</h3>
-                </a>
-                <p class="post-description">IoC也称为依赖注⼊(dependency injection, DI)。它是⼀个对象定义依赖关系的过程，也就是说，对象只通过构造函数参数。⼯⼚⽅法的参数或对象实例构造或从⼯⼚⽅法返回后在对象实例上设置的属性来定义它们所使⽤的其他对象</p>
-                <a href="/2019/11/01/Java/Spring-IOC/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #FF5E3A 0%, #FF2A68 100%)" target="_blank">
-                    <i class="icon far fa-eye fa-fw"></i>阅读更多
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    
-    <div class="col s12 m6" data-aos="zoom-in-up">
-        <div class="post-card" style="background-image: url('/medias/featureimages/4.jpg')">
-            <div class="post-body">
-                <div class="post-categories">
-                    
-                        
-                            <a href="/categories/Java/" class="category">Java</a>
-                        
-                    
-                </div>
-                <a href="/2018/09/07/Java/java-jar/">
-                    <h3 class="post-title">jar包结构讲解</h3>
-                </a>
-                <p class="post-description">jar包结构讲解，搞懂哪些META-INF/MANIFEST.MF是什么意思</p>
-                <a href="/2018/09/07/Java/java-jar/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #EF4DB6 0%, #C643FC 100%)" target="_blank">
-                    <i class="icon far fa-eye fa-fw"></i>阅读更多
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    
-    <div class="col s12 m6" data-aos="zoom-in-up">
-        <div class="post-card" style="background-image: url('/medias/featureimages/3.jpg')">
-            <div class="post-body">
-                <div class="post-categories">
-                    
-                        
-                            <a href="/categories/Python%E7%BC%96%E7%A8%8B/" class="category">Python编程</a>
-                        
-                    
-                </div>
-                <a href="/2018/10/22/Python/Django/">
-                    <h3 class="post-title">Django 框架学习笔记</h3>
-                </a>
-                <p class="post-description">对文档阅读的大致补充，框架拥有功能的概述，详细内容查阅文档</p>
-                <a href="/2018/10/22/Python/Django/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #1AD6FD 0%, #1D62F0 100%)" target="_blank">
-                    <i class="icon far fa-eye fa-fw"></i>阅读更多
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    
-    <div class="col s12" data-aos="zoom-in-up">
-        <div class="post-card" style="background-image: url('/medias/featureimages/8.jpg')">
-            <div class="post-body">
-                <div class="post-categories">
-                    
-                        
-                            <a href="/categories/Java/" class="category">Java</a>
-                        
-                    
-                </div>
-                <a href="/2018/04/05/Java/base/">
-                    <h3 class="post-title">Java学习笔记</h3>
-                </a>
-                <p class="post-description">Java语言作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程</p>
-                <a href="/2018/04/05/Java/base/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #FFCC00 0%, #FF9500 100%)" target="_blank">
-                    <i class="icon far fa-eye fa-fw"></i>阅读更多
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    
-    <div class="col s12 m6" data-aos="zoom-in-up">
-        <div class="post-card" style="background-image: url('/medias/featureimages/22.jpg')">
-            <div class="post-body">
-                <div class="post-categories">
-                    
-                        
-                            <a href="/categories/python%E7%BC%96%E7%A8%8B/" class="category">python编程</a>
-                        
-                    
-                </div>
-                <a href="/2018/10/23/Python/base/">
-                    <h3 class="post-title">python 学习笔记</h3>
-                </a>
-                <p class="post-description">基础永远是重中之重，虽然在应用开发中，很少会去使用语言的一些特性，比如一些高级话题，描述符，元类。但是掌握这些可以帮助理解框架源代码，从更深</p>
-                <a href="/2018/10/23/Python/base/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%)" target="_blank">
-                    <i class="icon far fa-eye fa-fw"></i>阅读更多
-                </a>
-            </div>
-        </div>
-    </div>
-    
-
-</div>
-
-
-                    </div>
                     
                 </div>
             </div>
