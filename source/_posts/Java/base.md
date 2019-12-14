@@ -14,6 +14,8 @@ reprintPolicy: cc_by
 
 Java 学习笔记，Java是一门面向对象编程语言，不仅吸收了C++语言的各种优点，还摒弃了C++里难以理解的多继承、指针等概念，因此Java语言具有功能强大和简单易用两个特征。Java语言作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程
 
+![image](/images/Java/Java-base.jpg)
+                
 <!-- more -->
 
 ## 名词解释
@@ -366,8 +368,8 @@ final:
 4. 类修饰，那么该类无法被继承。类方法都会隐式的指向final。
 
 private 和 final: 类中的private方法都隐式的指定为final。可以对private添加final，但这并不能给该方法增加任何额外的意义。 “覆盖”只有在某方法是基类的接口的一部分才会出现，即`必须能将一个对象向上转型`为它的基本类型并调用相同的方法。如果某方法为private，它就不是基类接口的一部分，用private修饰的方法在基类中同名方法不是方法覆盖，而是生成一个新的方法。
-
 static、final、static final的区别(转自：http://blog.csdn.net/qq1623267754/article/details/36190715)
+
 
 1. final 
  
@@ -713,6 +715,105 @@ class A extends B implements C, D {}
 接口特性：接口不能被实例化，可以声明接口类型的变量，接口可以包含常量
 
 在JavaSE8中，可以在接口中定义默认方法，default关键字修饰。接口的在实现的时候，默认方法可以不用覆盖
+
+特点:
+
+1. 接口不能用于实例化对象。
+1. 接口没有构造方法。
+1. 接口中所有的方法必须是抽象方法。
+1. 接口不能包含成员变量，除了 static 和 final 变量。
+1. 接口不是被类继承了，而是要被类实现。
+1. 接口支持多继承。
+
+- 接口并不是类，编写接口的方式和类很相似，但是它们属于不同的概念。类描述对象的属性和方法。接口则包含类要实现的方法。
+- 除非实现接口的类是抽象类，否则该类要定义接口中的所有方法。
+- 接口无法被实例化，但是可以被实现。一个实现接口的类，必须实现接口内所描述的所有方法，否则就必须声明为抽象类。另外，在 Java 中，接口类型可用来声明一个变量，他们可以成为一个空指针，或是被绑定在一个以此接口实现的对象。
+
+- 接口中每一个方法也是隐式抽象的,接口中的方法会被隐式的指定为 public abstract（只能是 public abstract，其他修饰符都会报错）。
+- 接口中可以含有变量，但是接口中的变量会被隐式的指定为 public static final 变量（并且只能是 public，用 private 修饰会报编译错误）。
+- 接口中的方法是不能在接口中实现的，只能由实现接口的类来实现接口中的方法。
+
+## 抽象类
+
+abstract 修饰抽象类或抽象方法
+
+特点:
+
+1. 方法和类都可以被修饰为抽象
+2. 只要类中有一个方法被修饰为抽象，这个类就必须加上抽象修饰
+3. 抽象方法不能有方法体
+4. 抽象类不能被实例化
+5. abstract interfact 可以修饰接口，不过其实从本质上来说接口就是抽象的，这么写不会报错，但是没意义(具体没考证过，不过没有这么写的，写了也不会报错)
+6. 由于抽象类不能被实例化，它都是用来被继承的，但是它本身也有类的大多数功能，比如成员变量，自己的方法，构造函数等，抽象类的构造函数由子类去调用
+7. 不能有抽象构造方法或抽象静态方法
+
+第6点举例
+
+```Java
+package polymophIntface;
+
+public abstract class BaoMa implements Car {
+
+    private String name;
+    private Integer price;
+
+    BaoMa(String name, Integer price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    @Override
+    abstract public String getName();
+
+    @Override
+    public Integer getPrice() {
+        return price;
+    }
+}
+
+package polymophIntface;
+
+public class QQCar extends BaoMa {
+    QQCar(String name, Integer price) {
+        super(name, price); 
+        // 抽象类有构造函数，其实结合前面聊到的构造函数的东西，就能理解抽象类需要调用构造函数对成员变量赋值
+        // 如果是无参构造器，当然就不需要子类去帮抽象类初始化了
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+}
+```
+
+
+## 接口和抽象类
+
+1. 抽象类中的方法可以有方法体，就是能实现方法的具体功能，但是接口中的方法不行。
+2. 抽象类中的成员变量可以是各种类型的，而接口中的成员变量只能是 public static final 类型的。
+3. 接口中不能含有静态代码块以及静态方法(用 static 修饰的方法)，而抽象类是可以有静态代码块和静态方法。
+4. 一个类只能继承一个抽象类，而一个类却可以实现多个接口。
+
+{% blockquote %}
+注：JDK 1.8 以后，接口里可以有静态方法和方法体了，静态方法直接用接口类名调用，也不需要实现
+{% endblockquote %}
+
+```java
+static String hello() {
+    return "hello";
+}
+```
+
+java 8 以后还可以定义默认方法，不过这个默认方法要接口的实现类才可以调用
+
+```java
+default void stu() {
+        System.out.println("stu");
+    }
+```
+
+
 
 ## 容器和基本对象
 

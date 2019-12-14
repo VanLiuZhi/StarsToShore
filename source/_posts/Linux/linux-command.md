@@ -223,7 +223,7 @@ MAILTO=root
 包名：操作已经安装的软件包时，使用包名，是搜索/var/lib/rpm/中的数据库。
 
 ```s
-rpm  -ivh  包全名
+rpm -ivh  包全名
 
 选项：
 
@@ -330,6 +330,13 @@ grep ‘搜寻字符串’ filename
 
 chown www lifang 改用户  chown 用户 要修改的文件
 chgrp www lifang 改用户组  chgrp 用户组 要修改的文件
+
+## 依赖
+
+yumdownloader systemd-python --resolve --destdir=/data/mydepot/
+
+把systemd-python依赖的东西下到指定目录，可以在有外网的机器上下载依赖，去服务器安装依赖
+
 
 
 

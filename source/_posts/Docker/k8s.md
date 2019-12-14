@@ -1,11 +1,11 @@
 ---
-title: Kubernetes(k8s) 安装过程
+title: Kubernetes 笔记
 date: 2019-04-05 00:00:00
 tags: [linux, docker, note]
 categories: web开发
 ---
 
-Kubernetes(k8s) 安装过程
+Kubernetes 笔记
 
 <!-- more -->
 

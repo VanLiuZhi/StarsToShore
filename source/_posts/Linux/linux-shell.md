@@ -1,8 +1,11 @@
 ---
 title: linux-shell 环境变量
 date: 2018-10-22 00:00:00
-tags: [linux, note]
-categories: 操作系统
+tags: 
+    - linux
+    - note
+categories: 
+    - 操作系统
 ---
 
 linux shell学习笔记
@@ -10,6 +13,7 @@ linux shell学习笔记
 <!-- more -->
 
 ## 定位系统环境变量
+
 登录shell的时候，默认情况下bash会在几个文件中查找命令，这些文件称为启动文件或环境文件。
 这就是我们经常设置的把某个程序的目录加到环境变量，如果你跟风，用了什么 `item2` 这样的第三方shell，并对系统做了一些修改，那么原来安装的软件默认设置的环境变量就没有了，需要把他们迁移到新的shell中。
 
