@@ -337,6 +337,69 @@ yumdownloader systemd-python --resolve --destdir=/data/mydepot/
 
 把systemd-python依赖的东西下到指定目录，可以在有外网的机器上下载依赖，去服务器安装依赖
 
+## sysstat
+
+pidstat 是sysstat软件套件的一部分，sysstat包含很多监控linux系统状态的工具，它能够从大多数linux发行版的软件源中获得
+
+可以用相关命令查看内存，进程，cpu等占比
+
+yum install sysstat
+
+https://www.jianshu.com/p/3991c0dba094
+
+## 输出重定向
+
+一个程序执行后，系统会生成三个句柄，分别是:
+
+- 0=stdin（标准输入）
+- 1=stdout（标准输出）
+- 2=stderr（错误输出）
+
+默认情况下，三个句柄都指向当前会话的命令行控制台。命令转到后台执行后，stdin关闭，stdout和stderr还是指向控制台
+通过在命令后使用输出重定向符 > 实现对输出的重定向
+
+`./test.py > log.log 2>&1 &`
+
+通过重定向符把stdout输出到log.log中，后面的 2>&1表示把stderr重定向到stdout，上面合起来的作用就是把stdout和stderr都输出到log.log中
+
+## nohup
+
+nohup介绍 用途：不挂断地运行命令
+
+一般情况，执行脚本  sh 脚本  ./脚本  但是这种执行只会在前台，不能挂到后台
+
+语法：nohup Command [Arg …] [　& ]
+
+通过 & 虽然可以把命令以后台进程的方式执行，但是如果SSH会话中断退出，和此会话相关的所有进程都会终止。
+如果我们是登录服务器去启动一个服务程序，总不能启动后一直把SSH会话开着，而且会话到期会自动终止
+
+这是，我们可以使用 nohup（no hung up）来执行进程，此命令确保会话挂断后，命令可以继续运行。以nohup运行的命令，系统默认自动把stdout和stderr重定向到当前目录的nohup.out文件
+
+`nohup ./run.py &`
+
+无论是否将 nohup 命令的输出重定向到终端，输出都将附加到当前目录的 nohup.out 文件中。
+如果当前目录的 nohup.out 文件不可写，输出重定向到 $HOME/nohup.out 文件中。
+如果没有文件能创建或打开以用于追加，那么 Command 参数指定的命令不可调用。
+
+### nohup和&的区别
+
+- &：已后台进程执行命令，但是会话关闭后，进程会结束
+- nohup：确保进程不挂断的执行，但是没有后台执行的功能，所以一般nohup和&需要配合一起使用
+
+- 使用 nohup 运行程序:
+
+输出重定向，默认重定向到当前目录下 nohup.out 文件
+使用 Ctrl + C 发送 SIGINT 信号，程序关闭
+关闭 Shell Session 发送 SIGHUP 信号，程序免疫
+
+- 使用 & 运行程序：
+
+程序转入后台运行
+结果会输出到终端
+使用 Ctrl + C 发送 SIGINT 信号，程序免疫
+关闭 Shell session 发送 SIGHUP 信号，程序关闭
+
+
 
 
 
