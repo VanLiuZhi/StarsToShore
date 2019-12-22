@@ -102,6 +102,61 @@ spring boot的包扫描
 https://www.cnblogs.com/aflyun/p/11992101.html 发现有这么一个东西，@Indexed注解，默认@Component就被@Indexed注解的，说是用了@Indexed，打包项目后读取META-INT/spring.components，不做包扫描，提高性能，不过要配置开启才行（我测试了确实如此）这个东西作用大吗？难道它这个转换比IOC反射效率高吗？还是强在省去了扫描步骤，该反射还是逃不过的
 {% endblockquote %}
 
+## BeanPostProcessor接口
+
+bean的后置处理器，类可以实现该接口，可以让bean在创建的生命周期中的特定时间点，执行代码
+
+```java
+public class CatBeanPostProcessor implements BeanPostProcessor {
+    
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        if (bean instanceof Cat) {
+            System.out.println("Cat postProcessBeforeInitialization run...");
+        }
+        return bean;
+    }
+    
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (bean instanceof Cat) {
+            System.out.println("Cat postProcessAfterInitialization run...");
+        }
+        return bean;
+    }
+    
+}
+```
+
+## InitializingBean接口
+
+当BeanFactory将bean创建成功，并设置完成所有它们的属性后，我们想在这个时候去做出自定义的反应，比如检查一些强制属性是否被设置成功，这个时候我们可以让我们的bean的class实现InitializingBean接口，以被触发
+另一种替代实现InitializingBean的可选方案是在我们的bean的类内部定义一个init方法，然后在xml的bean定义中添加init属性即可触发调用
+
+总结下来也就是下面的方式:
+
+1. init-method(xml，指向一个方法) 或 @PostConstruct(注解在类的一个方法上)
+2. InitializingBean接口，包含afterPropertiesSet方法
+
+InitializingBean接口可以让bean在创建的生命周期中的特定时间点，执行代码
+
+## XXXAware接口
+
+感知接口，实现该接口的bean能获取到spring容器中记录该bean的一些属性，或者说让spring容器感知bean的存在
+
+## Bean执行的顺序
+
+初始化执行顺序：
+
+构造方法
+
+@PostConstruct / init-method
+InitializingBean 的 afterPropertiesSet 方法
+
+BeanPostProcessor的执行时机
+
+before：构造方法之后，@PostConstruct之前
+after：afterPropertiesSet之后
 
 
 

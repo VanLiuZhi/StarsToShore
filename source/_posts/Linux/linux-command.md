@@ -84,7 +84,9 @@ wget url 下载文件
 
 关于解压，如果是网络的包，文件后缀tar.gz
 
-解压命令 tar zxvf filename
+解压命令 tar -zxvf filename
+
+tar -zxvf filename -C /tmp/ 解压到指定目录
 
 zip类型，需要安装解压工具 unzip
 
