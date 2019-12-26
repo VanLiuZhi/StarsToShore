@@ -307,3 +307,8 @@ user_role用户-角色中间表，id,user_id,role_id
 反范式化指的是通过增加冗余或重复的数据来提高数据库的读性能。
 例如：在上例中的user_role用户-角色中间表增加字段role_name。
 反范式化可以减少关联查询时，join表的次数。
+
+
+root 121.41.87.22 liuzhiEA123
+
+scp -r /Users/liuzhi/PycharmProjects/weixin_ip root@121.41.87.22:/root/app/weixin_ip

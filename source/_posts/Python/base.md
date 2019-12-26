@@ -450,6 +450,10 @@ d = datetime.datetime.fromtimestamp(timeStamp)
 - sort：修改原列表 
 - sorted：产生一个新的列表
 
+多条件排序，按set_name升排序，然后按cluster_type降序，cluster_type是字符串的，如果是数字的，可以 `-x['cluster_type']`
+
+sorted(b, key=lambda x: (x['set_name'], x['cluster_type'][::-1]))
+
 字符串处理，分割用split()，替换用replace() ，strip，lstrip, rstrip分别用于去除首位，左边，右边的指定字符串。替换可以把换行去了，str.replace('\n', '')，或者去空格。
 
 python是没有null类型的，这个类型其它语言的，如js，sql。所以当前端传过这样的类型来需要注意，sql也是，如果一个没有赋值的字段，他可能是null的，但是判断布尔会出错，你会取得一个‘null’字符串。

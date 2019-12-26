@@ -66,7 +66,7 @@ mount VBoxGuestAdditions.iso的目录(虚拟机里面要有这个文件)，这�
 通过命令或virtualBox，完成镜像挂载后，重新进入虚拟机
 
 通过命令查看挂载情况
-lsscsi (适用于centos7)
+lsscsi (适用于centos7)  yum install lsscsi 没有就安装一下
 lsblk  (适用于ubuntu)
 
 结果
