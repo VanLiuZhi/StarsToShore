@@ -230,10 +230,6 @@ EXIT，GRANT，NOAUDIT，QUIT，REVOKE，RENAME。
 系统将自动进行提交，这就是自动提交。其格式为：
 SQL>SET AUTOCOMMIT ON；
 
-## 锁
-
-共享锁，排它锁，意向锁
-
 ## 事务隔离级别
 
 SELECT @@tx_isolation 查看数据库隔离级别，版本不一致命令也不同，8.0 为 select @@transaction_isolation
@@ -307,8 +303,4 @@ user_role用户-角色中间表，id,user_id,role_id
 反范式化指的是通过增加冗余或重复的数据来提高数据库的读性能。
 例如：在上例中的user_role用户-角色中间表增加字段role_name。
 反范式化可以减少关联查询时，join表的次数。
-
-
-root 121.41.87.22 liuzhiEA123
-
-scp -r /Users/liuzhi/PycharmProjects/weixin_ip root@121.41.87.22:/root/app/weixin_ip
+s
