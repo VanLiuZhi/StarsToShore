@@ -1,3 +1,15 @@
+## 表结构
+
+innodb 表，数据和索引是一个文件
+myisim 表，数据，索引，三个分开
+
+为什么直接跳到8 滑稽
+
+MySQL 5.5 -> MySQL 5
+MySQL 5.6 -> MySQL 6
+MySQL 5.7 -> MySQL 7
+MySQL 8.0 -> MySQL 8
+
 ## 疑问
 
 悲观锁用for_update

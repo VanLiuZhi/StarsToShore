@@ -72,6 +72,7 @@ cp a.py /app/
     liuzhi@localhost  ~  uptime
     23:03  up 13:47, 3 users, load averages: 1.04 1.25 1.37
 
+/app/mysql/5.7.18/bin/mysql --socket=/app/mysql/5.7.18/dirstats/mysqld.sock -uroot -hlocalhost  -p
 
 ## lsof
 
@@ -352,6 +353,7 @@ grep ‘搜寻字符串’ filename
 
 chown www lifang 改用户  chown 用户 要修改的文件
 chgrp www lifang 改用户组  chgrp 用户组 要修改的文件
+chgrp -R vagrant open-falcon    -R    参数修改文件及子文件
 
 ## 依赖
 

@@ -72,3 +72,40 @@ Mac安装Mysql-python遇到的坑，被这俩报错反复摩擦：'my_config.h' 
 如果MySQL安装了，那么安装mysql-connector-c后，执行 `sed -i -e 's/libs="$libs -l "/libs="$libs -lmysqlclient -lssl -lcrypto"/g' /usr/local/bin/mysql_config` 差不多就可以安装成功了。
 
 本质就是读取配置文件错误，通过文本替换命令sed修改配置。
+
+
+## 解决Access denied for user ''@'localhost' to database 'mysql
+
+Access denied for user ''@'localhost' to database '
+
+出现原因是MySQL的密码有问题，使用yum安装的时候，没设置密码进入交互环境后不能创建用户
+
+用mysql匿名用户可以进入数据库，但是看不见mysql数据库.
+
+解决办法：
+
+具体操作步骤：
+
+关闭mysql:
+
+1. service mysqld stop
+
+然后:
+
+2. mysqld_safe --skip-grant-tables
+
+启动mysql:
+
+3. service mysqld start
+
+mysql -u root
+
+mysql> use mysql
+
+mysql> UPDATE user SET Password=PASSWORD('xxx') WHERE user='root';
+
+mysql> flush privileges;
+
+到这里密码已经修改成功，
+
+mysql -u root -p
