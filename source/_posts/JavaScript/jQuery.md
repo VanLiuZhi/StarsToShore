@@ -102,3 +102,31 @@ dom调用，可以在滚动条滚动的时候触发，只要有滚动就触发�
 hasClass()   addClass()   removClass()   对dom类的控制
 
 
+## js拼接字符串，传递对象
+
+在JS中拼接html字符串，遇到的坑往往是由书写格式引起的。
+注意以下几点：
+
+单双引号需嵌套使用；
+传入 JSON 对象需要使用 JSON.stringify() 序列化为一个 JSON 字符串，并且更需要注意单双引号嵌套问题。
+示例：
+
+```html
+let html = "";
+for(var i=0;i<data.length;i++){
+    html += '<tr>'+
+            '<td>'+ data[i].appName +'</td>'+
+            '<td>'+ '<button type="button" onclick="edit('+JSON.stringify(data[i]).replace(/\"/g,"'")+')">按钮1</button>'+'</td>'+
+            '<td>'+ "<button type='button' onclick='del("+JSON.stringify(data[i])+")'>按钮2</button>"+'</td>'+
+            +'</tr>'
+}
+```
+上述代码中，使用了两种不同的引号嵌套格式。按钮1外层使用单引号，因此需要将JSON字符串中所有双引号转化成单引号，比较繁琐。从语法角度考虑，JavaScript 字符串与 JSON 字符串的最大区别在于，JSON 字符串必须使用双引号（单引号会导致语法错误），因此不推荐此写法。
+
+推荐第二种写法，直接在外层嵌套双引号，无需进行额外操作
+
+```js
+htmlstr += "<a class='opt ib upd' href=" + 'javascript:void(0);' + " onclick='updateGetData(" + JSON.stringify(useData) + ")'>修改</a>"
+```
+
+

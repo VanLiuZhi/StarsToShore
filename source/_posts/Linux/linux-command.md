@@ -438,3 +438,50 @@ telnet 192.168.100.101 8080
 重启防火墙：service iptables restart
 查看防火墙状态：service iptables status
 
+## 性能排查
+
+echo "内存使用情况"
+echo "----------------------------------"
+free -m
+echo 
+echo "磁盘使用情况"
+echo "----------------------------------"
+df -h
+echo 
+echo "网络连接情况"
+echo "----------------------------------"
+#过滤了127.0.0.1
+netstat -n |grep -v '127.0.0.1'| awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+echo 
+echo "网络监听情况"
+echo "----------------------------------"
+netstat -tnpl | awk 'NR>2 {printf "%-20s %-15s \n",$4,$7}'
+echo 
+echo "内存占用Top 10"
+echo "----------------------------------"
+ps -eo rss,pmem,pcpu,vsize,args |body sort -k 1 -r -n | head -n 10
+echo 
+echo "CPU占用Top 10"
+echo "----------------------------------"
+ps -eo rss,pmem,pcpu,vsize,args |body sort -k 3 -r -n | head -n 10
+echo 
+echo "最近1小时网络流量统计"
+echo "----------------------------------"
+sar -n DEV -s `date -d "1 hour ago" +%H:%M:%S`
+echo 
+echo "最近1小时cpu使用统计"
+echo "----------------------------------"
+sar -u -s `date -d "1 hour ago" +%H:%M:%S`
+echo 
+echo "最近1小时磁盘IO统计"
+echo "----------------------------------"
+sar -b -s `date -d "1 hour ago" +%H:%M:%S`
+echo 
+echo "最近1小时进程队列和平均负载统计"
+echo "----------------------------------"
+sar -q -s `date -d "1 hour ago" +%H:%M:%S`
+echo 
+echo "最近1小时内存和交换空间的统计统计"
+echo "----------------------------------"
+sar -r -s `date -d "1 hour ago" +%H:%M:%S`
+echo 
