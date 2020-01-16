@@ -438,6 +438,18 @@ telnet 192.168.100.101 8080
 重启防火墙：service iptables restart
 查看防火墙状态：service iptables status
 
+## 查看进程数和线程数
+
+ps -ef| wc -l
+
+ps -ef| grep httpd | wc -l
+
+1。 使用top命令，具体用法是 top -H
+加上这个选项，top的每一行就不是显示一个进程，而是一个线程。
+2。 使用ps命令，具体用法是 ps -xH
+这样可以查看所有存在的线程，也可以使用grep作进一步的过滤。
+3。 使用ps命令，具体用法是 ps -mq PID
+
 ## 性能排查
 
 echo "内存使用情况"

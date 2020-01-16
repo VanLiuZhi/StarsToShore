@@ -46,7 +46,8 @@ class WebsiteUser(HttpLocust):
     max_wait = 1
 
 # 测试server
-# locust --host=http://localhost:8888
+# locust -f test_14.py --host=http://localhost:8888
+这里配置的host是要去测试的服务地址，Locust服务的地址会在启动信息中打印出来
 
 ```
 上述代码主要有两个类，UserBehavior类两个任务就是模拟当前用户的行为，sleep和work代表本次请求的用户将执行sleep和work操作，可以设置随机或同顺序，或者执行的比重。</br>`locust --host=http://localhost:8888`命令启动locust，8888代表测试服务的端口。

@@ -454,3 +454,9 @@ that.DataList.forEach(el => {
     el.checked = false;
 })
 ```
+
+## virtual Scroller
+
+众所周知，渲染性能主要取决于渲染量， 过多的 DOM 会使你的网站速度变得很慢，即使在本地，也会出现相同的问题，但若通过虚拟滚动的方式，也就是在用户滚动时用足够的内容填充屏幕并不断更新，就能让网站保持高速运行，这也是 virtual-scroller 的基本原理。
+
+

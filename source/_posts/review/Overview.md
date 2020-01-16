@@ -9,6 +9,19 @@ JVM 运行时常量池，字符串常量到底是存储在堆还是元空间，�
 
 创建多线程有几种方式？
 
+UDP是基于报文发送的，从UDP的帧结构可以看出，在UDP首部采用了16bit来指示UDP数据报文的长度，因此在应用层能很好的将不同的数据报文区分开，从而避免粘包和拆包的问题。
+
+redission实现的分布式锁，同学们可以看一下，解决了传统分布式锁续约的问题。
+
+redis做分布式锁，如果是集群，主节点在同步到从节点前挂掉，如何保证锁的互斥性？这个面试的时候经常问，面试官想考察的点是redlock(红锁)
+
+1.用zookeeper创建一个临时节点代表锁，比如在/exlusive_lock下创建临时顺序子节点/exlusive_lock/lock。
+2.所有客户端争相创建此节点，但只有一个客户端创建成功。
+3.创建成功代表获取锁成功，此客户端执行业务逻辑
+4.未创建成功的客户端，监听/exlusive_lock变更
+5.获取锁的客户端执行完成后，删除/exlusive_lock/lock，表示锁被释放
+6.锁被释放后，其他监听/exlusive_lock变更的客户端得到通知，再次争相创建临时子节点/exlusive_lock/lock。此时相当于回到了第2步。
+
 ## 微服务
 
 ServiceMesh(服务网格)
@@ -35,6 +48,28 @@ Nginx7层，硬件4层
 // 5是否允许空，是否允许重复，是否有序 
 
 
+## 常用包
+
+<dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-lang3</artifactId>
+    <version>3.7</version>
+</dependency>
+<dependency>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava</artifactId>
+    <version>23.0</version>
+</dependency>
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.16.18</version>
+    <optional>true</optional>
+</dependency>
 
 
 

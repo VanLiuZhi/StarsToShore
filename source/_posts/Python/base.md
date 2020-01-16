@@ -329,6 +329,25 @@ zip()是Python的一个内建函数，它接受一系列可迭代的对象作为
 t = (2016,7,21,22,47,45,0,0,0）
 ```
 
+- 时间戳返回日期
+
+```py
+import time
+ 
+timeStamp = 1557502800
+timeArray = time.localtime(timeStamp)
+otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+print(otherStyleTime)
+
+import datetime
+ 
+timeStamp = 1557502800
+dateArray = datetime.datetime.utcfromtimestamp(timeStamp)
+otherStyleTime = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+print(otherStyleTime)
+```
+
+
 - 英文显示：time.asctime(t)
 - 格式化结果：time.strftime()，time模块是封装好的一个类，可以理解为直接的time就是时间，但是你不能这么用，得调用类的方法，而strftime方法是将结果格式化的方法
 - 时区转换：`time.gmtime()` 将时间戳转换成UTC时区，这里的时间戳就是time.time()

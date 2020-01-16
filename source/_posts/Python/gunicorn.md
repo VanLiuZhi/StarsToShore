@@ -13,9 +13,16 @@ Gunicorn 'Green Unicorn' is a Python WSGI HTTP Server for UNIX. It's a pre-fork 
 
     gunicorn -w 2 --threads=4 application:app -b localhost:8080
 
+    gunicorn -c HttpTest/gunicorn.py HttpTest.wsgi:application 指定配置文件
+
 -w 指启动的进程数量如2
 
 `ps -ef|grep python` 可以看到python共有3个进程，其中一个主进程和两个work进程（两个work进程是master的子进程）
+
+注意，线程配置
+threads = 100 
+
+假如用sync模式，线程数不能不设置，否则就是1，即分发到每个工作进程的线程只能有1，一定要配，如果是其它模式，协程和io多路复用都只需要1个线程，配置无用
 
 gunicorn 工作模式
 
