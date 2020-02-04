@@ -1,3 +1,21 @@
+---
+title: Java工具类整理
+date: 2018-04-05 00:00:00
+author: vanliuzh
+top: true
+cover: false
+toc: true
+mathjax: false
+summary: Java工具类整理
+categories: Java
+tags: [Java, Note]
+reprintPolicy: cc_by
+---
+
+Java工具类整理，收集和整理的Java相关工具类，大部分来源网络，不过我都测试过了，哈哈
+
+
+## Byte[]与hex互相转换，用在某些数据传输场景下
 
 ```java
 import java.util.Arrays;
@@ -116,5 +134,55 @@ public static byte[] fromHexString(String hexString) {
     }
 
     return bytes;
+}
+```
+
+## 通过反射操作对象私有方法和私有变量
+
+```java
+public class ReflectionUtils {
+ 
+    /**
+     * 获取私有成员变量的值
+     * @param instance
+     * @param filedName
+     * @return
+     */
+    public static Object getPrivateField(Object instance, String filedName) throws NoSuchFieldException, IllegalAccessException {
+        Field field = instance.getClass().getDeclaredField(filedName);
+        field.setAccessible(true);
+        return field.get(instance);
+    }
+ 
+    /**
+     * 设置私有成员的值
+     * @param instance
+     * @param fieldName
+     * @param value
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
+     */
+    public static void setPrivateField(Object instance, String fieldName, Object value) throws NoSuchFieldException, IllegalAccessException {
+        Field field = instance.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        field.set(instance, value);
+    }
+ 
+    /**
+     * 访问私有方法
+     * @param instance
+     * @param methodName
+     * @param classes
+     * @param objects
+     * @return
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    public static Object invokePrivateMethod(Object instance, String methodName, Class[] classes, String objects) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = instance.getClass().getDeclaredMethod(methodName, classes);
+        method.setAccessible(true);
+        return method.invoke(instance, objects);
+    }
 }
 ```

@@ -22,6 +22,14 @@ redis做分布式锁，如果是集群，主节点在同步到从节点前挂掉
 5.获取锁的客户端执行完成后，删除/exlusive_lock/lock，表示锁被释放
 6.锁被释放后，其他监听/exlusive_lock变更的客户端得到通知，再次争相创建临时子节点/exlusive_lock/lock。此时相当于回到了第2步。
 
+## 复习规划
+
+Java NIO
+nginx redis mysql zookeeper
+spring boot tomcat
+rocketmq kafka
+shardingSphere
+
 ## 微服务
 
 ServiceMesh(服务网格)
@@ -47,6 +55,9 @@ Nginx7层，硬件4层
 // 4线程安全与否
 // 5是否允许空，是否允许重复，是否有序 
 
+普通的集合类，迭代的时候，其它线程修改了容器，会直接触发fail-fast
+线程安全的集合类才能在迭代的时候修改容器
+
 
 ## 常用包
 
@@ -70,9 +81,6 @@ Nginx7层，硬件4层
     <version>1.16.18</version>
     <optional>true</optional>
 </dependency>
-
-
-
 
 
 
