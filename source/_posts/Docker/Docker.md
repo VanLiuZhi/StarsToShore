@@ -21,7 +21,7 @@ docker是使用go语言开发的应用容器引擎，docker 的开发商是 Dock
     docker container ls 管理容器
 
 两个命令都是查看正在运行的容器，加 -a 参数可以查看更多的信息
-
+†
     docker run     docker container run   都是运行容器(但是本质还是不同的，可以深入研究下)
     Ctrl+P+Q  退出容器不关闭
 

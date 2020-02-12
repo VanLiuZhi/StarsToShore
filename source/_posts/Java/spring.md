@@ -55,6 +55,22 @@ freemarker
 Thymeleaf
 velocity
 
+## 关于controller层
+
+有两种风格的代码，主要是注解的运用，具体看源码注释
+
+1. 风格一
+- 对主类使用@RequestMapping("/movies") @RestController
+- 对方法使用@GetMapping("/users/{id}")
+
+2. 风格二
+- 对主类使用@RequestMapping("/brand") @Controller
+- 对方法使用@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET) @ResponseBody
+
+使用了RestController，就包含了Controller，ResponseBody
+使用了GetMapping，包含了RequestMapping
+
+
 ## AOP 在 spring中的运用
 
 OOP面向对象，允许开发者定义纵向的关系，但并适用于定义横向的关系，导致了大量代码的重复，而不利于各个模块的重用。

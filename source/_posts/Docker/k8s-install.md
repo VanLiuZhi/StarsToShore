@@ -513,6 +513,10 @@ $ sudo ifconfig flannel.1 down && sudo ip link delete flannel.1
 $ sudo rm -rf /var/lib/cni/
 ```
 
+### 关于网卡问题导致网络通信失败
+
+这是使用vagrant导致的，vagrant使用第一网卡来做ssh，导致flannel通信失败，需要我们创建集群的时候手动指定网卡，这是本地环境搭建，而且使用vagrant的时候会遇到的一个问题
+
 这里列出了v0.11.0-amd64版本的yml
 
 ```yml

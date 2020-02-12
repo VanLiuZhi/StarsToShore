@@ -1,5 +1,5 @@
 ---
-title: Spring IOC 源码分析
+title: Spring IOC
 date: 2019-11-01 00:00:00
 author: vanliuzh
 top: true
@@ -12,7 +12,7 @@ tags: [Java, Note]
 reprintPolicy: cc_by
 ---
 
-Spring IOC 源码分析
+Spring IOC
 
 <!-- more -->
 

@@ -22,14 +22,6 @@ redis做分布式锁，如果是集群，主节点在同步到从节点前挂掉
 5.获取锁的客户端执行完成后，删除/exlusive_lock/lock，表示锁被释放
 6.锁被释放后，其他监听/exlusive_lock变更的客户端得到通知，再次争相创建临时子节点/exlusive_lock/lock。此时相当于回到了第2步。
 
-## 复习规划
-
-Java NIO
-nginx redis mysql zookeeper
-spring boot tomcat
-rocketmq kafka
-shardingSphere
-
 ## 微服务
 
 ServiceMesh(服务网格)

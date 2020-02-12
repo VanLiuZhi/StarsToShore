@@ -1,5 +1,0 @@
-Druid
-alibaba开源的数据库连接池，号称Java语言中最好的数据库连接池
-
-Mybatis generator
-MyBatis的代码生成器，可以根据数据库生成model、mapper.xml、mapper接口和Example，通常情况下的单表查询不用再手写mapper
