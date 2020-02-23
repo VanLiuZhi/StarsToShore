@@ -6,11 +6,12 @@ top: false
 cover: false
 toc: true
 mathjax: false
-summary: jar包结构讲解，搞懂哪些META-INF/MANIFEST.MF是什么意思
 categories: Java
 tags: [Java, Note]
 reprintPolicy: cc_by
 ---
+
+jar包结构讲解，搞懂哪些META-INF/MANIFEST.MF是什么意思
 
 ## 官方参考
 

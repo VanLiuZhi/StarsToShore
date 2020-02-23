@@ -1,3 +1,14 @@
+---
+title: Java review
+date: 2019-04-05 00:00:00
+tags: [java, note]
+categories: Java
+---
+
+review
+
+<!-- more -->
+
 ## 基础与名词解释
 
 竞态条件: 多个线程竞争同一个资源，如果对资源的访问顺序敏感，就称存在竞态条件

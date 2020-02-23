@@ -6,7 +6,6 @@ top: true
 cover: false
 toc: true
 mathjax: false
-summary: JVM虚拟机总结笔记
 categories: Java
 tags: [Java, Note]
 reprintPolicy: cc_by

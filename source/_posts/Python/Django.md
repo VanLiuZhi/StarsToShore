@@ -6,7 +6,6 @@ top: true
 cover: true
 toc: true
 mathjax: false
-summary: 对文档阅读的大致补充，框架拥有功能的概述，详细内容查阅文档
 categories: Python编程
 tags: [Python, Note, FrameWork]
 reprintPolicy: cc_by

@@ -6,7 +6,7 @@ top: true
 cover: false
 toc: true
 mathjax: false
-summary: Java8 new语法特性
+summary: Java8 new语法特性 发现很多小伙伴还没有用上Java的新特性，这其实也和Java比较标准化的原因有关吧，稳定才是企业的诉求，像lambda，函数式等其它语言都过的东西，却很少在Java中看见，不过会还是要会的，跟上时代的步伐，尤其是函数式编程的思想
 categories: Java
 tags: [Java, Note]
 reprintPolicy: cc_by

@@ -1,8 +1,14 @@
 ---
-title: Maven
+title: Java8 new语法特性
 date: 2019-04-05 00:00:00
-tags: [java, note]
+author: vanliuzh
+top: true
+cover: false
+toc: true
+mathjax: false
 categories: Java
+tags: [Java, Note]
+reprintPolicy: cc_by
 ---
 
 Maven的使用与学习总结
@@ -34,15 +40,15 @@ POM 项目对象模型
 
 通过IDEA就可以打包了，前提是要配置好pom文件，项目是maven工程
 
-目前已知打包会扫描测试部分的代码，测试不通过也不行。打包后得到jar包，用`java -jar api-1.0.jar`命名就可以运行，`api-1.0.jar.original`后缀的文件是给其它项目依赖用的(暂时不管，这个不能用来部署)
+打包会扫描测试部分的代码，测试不通过也不行(可以配置跳过)。打包后得到jar包，用`java -jar api-1.0.jar`命名就可以运行，`api-1.0.jar.original`后缀的文件是给其它项目依赖用的(暂时不管，这个不能用来部署)
 
 ## 导入包到当前仓库
 
-system 除了可以用于引入系统classpath 中包，也可以用于引入系统非maven  收录的第三方Jar，做法是将第三方Jar放置在 项目的 lib 目录下，然后配置 相对路径，但因system 不会打包进去所以需要配合 maven-dependency-plugin 插件配合使用。当然推荐大家还是通过将第三方Jar手动install 到仓库
+system 除了可以用于引入系统classpath 中包，也可以用于引入系统非maven  收录的第三方Jar，做法是将第三方Jar放置在 项目的 lib 目录下，然后配置 相对路径，但因system 不会打包进去所以需要配合 maven-dependency-plugin 插件配合使用。当然推荐大家还是通过将第三方Jar手动install 到仓库(这一点非常重要，因为各个企业不可能没有一点定制，除非jar包在私服仓库，否则最好就是要走这个安装流程，下面是一个安装示意)
 
-mvn install:install-file -DgroupId=com.ctg.itrdc.cache -DartifactId=ctg-cache-nclient -Dversion=2.4.0 -Dpackaging=jar -Dfile=/Users/liuzhi/Downloads/ctg-cache-nclient-2.4.0.jar
+`mvn install:install-file -DgroupId=com.ctg.itrdc.cache -DartifactId=ctg-cache-nclient -Dversion=2.4.0 -Dpackaging=jar -Dfile=/Users/liuzhi/Downloads/ctg-cache-nclient-2.4.0.jar`
 
-修改对应的参数
+根据实际情况，修改对应的参数
 
 ## maven快速构建项目
 
@@ -95,7 +101,7 @@ mvn archetype:generate
 - 私服是一种特殊的远程仓库，架设于局域网内。当maven需要下载构件时，先从私服寻找，私服中没有再从外部仓库下载
 - 任何一个仓库的id是唯一的，maven自带的中央仓库使用的id为central，如果其他仓库的id也为central，那么它将覆盖自带的中央仓库
 
-实践: 有时候我们去maven官网找到的jar包并不是默认的中央仓库的，这个时候就需要配置repositories，并且id不能用central。还有一种情况就是用阿里云的仓库代替maven的默认中央仓库
+实践总结: 有时候我们去maven官网找到的jar包并不是默认的中央仓库的(注意看，一般都会有个note告诉你)，这个时候就需要配置repositories，并且id不能用central。还有一种情况就是用阿里云的仓库代替maven的默认中央仓库
 
 ## 配置
 
@@ -105,16 +111,78 @@ mvn archetype:generate
 用户配置:  user.home/.m2/settings.xml
 
 需要注意的是：**局部配置优先于全局配置**。
-配置优先级从高到低：pom.xml> user settings > global settings
+配置优先级从高到低：`pom.xml> user settings > global settings`
 如果这些文件同时存在，在应用配置时，会合并它们的内容，如果有重复的配置，优先级高的配置会覆盖优先级的
 
 /Applications/IntelliJ\ IDEA.app/Contents/plugins/maven/lib/maven3/conf  idea 路径，记得转义空格cp到目录下
 
-本地情况，默认源码，idea配置文件都是空的配置，m2下没有配置文件（Mac环境）
+我本地情况: 默认源码，idea配置文件都是空的配置，m2下没有配置文件（Mac环境）
 
 ## 依赖关系
 
 项目依赖是指maven 通过依赖传播、依赖优先原则、可选依赖、排除依赖、依赖范围等特性来管理项目ClassPath
+
+## dependency scope
+
+依赖中有一个属性是描述依赖作用域的
+
+1. compile
+默认的scope，表示 dependency 都可以在生命周期中使用。而且，这些dependencies 会传递到依赖的项目中
+
+2. provided
+跟compile相似，但是表明了dependency 由JDK或者容器提供，如：servlet-api，因为servlet-api，tomcat等web服务器已经存在了，如果再打包会冲突。这个scope 只能作用在编译和测试时，同时没有传递性
+
+使用这个时，不会将包打入本项目中，只是依赖过来，使用默认或其他时，会将依赖的项目打成jar包，放入本项目的Lib里
+
+3. runtime
+表示dependency不作用在编译时，但会作用在运行和测试时
+
+4. test
+表示dependency作用在测试时，不作用在运行时
+
+5. system
+跟provided 相似，但是在系统中要以外部JAR包的形式提供，maven不会在repository查找它
+
+```
+<scope>system</scope>
+<systemPath>${java.home}/lib/rt.jar</systemPath>
+```
+
+6. import
+只能用在dependencyManagement里面
+
+我用实际例子说明这个作用，在`A项目`下`dependencyManagement`定义的`依赖B`使用`import`配置，可以把这个`依赖B`自己的`dependencies`下的依赖加到`A项目`下的`dependencyManagement`中
+
+A项目
+
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring-cloud.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+
+就相当于Spring-cloud的依赖被加入进来了，记住dependencyManagement的特性，加入进来要使用才在项目中被依赖
+
+然后其他项目
+
+```xml
+ <dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-config-server</artifactId>
+</dependency>
+```
+
+这个项目的父pom是Spring-boot，却可以使用Spring-cloud的，不用声名版本号，就是因为import的特性
+
+
 
 ## 项目聚合与继承
 

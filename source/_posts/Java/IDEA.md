@@ -57,9 +57,13 @@ IDEA更新classpath的方法：【Build】->【Build Project】，如果你设�
 
 全自动设置方式，打开运行时编译：
 
-1. build -> compile -> build Project Automatically
-2. 快捷键Ctrl + Shift + Alt + /，选择Registry
+1. build -> compile -> build Project Automatically 开启自动编制，但是running和debug不能用
+2. 快捷键Ctrl + Shift + Alt + /，选择Registry  让running能自动编译
 3. 勾选 Compiler autoMake allow when app running
+
+## gradle 编译，只运行所选测试
+
+Delegate IDE build开启，选择 reun tests using下拉选项
 
 ## IDEA 插件
 

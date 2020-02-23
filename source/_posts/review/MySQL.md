@@ -1,3 +1,14 @@
+---
+title: Java review
+date: 2019-04-05 00:00:00
+tags: [java, note]
+categories: Java
+---
+
+review
+
+<!-- more -->
+
 ## 表结构
 
 innodb 表，数据和索引是一个文件
