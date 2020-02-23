@@ -21891,3 +21891,40 @@
 {"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Rendering HTML post: \u001b[35m2018/10/22/Python/Django/index.html\u001b[39m","time":"2020-02-23T07:10:36.958Z","v":0}
 {"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Rendering HTML post: \u001b[35m2019/08/06/Web/options/index.html\u001b[39m","time":"2020-02-23T07:10:40.762Z","v":0}
 {"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Rendering HTML post: \u001b[35m2019/04/13/Linux/shell/index.html\u001b[39m","time":"2020-02-23T07:10:42.587Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Rendering HTML post: \u001b[35m2019/04/05/Docker/k8s/index.html\u001b[39m","time":"2020-02-23T07:11:08.510Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Rendering HTML post: \u001b[35m2019/11/01/Java/Spring-IOC/index.html\u001b[39m","time":"2020-02-23T07:13:39.244Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Rendering HTML post: \u001b[35m2018/04/05/Java/base/index.html\u001b[39m","time":"2020-02-23T07:13:40.045Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Processed: \u001b[35m_posts/Java/Spring-IOC.md\u001b[39m","time":"2020-02-23T07:18:27.515Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Rendering post: \u001b[35m/Users/liuzhi/JavaScriptProjects/StarsToShore/source/_posts/Java/Spring-IOC.md\u001b[39m","time":"2020-02-23T07:18:27.641Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mpage\u001b[39m","time":"2020-02-23T07:18:27.753Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mpost\u001b[39m","time":"2020-02-23T07:18:27.753Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mcategory\u001b[39m","time":"2020-02-23T07:18:27.754Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mindex\u001b[39m","time":"2020-02-23T07:18:27.754Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mtag\u001b[39m","time":"2020-02-23T07:18:27.754Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mxml\u001b[39m","time":"2020-02-23T07:18:27.754Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35marchive\u001b[39m","time":"2020-02-23T07:18:27.754Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mprism_assets\u001b[39m","time":"2020-02-23T07:18:27.754Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35masset\u001b[39m","time":"2020-02-23T07:18:27.758Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Processed: \u001b[35m_posts/Java/Spring-IOC.md\u001b[39m","time":"2020-02-23T07:20:58.418Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Processed: \u001b[35m_posts/Java/Spring-framework.md\u001b[39m","time":"2020-02-23T07:20:58.423Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Rendering post: \u001b[35m/Users/liuzhi/JavaScriptProjects/StarsToShore/source/_posts/Java/Spring-framework.md\u001b[39m","time":"2020-02-23T07:20:58.549Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mpage\u001b[39m","time":"2020-02-23T07:20:58.634Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mpost\u001b[39m","time":"2020-02-23T07:20:58.634Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mcategory\u001b[39m","time":"2020-02-23T07:20:58.635Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mindex\u001b[39m","time":"2020-02-23T07:20:58.635Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mtag\u001b[39m","time":"2020-02-23T07:20:58.635Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mxml\u001b[39m","time":"2020-02-23T07:20:58.635Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35marchive\u001b[39m","time":"2020-02-23T07:20:58.635Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mprism_assets\u001b[39m","time":"2020-02-23T07:20:58.635Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35masset\u001b[39m","time":"2020-02-23T07:20:58.638Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Processed: \u001b[35m_posts/Java/Spring-framework.md\u001b[39m","time":"2020-02-23T07:22:32.267Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Rendering post: \u001b[35m/Users/liuzhi/JavaScriptProjects/StarsToShore/source/_posts/Java/Spring-framework.md\u001b[39m","time":"2020-02-23T07:22:32.396Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mpage\u001b[39m","time":"2020-02-23T07:22:32.480Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mpost\u001b[39m","time":"2020-02-23T07:22:32.481Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mcategory\u001b[39m","time":"2020-02-23T07:22:32.481Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mindex\u001b[39m","time":"2020-02-23T07:22:32.481Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mtag\u001b[39m","time":"2020-02-23T07:22:32.481Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mxml\u001b[39m","time":"2020-02-23T07:22:32.481Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35marchive\u001b[39m","time":"2020-02-23T07:22:32.481Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35mprism_assets\u001b[39m","time":"2020-02-23T07:22:32.481Z","v":0}
+{"name":"hexo","hostname":"liudeMacBook-Pro.local","pid":12247,"level":20,"msg":"Generator: \u001b[35masset\u001b[39m","time":"2020-02-23T07:22:32.483Z","v":0}
