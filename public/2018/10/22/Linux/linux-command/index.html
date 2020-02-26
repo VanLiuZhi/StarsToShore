@@ -405,21 +405,21 @@ e">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-11-30
+                    2020-01-16
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3k
+                    4.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    11 分
+                    17 分
                 </div>
                 
 				
@@ -444,6 +444,9 @@ e">
 <p>从服务器到本地 <code>scp root@ip:拷贝路径 本地路径</code></p>
 <p>从本地到服务器 <code>scp 本地路径 root@ip:拷贝路径</code></p>
 <p>拷贝文件夹下的数据 scp -r /test/ root@ip:/root/target<br>记得拷贝文件夹要加 -r 斜杆遵照上面的格式，效果为把本地test文件夹拷贝到服务器，服务器在/root/target/test下得到文件夹下的文件</p>
+<p>覆盖问题:</p>
+<p>差不多都是这个套路，cp也是</p>
+<p>本地weixin_ip，服务器没有weixin_ip，不过这种情况，第二次拷贝是不会覆盖原来的<br>scp -r /Users/liuzhi/PycharmProjects/weixin_ip <a href="mailto:root@121.41.87.22" target="_blank" rel="noopener">root@121.41.87.22</a>:/root/app/weixin_ip<br>覆盖服务器文件夹<br>scp -r /Users/liuzhi/PycharmProjects/weixin_ip <a href="mailto:root@121.41.87.22" target="_blank" rel="noopener">root@121.41.87.22</a>:/root/app/</p>
 <h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><ol>
 <li>复制指定目录下的全部文件到另一个目录中<br>如果dir2目录不存在，则可以直接使用<br>cp -r dir1 dir2</li>
 </ol>
@@ -457,14 +460,17 @@ e">
 <h2 id="find-查找命令"><a href="#find-查找命令" class="headerlink" title="find 查找命令"></a>find 查找命令</h2><p>查找命令，列出符合条件的文件路径。 find / -name *</p>
 <h2 id="uptime"><a href="#uptime" class="headerlink" title="uptime"></a>uptime</h2><p>查看系统运行情况，启动时间，登陆时间等。最后的三个数字代表系统最近1分钟，5分钟，15分钟负载情况。</p>
 <pre><code>liuzhi@localhost  ~  uptime
-23:03  up 13:47, 3 users, load averages: 1.04 1.25 1.37</code></pre><h2 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h2><p>lsof 是 linux 下的一个非常实用的系统级的监控、诊断工具。<br>它的意思是 <code>List Open Files</code>，很容易你就记住了它是 <code>“ls + of”</code> 的组合。<br>它可以用来列出被各种进程打开的文件信息，记住：linux 下 “一切皆文件”，<br>包括但不限于 pipes, sockets, directories, devices, 等等。<br>因此，使用 lsof，你可以获取任何被打开文件的各种信息。</p>
+23:03  up 13:47, 3 users, load averages: 1.04 1.25 1.37</code></pre><p>/app/mysql/5.7.18/bin/mysql –socket=/app/mysql/5.7.18/dirstats/mysqld.sock -uroot -hlocalhost  -p</p>
+<h2 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h2><p>lsof 是 linux 下的一个非常实用的系统级的监控、诊断工具。<br>它的意思是 <code>List Open Files</code>，很容易你就记住了它是 <code>“ls + of”</code> 的组合。<br>它可以用来列出被各种进程打开的文件信息，记住：linux 下 “一切皆文件”，<br>包括但不限于 pipes, sockets, directories, devices, 等等。<br>因此，使用 lsof，你可以获取任何被打开文件的各种信息。</p>
 <p>监控进程：<code>lsof -p 2854</code> 查看指定进程打开的文件。</p>
 <p>监控网络：<code>lsof -i:8080</code> 查看端口被哪些进程使用。</p>
 <h2 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h2><p>wget url 下载文件</p>
 <h2 id="tar-解压"><a href="#tar-解压" class="headerlink" title="tar 解压"></a>tar 解压</h2><p>关于解压，如果是网络的包，文件后缀tar.gz</p>
-<p>解压命令 tar zxvf filename</p>
+<p>解压命令 tar -zxvf filename</p>
+<p>tar -zxvf filename -C /tmp/ 解压到指定目录</p>
 <p>zip类型，需要安装解压工具 unzip</p>
 <p>unzip filename 先创建好目标目录，在里面解压，或者指定目录</p>
+<h2 id="zip压缩文件夹"><a href="#zip压缩文件夹" class="headerlink" title="zip压缩文件夹"></a>zip压缩文件夹</h2><p>zip -r fileName.zip 文件夹名</p>
 <h2 id="screen-工具"><a href="#screen-工具" class="headerlink" title="screen 工具"></a>screen 工具</h2><p>需要下载</p>
 <p>screen -r name</p>
 <p>screen -S name  最好用大写的S</p>
@@ -518,7 +524,7 @@ MAILTO=root
 <h2 id="PRM包安装"><a href="#PRM包安装" class="headerlink" title="PRM包安装"></a>PRM包安装</h2><p>网络下载包，一般用于离线安装</p>
 <p>包全名：操作的包是没有安装的软件包时，使用包全名。而且要注意路径。</p>
 <p>包名：操作已经安装的软件包时，使用包名，是搜索/var/lib/rpm/中的数据库。</p>
-<pre class="line-numbers language-s"><code class="language-s">rpm  -ivh  包全名
+<pre class="line-numbers language-s"><code class="language-s">rpm -ivh  包全名
 
 选项：
 
@@ -565,8 +571,54 @@ journalctl -u 服务名<span aria-hidden="true" class="line-numbers-rows"><span>
 <h2 id="du-sh-查看当前目录大小"><a href="#du-sh-查看当前目录大小" class="headerlink" title="du -sh 查看当前目录大小"></a>du -sh 查看当前目录大小</h2><p>用于查看当前目录下所有文件合计大小</p>
 <h2 id="saltstack"><a href="#saltstack" class="headerlink" title="saltstack"></a>saltstack</h2><p>saltstack是由python编写的采用c/s架构的自动化运维工具，由master和minion组成，使用ZeroMQ消息队列pub/sub方式通信，使用SSL证书签发的方式进行认证管理<br>本身是支持多master的。saltstack除了可以通过在节点安装客户端进行管理还支持直接通过ssh进行管理<br>运行模式为master端下发指令，客户端接收指令执行<br>采用yaml格式编写配置文件，支持api及自定义python模块，能轻松实现功能扩展</p>
 <p>saltstack有一个saltstack master，而很多saltstack minon在初始化时会连接到该master上<br>初始化时，minion会交换一个秘钥建立握手，然后建立一个持久的加密的TCP连接<br>通常，命令起始于master的命令行中，master将命令分发minion上<br>saltstack master可以同时连接很多minion而无需担心过载，这都归功于ZeroMQ<br>由于minion和master之间建立了持久化连接，所以master上的命令能很快的到达minion上。minion也可以缓存多种数据，以便加速执行</p>
+<p>salt ‘192.168.10.1’ cmd.run ‘pwd’</p>
+<p>关于salt-key，minion端新启动后，会向master注册salt-key，后面就不会再注册了，有重复注册了也不会自动解决，所以应该minion停止服务，salt-key -d 删除认证，然后再重启minion，进行重新注册</p>
+<p>salt-key -d 10.0.007 把已经认证的key删除<br>salt-key</p>
 <h2 id="tail-查看文件"><a href="#tail-查看文件" class="headerlink" title="tail 查看文件"></a>tail 查看文件</h2><p>tail -f 实时查看日志文件 tail -f 日志文件log<br>tail - 100f 实时查看日志文件 后一百行<br>tail -f -n 100 catalina.out linux查看日志后100行<br>搜寻字符串<br>grep ‘搜寻字符串’ filename<br>按ctrl+c 退出</p>
-<h2 id="修改用户和用户组"><a href="#修改用户和用户组" class="headerlink" title="修改用户和用户组"></a>修改用户和用户组</h2><p>chown www lifang 改用户  chown 用户 要修改的文件<br>chgrp www lifang 改用户组  chgrp 用户组 要修改的文件</p>
+<h2 id="修改用户和用户组"><a href="#修改用户和用户组" class="headerlink" title="修改用户和用户组"></a>修改用户和用户组</h2><p>chown www lifang 改用户  chown 用户 要修改的文件<br>chgrp www lifang 改用户组  chgrp 用户组 要修改的文件<br>chgrp -R vagrant open-falcon    -R    参数修改文件及子文件</p>
+<h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>yumdownloader systemd-python –resolve –destdir=/data/mydepot/</p>
+<p>把systemd-python依赖的东西下到指定目录，可以在有外网的机器上下载依赖，去服务器安装依赖</p>
+<h2 id="sysstat"><a href="#sysstat" class="headerlink" title="sysstat"></a>sysstat</h2><p>pidstat 是sysstat软件套件的一部分，sysstat包含很多监控linux系统状态的工具，它能够从大多数linux发行版的软件源中获得</p>
+<p>可以用相关命令查看内存，进程，cpu等占比</p>
+<p>yum install sysstat</p>
+<p><a href="https://www.jianshu.com/p/3991c0dba094" target="_blank" rel="noopener">https://www.jianshu.com/p/3991c0dba094</a></p>
+<h2 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h2><p>一个程序执行后，系统会生成三个句柄，分别是:</p>
+<ul>
+<li>0=stdin（标准输入）</li>
+<li>1=stdout（标准输出）</li>
+<li>2=stderr（错误输出）</li>
+</ul>
+<p>默认情况下，三个句柄都指向当前会话的命令行控制台。命令转到后台执行后，stdin关闭，stdout和stderr还是指向控制台<br>通过在命令后使用输出重定向符 &gt; 实现对输出的重定向</p>
+<p><code>./test.py &gt; log.log 2&gt;&amp;1 &amp;</code></p>
+<p>通过重定向符把stdout输出到log.log中，后面的 2&gt;&amp;1表示把stderr重定向到stdout，上面合起来的作用就是把stdout和stderr都输出到log.log中</p>
+<h2 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h2><p>nohup介绍 用途：不挂断地运行命令</p>
+<p>一般情况，执行脚本  sh 脚本  ./脚本  但是这种执行只会在前台，不能挂到后台</p>
+<p>语法：nohup Command [Arg …] [　&amp; ]</p>
+<p>通过 &amp; 虽然可以把命令以后台进程的方式执行，但是如果SSH会话中断退出，和此会话相关的所有进程都会终止。<br>如果我们是登录服务器去启动一个服务程序，总不能启动后一直把SSH会话开着，而且会话到期会自动终止</p>
+<p>这是，我们可以使用 nohup（no hung up）来执行进程，此命令确保会话挂断后，命令可以继续运行。以nohup运行的命令，系统默认自动把stdout和stderr重定向到当前目录的nohup.out文件</p>
+<p><code>nohup ./run.py &amp;</code></p>
+<p>无论是否将 nohup 命令的输出重定向到终端，输出都将附加到当前目录的 nohup.out 文件中。<br>如果当前目录的 nohup.out 文件不可写，输出重定向到 $HOME/nohup.out 文件中。<br>如果没有文件能创建或打开以用于追加，那么 Command 参数指定的命令不可调用。</p>
+<h3 id="nohup和-amp-的区别"><a href="#nohup和-amp-的区别" class="headerlink" title="nohup和&amp;的区别"></a>nohup和&amp;的区别</h3><ul>
+<li><p>&amp;：已后台进程执行命令，但是会话关闭后，进程会结束</p>
+</li>
+<li><p>nohup：确保进程不挂断的执行，但是没有后台执行的功能，所以一般nohup和&amp;需要配合一起使用</p>
+</li>
+<li><p>使用 nohup 运行程序:</p>
+</li>
+</ul>
+<p>输出重定向，默认重定向到当前目录下 nohup.out 文件<br>使用 Ctrl + C 发送 SIGINT 信号，程序关闭<br>关闭 Shell Session 发送 SIGHUP 信号，程序免疫</p>
+<ul>
+<li>使用 &amp; 运行程序：</li>
+</ul>
+<p>程序转入后台运行<br>结果会输出到终端<br>使用 Ctrl + C 发送 SIGINT 信号，程序免疫<br>关闭 Shell session 发送 SIGHUP 信号，程序关闭</p>
+<h2 id="telnet"><a href="#telnet" class="headerlink" title="telnet"></a>telnet</h2><p>yum install telnet –y</p>
+<p>telnet 192.168.100.101 8080</p>
+<h2 id="centos6-关闭防火墙"><a href="#centos6-关闭防火墙" class="headerlink" title="centos6 关闭防火墙"></a>centos6 关闭防火墙</h2><p>1.service命令</p>
+<p>关闭防火墙：service iptables stop<br>开启防火墙：service iptables start<br>重启防火墙：service iptables restart<br>查看防火墙状态：service iptables status</p>
+<h2 id="查看进程数和线程数"><a href="#查看进程数和线程数" class="headerlink" title="查看进程数和线程数"></a>查看进程数和线程数</h2><p>ps -ef| wc -l</p>
+<p>ps -ef| grep httpd | wc -l</p>
+<p>1。 使用top命令，具体用法是 top -H<br>加上这个选项，top的每一行就不是显示一个进程，而是一个线程。<br>2。 使用ps命令，具体用法是 ps -xH<br>这样可以查看所有存在的线程，也可以使用grep作进一步的过滤。<br>3。 使用ps命令，具体用法是 ps -mq PID</p>
+<h2 id="性能排查"><a href="#性能排查" class="headerlink" title="性能排查"></a>性能排查</h2><p>echo “内存使用情况”<br>echo “———————————-“<br>free -m<br>echo<br>echo “磁盘使用情况”<br>echo “———————————-“<br>df -h<br>echo<br>echo “网络连接情况”<br>echo “———————————-“<br>#过滤了127.0.0.1<br>netstat -n |grep -v ‘127.0.0.1’| awk ‘/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}’<br>echo<br>echo “网络监听情况”<br>echo “———————————-“<br>netstat -tnpl | awk ‘NR&gt;2 {printf “%-20s %-15s \n”,$4,$7}’<br>echo<br>echo “内存占用Top 10”<br>echo “———————————-“<br>ps -eo rss,pmem,pcpu,vsize,args |body sort -k 1 -r -n | head -n 10<br>echo<br>echo “CPU占用Top 10”<br>echo “———————————-“<br>ps -eo rss,pmem,pcpu,vsize,args |body sort -k 3 -r -n | head -n 10<br>echo<br>echo “最近1小时网络流量统计”<br>echo “———————————-“<br>sar -n DEV -s <code>date -d "1 hour ago" +%H:%M:%S</code><br>echo<br>echo “最近1小时cpu使用统计”<br>echo “———————————-“<br>sar -u -s <code>date -d "1 hour ago" +%H:%M:%S</code><br>echo<br>echo “最近1小时磁盘IO统计”<br>echo “———————————-“<br>sar -b -s <code>date -d "1 hour ago" +%H:%M:%S</code><br>echo<br>echo “最近1小时进程队列和平均负载统计”<br>echo “———————————-“<br>sar -q -s <code>date -d "1 hour ago" +%H:%M:%S</code><br>echo<br>echo “最近1小时内存和交换空间的统计统计”<br>echo “———————————-“<br>sar -r -s <code>date -d "1 hour ago" +%H:%M:%S</code><br>echo </p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1086,22 +1138,23 @@ journalctl -u 服务名<span aria-hidden="true" class="line-numbers-rows"><span>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2018/10/22/Linux/linux-shell/">
+                <a href="/2018/10/22/Linux/linux-base/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="linux-shell 环境变量">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="linux-base 基础概念">
                         
-                        <span class="card-title">linux-shell 环境变量</span>
+                        <span class="card-title">linux-base 基础概念</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            linux shell学习笔记
+                            Linux学习笔记
 
 
-定位系统环境变量登录shell的时候，默认情况下bash会在几个文件中查找命令，这些文件称为启动文件或环境文件。这就是我们经常设置的把某个程序的目录加到环境变量，如果你跟风，用了什么 item2 这样的第
+文件目录/etc存放系统管理和配置文件
+/usr  (Unix System Resource)用于存放系统应用程序，比较重要的目录/usr/local本地系统管理员软件安装目录（安装系统级的应用）。这是最庞大的目录
                         
                     </div>
                     <div class="publish-info">
@@ -1331,7 +1384,7 @@ journalctl -u 服务名<span aria-hidden="true" class="line-numbers-rows"><span>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

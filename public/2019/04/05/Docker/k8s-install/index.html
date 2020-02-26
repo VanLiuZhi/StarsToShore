@@ -410,14 +410,14 @@ K8S DashBoard服务创建服务后通过代理访问
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-11-30
+                    2020-02-07
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.1k
+                    5.2k
                 </div>
                 
 
@@ -761,6 +761,7 @@ $ sudo ifconfig cni0 down && sudo ip link delete cni0
 $ sudo ifconfig flannel.1 down && sudo ip link delete flannel.1
 删除cni文件
 $ sudo rm -rf /var/lib/cni/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="关于网卡问题导致网络通信失败"><a href="#关于网卡问题导致网络通信失败" class="headerlink" title="关于网卡问题导致网络通信失败"></a>关于网卡问题导致网络通信失败</h3><p>这是使用vagrant导致的，vagrant使用第一网卡来做ssh，导致flannel通信失败，需要我们创建集群的时候手动指定网卡，这是本地环境搭建，而且使用vagrant的时候会遇到的一个问题</p>
 <p>这里列出了v0.11.0-amd64版本的yml</p>
 <pre class="line-numbers language-yml"><code class="language-yml">---
 apiVersion: policy/v1beta1
@@ -1832,28 +1833,87 @@ spec:
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/04/05/Docker/k8s/">
+                <a href="/2019/04/13/Linux/shell/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Kubernetes(k8s) 安装过程">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Linux 开发环境 shell 配置">
                         
-                        <span class="card-title">Kubernetes(k8s) 安装过程</span>
+                        <span class="card-title">Linux 开发环境 shell 配置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Kubernetes(k8s) 安装过程
+                            shell 配置和使用 zsh
 
 
-基本名称解释etcd: 是一个高可用的分布式键值(key-value)数据库。etcd内部采用raft协议作为一致性算法，有点像zk，k8s集群使用etcd作为它的数据后端，etcd是一种无状态
+Xshell在使用Xshell的时候，出现本地终端排版错误问题，解决方案：文件 - 属性 - 终端 - 高级 - 用CR-LF接受LF(R)
+安装 zsh通过命令就可以安装了
+CentOS 安装：sudo
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-04-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-04-13
                         </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-category">
+                                    操作系统
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/linux/">
+                        <span class="chip bg-color">linux</span>
+                    </a>
+                    
+                    <a href="/tags/note/">
+                        <span class="chip bg-color">note</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/04/05/Docker/k8s/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Kubernetes 笔记">
+                        
+                        <span class="card-title">Kubernetes 笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Kubernetes 笔记
+
+
+基础协议规范:
+CNI( Container Network Interface)CSI（Container Storage Interface）CRI（Container Runtime Interface
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1879,64 +1939,6 @@ spec:
                     
                     <a href="/tags/note/">
                         <span class="chip bg-color">note</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/04/05/Java/IDEA/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Java IDEA">
-                        
-                        <span class="card-title">Java IDEA</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            IDEA 使用技巧补充总结
-
-
-IDEA 工具使用ntellig idea 使用@Resource或者@Autowire报错，出现红色波浪线；
-虽然不影响使用，但是看着很不爽，所以还是解决了下：
-报错提示：Could not autowir
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-05
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Java/" class="post-category">
-                                    Java
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/note/">
-                        <span class="chip bg-color">note</span>
-                    </a>
-                    
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
                     </a>
                     
                 </div>
@@ -2082,7 +2084,7 @@ IDEA 工具使用ntellig idea 使用@Resource或者@Autowire报错，出现红�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

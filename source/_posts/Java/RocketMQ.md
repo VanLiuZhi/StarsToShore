@@ -1,7 +1,7 @@
 ---
 title: RocketMQ
 date: 2019-04-05 00:00:00
-tags: [java, note]
+tags: [Java, note]
 categories: Java
 ---
 

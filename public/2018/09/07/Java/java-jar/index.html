@@ -5,8 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="jar包结构讲解, Java，Python，JavaScript，Linux">
-    <meta name="description" content="官方参考https://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html 🎉 🎉
-本文参考: https://www.cnblogs.com/applerosa/p/">
+    <meta name="description" content="jar包结构讲解，搞懂哪些META-INF/MANIFEST.MF是什么意思
+官方参考https://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html 🎉 🎉
+本文参">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -402,7 +403,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-12-05
+                    2020-02-23
                 </div>
                 
 
@@ -416,7 +417,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 				
@@ -432,7 +433,8 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="官方参考"><a href="#官方参考" class="headerlink" title="官方参考"></a>官方参考</h2><p><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html" target="_blank" rel="noopener">https://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html</a> <span class="github-emoji" style="color: transparent;background:no-repeat url(https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8) center/contain" data-src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8">🎉</span> <span class="github-emoji" style="color: transparent;background:no-repeat url(https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8) center/contain" data-src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8">🎉</span></p>
+                <p>jar包结构讲解，搞懂哪些META-INF/MANIFEST.MF是什么意思</p>
+<h2 id="官方参考"><a href="#官方参考" class="headerlink" title="官方参考"></a>官方参考</h2><p><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html" target="_blank" rel="noopener">https://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html</a> <span class="github-emoji" style="color: transparent;background:no-repeat url(https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8) center/contain" data-src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8">🎉</span> <span class="github-emoji" style="color: transparent;background:no-repeat url(https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8) center/contain" data-src="https://github.githubassets.com/images/icons/emoji/unicode/1f389.png?v8">🎉</span></p>
 <p>本文参考: <a href="https://www.cnblogs.com/applerosa/p/9736729.html" target="_blank" rel="noopener">https://www.cnblogs.com/applerosa/p/9736729.html</a></p>
 <h2 id="什么是jar"><a href="#什么是jar" class="headerlink" title="什么是jar"></a>什么是jar</h2><p>JAR(Java Archive File)，Java 档案文件。通常jar 为压缩文件, 与 ZIP/RAR 压缩文件 一样的概念<br>区别在于 jar 文件中存在一个名为<code>META-INF/MANIFEST.MF</code>的清单文件，关于JAR包的描述信息、启动时的配置信息和安全性信息等均保存在其中，可以理解为 jar 的一个<code>配置文件</code></p>
 <h2 id="可执行的-JAR"><a href="#可执行的-JAR" class="headerlink" title="可执行的 JAR"></a>可执行的 JAR</h2><ul>
@@ -1042,19 +1044,19 @@ Class-Path: ExtensionDemo.jar<span aria-hidden="true" class="line-numbers-rows">
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/04/05/Java/base/">
+                <a href="/2018/04/05/Java/Java8-new-syntax/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Java学习笔记">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Java8 new语法特性">
                         
-                        <span class="card-title">Java学习笔记</span>
+                        <span class="card-title">Java8 new语法特性</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Java语言作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程
+                            Java8 new语法特性 发现很多小伙伴还没有用上Java的新特性，这其实也和Java比较标准化的原因有关吧，稳定才是企业的诉求，像lambda，函数式等其它语言都过的东西，却很少在Java中看见，不过会还是要会的，跟上时代的步伐，尤其是函数式编程的思想
                         
                     </div>
                     <div class="publish-info">
@@ -1227,7 +1229,7 @@ Class-Path: ExtensionDemo.jar<span aria-hidden="true" class="line-numbers-rows">
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

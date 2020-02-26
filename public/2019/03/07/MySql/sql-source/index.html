@@ -406,21 +406,21 @@ select * from table_a a inner join tabl">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-11-30
+                    2019-12-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    543
+                    850
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    4 分
                 </div>
                 
 				
@@ -470,6 +470,25 @@ selete <span class="token operator">*</span> <span class="token keyword">from</s
 <p>第2页： 从第20个开始，获取30条数据</p>
 <pre class="line-numbers language-sql"><code class="language-sql">selete <span class="token operator">*</span> <span class="token keyword">from</span> testtable <span class="token keyword">limit</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">;</span> 
 selete <span class="token operator">*</span> <span class="token keyword">from</span> testtable <span class="token keyword">limit</span> <span class="token number">30</span> <span class="token keyword">offset</span> <span class="token number">20</span><span class="token punctuation">;</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="分组取最大值"><a href="#分组取最大值" class="headerlink" title="分组取最大值"></a>分组取最大值</h2><ol>
+<li>推荐标准用法</li>
+</ol>
+<p>SELECT * from learn A inner join<br>( SELECT course_id as course_id_child，MAX(learn_time) as learn_time_child FROM learn where user_id = ‘14201109’ GROUP BY course_id) B<br>ON A.course_id=B.course_id_child and A.learn_time=B.learn_time_child</p>
+<p>learn表按course_id分组，取learn_time最大的，可以用上面的sql来实现，如果learn_time最大的有多个一样的，这些值都会留下来</p>
+<p>实际示例:</p>
+<p>“SELECT itemid, value, getclock FROM {table} a join ( SELECT itemid as itemid_child, MAX(getclock) as clock_child FROM {table} “ <br>“WHERE( {items_where} ) AND value !=’0’ AND getclock &gt; {time_stamp} GROUP BY itemid) b “ <br>“ON a.itemid = b.itemid_child and a.getclock = b.clock_child “.format(table=table_name, items_where=items_where, time_stamp=time_stamp)</p>
+<ol start="2">
+<li>不赞成的用法</li>
+</ol>
+<p>这个用法会只取到最大的，如果不关心更多的字段，可以这么用，但是其实是有脏数据的(但是我只关心我想要的数据)</p>
+<p>SELECT *<br>from learn<br>where learn.learn_time in (<br>            SELECT MAX(l.learn_time)<br>            FROM learn l<br>            where l.user_id = ‘14201109’<br>            GROUP BY l.course_id)</p>
+<ol start="3">
+<li>其它用法，大同小异</li>
+</ol>
+<p>select * from test as a<br>where typeindex = (select max(b.typeindex)<br>from test as b<br>where a.type = b.type )</p>
+<p>select<br>a.* from test a,<br>(select type,max(typeindex) typeindex from test group by type) b<br>where a.type = b.type and a.typeindex = b.typeindex order by a.type</p>
+<p>select * from<br>(<br>select *,ROW_NUMBER() OVER(PARTITION BY type ORDER BY typeindex DESC) as num<br>from test<br>) t<br>where t.num = 1</p>
+<p>SELECT * FROM Test t1 WHERE not EXISTS(select 1 from Test t2 WHERE t2.value&gt;t1.value and t1.name = t2.name);</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1241,7 +1260,7 @@ WSGIWSGI协议是Python为web服务器制定的标准，只要遵循WSGI协议�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

@@ -405,14 +405,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-11-30
+                    2020-01-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    533
+                    569
                 </div>
                 
 
@@ -467,8 +467,9 @@
     max_wait <span class="token operator">=</span> <span class="token number">1</span>
 
 <span class="token comment" spellcheck="true"># 测试server</span>
-<span class="token comment" spellcheck="true"># locust --host=http://localhost:8888</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment" spellcheck="true"># locust -f test_14.py --host=http://localhost:8888</span>
+这里配置的host是要去测试的服务地址，Locust服务的地址会在启动信息中打印出来
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>上述代码主要有两个类，UserBehavior类两个任务就是模拟当前用户的行为，sleep和work代表本次请求的用户将执行sleep和work操作，可以设置随机或同顺序，或者执行的比重。<br><code>locust --host=http://localhost:8888</code>命令启动locust，8888代表测试服务的端口。</p>
 <h2 id="UI界面描述"><a href="#UI界面描述" class="headerlink" title="UI界面描述"></a>UI界面描述</h2><ul>
 <li>Type：请求类型；</li>
@@ -1001,22 +1002,23 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2018/10/22/Mac/Iterm2/">
+                <a href="/2018/10/22/JavaScript/jQuery/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Iterm2 终端工具">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="jQuery 学习笔记">
                         
-                        <span class="card-title">Iterm2 终端工具</span>
+                        <span class="card-title">jQuery 学习笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            不错的终端软件
+                            javascript封装，快速编写前端代码，不过在MVVM框架的势头下，jQuery慢慢的不再需要了
 
 
-移动一个单词在Profile – keys下，找到如同的原配置信息。其实这是已有的功能，不过Mac默认的快捷键被占用了，修改成我们习惯的。分别修改option+←和option+→的映射，选择Action为“Send E
+jQuery 方法javascript封装，快速编写前端代码，不过在MVVM框架的势头下，jQuery慢慢的不再需要了
+each( )
                         
                     </div>
                     <div class="publish-info">
@@ -1027,8 +1029,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/mac/" class="post-category">
-                                    mac
+                            <a href="/categories/javascript/" class="post-category">
+                                    javascript
                                 </a>
                             
                             
@@ -1042,12 +1044,8 @@
                         <span class="chip bg-color">note</span>
                     </a>
                     
-                    <a href="/tags/util/">
-                        <span class="chip bg-color">util</span>
-                    </a>
-                    
-                    <a href="/tags/mac/">
-                        <span class="chip bg-color">mac</span>
+                    <a href="/tags/javascript/">
+                        <span class="chip bg-color">javascript</span>
                     </a>
                     
                 </div>
@@ -1061,19 +1059,23 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/10/22/MongoDB/MongoDB/">
+                <a href="/2018/10/22/MySql/sqlAlchemy-query/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="MongoDB NoSQL 数据库">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="sqlAlchemy-query 常见操作总结">
                         
-                        <span class="card-title">MongoDB NoSQL 数据库</span>
+                        <span class="card-title">sqlAlchemy-query 常见操作总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            MongoDB是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系数据库的。它支持的数据结构非常松散，是类似json的bson格式，因此可以存储比较复杂的数据类型。Mongo最大的特点是它支持的查询语言非常强
+                            MySQL 的 Python 版 ORM
+
+
+sqlAlchemy 数据库操作sqlAlchemy提供了数据库的很多封装
+模型创建模型需要继承 db.Model ，db.Colum类描述table的字段，__tablename__ 描述ta
                         
                     </div>
                     <div class="publish-info">
@@ -1101,6 +1103,10 @@
                     
                     <a href="/tags/database/">
                         <span class="chip bg-color">database</span>
+                    </a>
+                    
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
                     </a>
                     
                 </div>
@@ -1246,7 +1252,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Maven, Java，Python，JavaScript，Linux">
+    <meta name="keywords" content="Maven 总结, Java，Python，JavaScript，Linux">
     <meta name="description" content="Maven的使用与学习总结
 
 
@@ -18,7 +18,7 @@ basePOM 项目对象模型
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Maven | VanLiuZhi</title>
+    <title>Maven 总结 | VanLiuZhi</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -246,13 +246,13 @@ basePOM 项目对象模型
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Maven
+                        Maven 总结
                     </div>
                 </div>
             </div>
@@ -370,12 +370,12 @@ basePOM 项目对象模型
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/note/">
-                                <span class="chip bg-color">note</span>
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
                             </a>
                         
-                            <a href="/tags/java/">
-                                <span class="chip bg-color">java</span>
+                            <a href="/tags/Note/">
+                                <span class="chip bg-color">Note</span>
                             </a>
                         
                     </div>
@@ -406,21 +406,21 @@ basePOM 项目对象模型
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-11-30
+                    2020-02-26
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    447
+                    3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    12 分
                 </div>
                 
 				
@@ -449,9 +449,207 @@ basePOM 项目对象模型
 <p>依赖管理</p>
 <p>自动构建，通过对应的插件Release实现自动构建</p>
 <h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>通过IDEA就可以打包了，前提是要配置好pom文件，项目是maven工程</p>
-<p>目前已知打包会扫描测试部分的代码，测试不通过也不行。打包后得到jar包，用<code>java -jar api-1.0.jar</code>命名就可以运行，<code>api-1.0.jar.original</code>后缀的文件是给其它项目依赖用的(暂时不管，这个不能用来部署)</p>
-<h2 id="导入包到当前仓库"><a href="#导入包到当前仓库" class="headerlink" title="导入包到当前仓库"></a>导入包到当前仓库</h2><p>mvn install:install-file -DgroupId=com.ctg.itrdc.cache -DartifactId=ctg-cache-nclient -Dversion=2.4.0 -Dpackaging=jar -Dfile=/Users/liuzhi/Downloads/ctg-cache-nclient-2.4.0.jar</p>
-<p>修改对应的参数</p>
+<p>打包会扫描测试部分的代码，测试不通过也不行(可以配置跳过)。打包后得到jar包，用<code>java -jar api-1.0.jar</code>命名就可以运行，<code>api-1.0.jar.original</code>后缀的文件是给其它项目依赖用的(暂时不管，这个不能用来部署)</p>
+<h2 id="导入包到当前仓库"><a href="#导入包到当前仓库" class="headerlink" title="导入包到当前仓库"></a>导入包到当前仓库</h2><p>system 除了可以用于引入系统classpath 中包，也可以用于引入系统非maven  收录的第三方Jar，做法是将第三方Jar放置在 项目的 lib 目录下，然后配置 相对路径，但因system 不会打包进去所以需要配合 maven-dependency-plugin 插件配合使用。当然推荐大家还是通过将第三方Jar手动install 到仓库(这一点非常重要，因为各个企业不可能没有一点定制，除非jar包在私服仓库，否则最好就是要走这个安装流程，下面是一个安装示意)</p>
+<p><code>mvn install:install-file -DgroupId=com.ctg.itrdc.cache -DartifactId=ctg-cache-nclient -Dversion=2.4.0 -Dpackaging=jar -Dfile=/Users/liuzhi/Downloads/ctg-cache-nclient-2.4.0.jar</code></p>
+<p>根据实际情况，修改对应的参数</p>
+<h2 id="maven快速构建项目"><a href="#maven快速构建项目" class="headerlink" title="maven快速构建项目"></a>maven快速构建项目</h2><p>mvn使用插件快速构建项目</p>
+<p>mvn archetype:generate<br>    -DgroupId=com.liuzhidream.app<br>    -DartifactId=spring-learn<br>    -DarchetypeArtifactId=maven-archetype-quickstart<br>    -DinteractiveMode=false</p>
+<p>执行mvn操作，要进行pom文件所在目录</p>
+<h2 id="Maven仓库"><a href="#Maven仓库" class="headerlink" title="Maven仓库"></a>Maven仓库</h2><p>默认远程仓库： <a href="http://repo1.maven.org/maven2" target="_blank" rel="noopener">http://repo1.maven.org/maven2</a></p>
+<p>本地仓库： 默认在 ~/.m2/respository </p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>localRepository</span><span class="token punctuation">></span></span>D:/maven/repository<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>localRepository</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="使用阿里仓库"><a href="#使用阿里仓库" class="headerlink" title="使用阿里仓库"></a>使用阿里仓库</h2><pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>repositories</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>repository</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>central<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">></span></span>aliyun maven<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url</span><span class="token punctuation">></span></span>http://maven.aliyun.com/nexus/content/groups/public/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>layout</span><span class="token punctuation">></span></span>default<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>layout</span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 是否开启发布版构件下载 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>releases</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>enabled</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>enabled</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>releases</span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 是否开启快照版构件下载 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>snapshots</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>enabled</span><span class="token punctuation">></span></span>false<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>enabled</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>snapshots</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>repository</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>repositories</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里还可以延伸很多知识点，首先maven是先从本地仓库找，找不到，再找远程仓库</p>
+<p>远程仓库分为: 中央仓库，私服，其它远程仓库</p>
+<ul>
+<li>默认是去中央仓库找</li>
+<li>私服是一种特殊的远程仓库，架设于局域网内。当maven需要下载构件时，先从私服寻找，私服中没有再从外部仓库下载</li>
+<li>任何一个仓库的id是唯一的，maven自带的中央仓库使用的id为central，如果其他仓库的id也为central，那么它将覆盖自带的中央仓库</li>
+</ul>
+<p>实践总结: 有时候我们去maven官网找到的jar包并不是默认的中央仓库的(注意看，一般都会有个note告诉你)，这个时候就需要配置repositories，并且id不能用central。还有一种情况就是用阿里云的仓库代替maven的默认中央仓库</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p><code>settings.xml</code>文件一般存在于两个位置</p>
+<p>全局配置:  ${MAVEN_HOME}/conf/settings.xml<br>用户配置:  user.home/.m2/settings.xml</p>
+<p>需要注意的是：<strong>局部配置优先于全局配置</strong>。<br>配置优先级从高到低：<code>pom.xml&gt; user settings &gt; global settings</code><br>如果这些文件同时存在，在应用配置时，会合并它们的内容，如果有重复的配置，优先级高的配置会覆盖优先级的</p>
+<p>/Applications/IntelliJ\ IDEA.app/Contents/plugins/maven/lib/maven3/conf  idea 路径，记得转义空格cp到目录下</p>
+<p>我本地情况: 默认源码，idea配置文件都是空的配置，m2下没有配置文件（Mac环境）</p>
+<h2 id="依赖关系"><a href="#依赖关系" class="headerlink" title="依赖关系"></a>依赖关系</h2><p>项目依赖是指maven 通过依赖传播、依赖优先原则、可选依赖、排除依赖、依赖范围等特性来管理项目ClassPath</p>
+<h2 id="dependency-scope"><a href="#dependency-scope" class="headerlink" title="dependency scope"></a>dependency scope</h2><p>依赖中有一个属性是描述依赖作用域的</p>
+<ol>
+<li><p>compile<br>默认的scope，表示 dependency 都可以在生命周期中使用。而且，这些dependencies 会传递到依赖的项目中</p>
+</li>
+<li><p>provided<br>跟compile相似，但是表明了dependency 由JDK或者容器提供，如：servlet-api，因为servlet-api，tomcat等web服务器已经存在了，如果再打包会冲突。这个scope 只能作用在编译和测试时，同时没有传递性</p>
+</li>
+</ol>
+<p>使用这个时，不会将包打入本项目中，只是依赖过来，使用默认或其他时，会将依赖的项目打成jar包，放入本项目的Lib里</p>
+<ol start="3">
+<li><p>runtime<br>表示dependency不作用在编译时，但会作用在运行和测试时</p>
+</li>
+<li><p>test<br>表示dependency作用在测试时，不作用在运行时</p>
+</li>
+<li><p>system<br>跟provided 相似，但是在系统中要以外部JAR包的形式提供，maven不会在repository查找它</p>
+</li>
+</ol>
+<pre><code>&lt;scope&gt;system&lt;/scope&gt;
+&lt;systemPath&gt;${java.home}/lib/rt.jar&lt;/systemPath&gt;</code></pre><ol start="6">
+<li>import<br>只能用在dependencyManagement里面</li>
+</ol>
+<p>我用实际例子说明这个作用，在<code>A项目</code>下<code>dependencyManagement</code>定义的<code>依赖B</code>使用<code>import</code>配置，可以把这个<code>依赖B</code>自己的<code>dependencies</code>下的依赖加到<code>A项目</code>下的<code>dependencyManagement</code>中</p>
+<p>A项目</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencyManagement</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-dependencies<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>${spring-cloud.version}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>type</span><span class="token punctuation">></span></span>pom<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>type</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>import<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencyManagement</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>就相当于Spring-cloud的依赖被加入进来了，记住dependencyManagement的特性，加入进来要使用才在项目中被依赖</p>
+<p>然后其他项目</p>
+<pre class="line-numbers language-xml"><code class="language-xml"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-config-server<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个项目的父pom是Spring-boot，却可以使用Spring-cloud的，不用声名版本号，就是因为import的特性</p>
+<h2 id="项目聚合与继承"><a href="#项目聚合与继承" class="headerlink" title="项目聚合与继承"></a>项目聚合与继承</h2><p>聚合：是指将多个模块整合在一起，统一构建，避免一个一个的构建。聚合需要个父工程，然后使用 <code>&lt;modules&gt;</code> 进行配置其中对应的是子工程的相对路径</p>
+<p>继承：是指子工程直接继承父工程 当中的属性、依赖、插件等配置，避免重复配置</p>
+<ol>
+<li>属性继承</li>
+<li>依赖继承</li>
+<li>插件继承</li>
+</ol>
+<p>上面的三个配置子工程都可以进行重写，重写之后以子工程的为准</p>
+<p>依赖管理：通过继承的特性，子工程是可以间接依赖父工程的依赖，但多个子工程依赖有时并不一至，这时就可以在父工程中加入 <code>&lt;dependencyManagement&gt;</code> 声明工程需要的JAR包，然后在子工程中引入</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>！--</span> <span class="token attr-name">父工程中声明</span> <span class="token attr-name">junit</span> <span class="token attr-name">4.12</span> <span class="token attr-name">--</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencyManagement</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>junit<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>junit<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>4.12<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencyManagement</span><span class="token punctuation">></span></span>
+<span class="token comment" spellcheck="true">&lt;!-- 子工程中引入 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>junit<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>junit<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li>dependencyManagement 只是声明依赖的版本号，该依赖不会引入，因此子项目需要显示声明所需要引入的依赖，若不声明则不引入</li>
+<li>子项目声明了依赖且未声明版本号和scope，则会继承父项目的版本号和scope，否则覆盖</li>
+</ol>
+<p>上述的2点描述了dependencyManagement的作用，本来父pom文件定义的依赖，子pom继承，但是两个子pom可能版本号不一样，这就导致了同一个jar包有两个版本，而dependencyManagement就是解决这个问题的</p>
+<h2 id="项目属性"><a href="#项目属性" class="headerlink" title="项目属性"></a>项目属性</h2><pre class="line-numbers language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 配置proName属性 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>proName</span><span class="token punctuation">></span></span>fox<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>proName</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!-- 引用方式 --></span>
+${proName}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>默认属性</p>
+<pre><code>${basedir} 项目根目录;    
+${version} 表示项目版本;  
+${project.basedir}同${basedir};  
+${project.version}表示项目版本,与${version}相同;  
+${project.build.directory} 构建目录，缺省为target  
+${project.build.sourceEncoding}表示主源码的编码格式;  
+${project.build.sourceDirectory}表示主源码路径;  
+${project.build.finalName}表示输出文件名称;  
+${project.build.outputDirectory} 构建过程输出目录，缺省为target/classes </code></pre><h2 id="项目构建配置"><a href="#项目构建配置" class="headerlink" title="项目构建配置"></a>项目构建配置</h2><p>就是如何构建，包括资源文件的各种包含，过滤等配置，不过如果是spring-boot项目，直接依赖一个插件就完事了，如果是其它项目需要自定义配置就是在这里配置</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="关于测试"><a href="#关于测试" class="headerlink" title="关于测试"></a>关于测试</h2><p>maven测试为 default 生命周期中的test阶段<br>test阶段与 maven-surefire-plugin 的test目标相绑定了， 这是一个内置的绑定<br>Maven通过插件来执行 JUnit 和 TestNG 的测试用例</p>
+<p>maven-surefire-plugin 的test目标会自动执行测试源码路径下符合命名模式的测试类<br>默认测试源代码路径：src/test/java/<br>测试类命名模式：</p>
+<pre class="line-numbers language-s"><code class="language-s">**/Test*.java
+**/*Test.java
+**/*TestCase.java<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>按上述模式命名的类， 使用 mvn test 命令就能自动运行他们</p>
+<h2 id="跳过测试"><a href="#跳过测试" class="headerlink" title="跳过测试"></a>跳过测试</h2><p>mvn install -DskipTests，不过会一直跳过测试</p>
+<p>配置式：</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.maven.plugins<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>maven-surefire-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.19.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>skipTests</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>skipTests</span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 
+            skip 对应命令行参数为 maven.test.skip  
+            --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>skip</span><span class="token punctuation">></span></span>false<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>skip</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果想不仅跳过测试运行，还跳过测试代码的编译，使用下面命令：</p>
+<p><code>mvn package -Dmaven.test.skip=true</code><br>maven.test.skip 控制了 maven-compiler-plugin 和 maven-surefire-plugin 两个插件的行为</p>
+<p>或借助idea，比较方便</p>
+<h2 id="指定测试"><a href="#指定测试" class="headerlink" title="指定测试"></a>指定测试</h2><p>maven-surefire-plugin 使用 test 参数指定测试用例, 为测试用例的类名<br><code>mvn test -Dtest=RandomTest</code><br>只执行 RandomTest 这个测试类.<br><code>mvn test -Dtest=RandomTest#myTest</code><br>上面命令，只运行 RandomTest 类的 myTest 方法</p>
+<p>可以指定多个类，逗号分隔<br><code>mvn test -Dtest=RandomTest,Random2Test</code><br>也可以用 * 匹配多个<br><code>mvn test -Dtest=Random*Test</code><br>*和 逗号可以结合使用。</p>
+<p>如果不指定或者找不到测试类则构建失败<br><code>mvn test -Dtest</code><br>failIfNoTests 参数控制没有测试用例不报错<br><code>mvn test -Dtest -DfailIfNoTests=false</code></p>
+<h2 id="包含测试用例"><a href="#包含测试用例" class="headerlink" title="包含测试用例"></a>包含测试用例</h2><p>将不符合命名模式测试类自动运行测试</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.maven.plugins<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>maven-surefire-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.19.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>includes</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>include</span><span class="token punctuation">></span></span>**/*Tests.java<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>include</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>includes</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>两个星号 ** 表示匹配任意路径。<br>上面表示匹配已 Tests.java 结尾的Java类</p>
+<h2 id="排除测试用例"><a href="#排除测试用例" class="headerlink" title="排除测试用例"></a>排除测试用例</h2><p>排除测试用例不实用test自动运行<br>使用 excludes 节点</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.maven.plugins<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>maven-surefire-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.19.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>excludes</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>exclude</span><span class="token punctuation">></span></span>**/*ServiceTest.java<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>exclude</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>excludes</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="测试代码重用"><a href="#测试代码重用" class="headerlink" title="测试代码重用"></a>测试代码重用</h2><p>mvn package 会打包项目主代码和资源文件代码，没有包含测试代码。<br>如果想一起打包测试用例，供依赖方使用， 使用 maven-jar-plugin 插件</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.maven.plugins<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>maven-jar-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.4<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>executions</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>execution</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>goals</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>goal</span><span class="token punctuation">></span></span>test-jar<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>goal</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>goals</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>execution</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>executions</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>maven-jar-plugin 有两个目标 jar ，test-jar,<br>jar 内置绑定在 default 生命周期的 package 阶段。<br>test-jar没有内置绑定。</p>
+<p>依赖方引入时 dependency</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.A<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>A<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>5.0.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>type</span><span class="token punctuation">></span></span>test-jar<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>type</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>需要设置 type 和 scope</p>
+<p>参考原文：<a href="https://blog.csdn.net/yonggang7/article/details/79780487" target="_blank" rel="noopener">https://blog.csdn.net/yonggang7/article/details/79780487</a></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -485,7 +683,7 @@ basePOM 项目对象模型
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.liuzhidream.com" rel="external nofollow noreferrer">Liu Zhi</a>
+                    <a href="https://www.liuzhidream.com" rel="external nofollow noreferrer">vanliuzh</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -508,7 +706,7 @@ basePOM 项目对象模型
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="https://www.liuzhidream.com" target="_blank">Liu Zhi</a>
+                    <a href="https://www.liuzhidream.com" target="_blank">vanliuzh</a>
                     !
                 </span>
             </div>
@@ -533,12 +731,12 @@ basePOM 项目对象模型
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/note/">
-                                    <span class="chip bg-color">note</span>
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
                                 </a>
                             
-                                <a href="/tags/java/">
-                                    <span class="chip bg-color">java</span>
+                                <a href="/tags/Note/">
+                                    <span class="chip bg-color">Note</span>
                                 </a>
                             
                         </div>
@@ -971,23 +1169,24 @@ basePOM 项目对象模型
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/04/05/Java/spring/">
+                <a href="/2019/04/05/Java/IDEA/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Spring">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Java IDEA">
                         
-                        <span class="card-title">Spring</span>
+                        <span class="card-title">Java IDEA</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Spring 基础概念学习总结
+                            IDEA 使用技巧补充总结
 
 
-应用服务器SpringBoot已经内置了Servlet容器，包括tomcat，jetty，Undertow
-Spring基础IoC 控制反转：Spring所倡导的开发方式就是如此，所有的类都会在sprin
+IDEA 工具使用ntellig idea 使用@Resource或者@Autowire报错，出现红色波浪线；
+虽然不影响使用，但是看着很不爽，所以还是解决了下：
+报错提示：Could not autowir
                         
                     </div>
                     <div class="publish-info">
@@ -1028,22 +1227,23 @@ Spring基础IoC 控制反转：Spring所倡导的开发方式就是如此，所�
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/04/05/JavaScript/G2/">
+                <a href="/2019/04/05/Java/spring/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="G2">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Spring">
                         
-                        <span class="card-title">G2</span>
+                        <span class="card-title">Spring</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            G2，一种全新的画图工具，有自己的一套设计语言
+                            Spring 基础概念学习总结
 
 
-基础Chart 对象和 View 对象G2 的图表可以由多个视图 View 构成，同时各个视图可以拥有各自的数据源，即支持异构数据。在结构上，视图和 chart 相同，拥有自己独立的数据源
+应用服务器SpringBoot已经内置了Servlet容器，包括tomcat，jetty，Undertow
+Spring基础IoC 控制反转(Inversion of Control，缩写为IoC)：Sp
                         
                     </div>
                     <div class="publish-info">
@@ -1054,8 +1254,8 @@ Spring基础IoC 控制反转：Spring所倡导的开发方式就是如此，所�
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/javascript/" class="post-category">
-                                    javascript
+                            <a href="/categories/Java/" class="post-category">
+                                    Java
                                 </a>
                             
                             
@@ -1069,8 +1269,8 @@ Spring基础IoC 控制反转：Spring所倡导的开发方式就是如此，所�
                         <span class="chip bg-color">note</span>
                     </a>
                     
-                    <a href="/tags/javascript/">
-                        <span class="chip bg-color">javascript</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                 </div>
@@ -1216,7 +1416,7 @@ Spring基础IoC 控制反转：Spring所倡导的开发方式就是如此，所�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

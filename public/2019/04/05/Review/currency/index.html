@@ -4,11 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Spring IOC 源码分析, Java，Python，JavaScript，Linux">
-    <meta name="description" content="Spring IOC 源码分析
+    <meta name="keywords" content="Java review, Java，Python，JavaScript，Linux">
+    <meta name="description" content="review
 
 
-Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀个对象定义依赖关系的过程，也就是说，对象只通过构造函数参数、⼯⼚⽅法的参数或对象实例构造或从⼯⼚⽅法返回后在">
+基础与名词解释竞态条件: 多个线程竞争同一个资源，如果对资源的访问顺序敏感，就称存在竞态条件临界区: 导致竞态条件发生的代码称为临界区
+Java运行至少启动两个线程，一个是main线程，一个是垃圾回收线程;Java启动的每">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +17,7 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Spring IOC 源码分析 | VanLiuZhi</title>
+    <title>Java review | VanLiuZhi</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -244,13 +245,13 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Spring IOC 源码分析
+                        Java review
                     </div>
                 </div>
             </div>
@@ -368,12 +369,12 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Java/">
-                                <span class="chip bg-color">Java</span>
+                            <a href="/tags/note/">
+                                <span class="chip bg-color">note</span>
                             </a>
                         
-                            <a href="/tags/Note/">
-                                <span class="chip bg-color">Note</span>
+                            <a href="/tags/java/">
+                                <span class="chip bg-color">java</span>
                             </a>
                         
                     </div>
@@ -397,28 +398,28 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-11-01
+                    2019-04-05
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-12-05
+                    2020-02-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    3.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    11 分
                 </div>
                 
 				
@@ -434,66 +435,116 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Spring IOC 源码分析</p>
+                <p>review</p>
 <a id="more"></a>
 
-<h2 id="Ioc-设计理念"><a href="#Ioc-设计理念" class="headerlink" title="Ioc 设计理念"></a>Ioc 设计理念</h2><p>IoC也称为依赖注⼊(dependency injection, DI)。它是⼀个对象定义依赖关系的过程，也就是说，对象只通过构造函数参数、⼯⼚⽅法的参数或对象实例构造或从⼯⼚⽅法返回后在对象实例上设置的属性来定义它们所使⽤的其他对象。</p>
-<p>然后容器在创建bean时注⼊这些依赖项。这个过程基本上是bean的逆过程，因此称为控制反转(IoC) 在Spring中，构成应⽤程序主⼲并由Spring IoC容器管理的对象称为bean。</p>
-<p>bean是由Spring IoC容器实例化、组装和管理的对象。IoC容器设计理念: 通过容器统⼀对象的构建⽅式，并且⾃动维护对象的依赖关系。</p>
-<h2 id="bean的装配方式"><a href="#bean的装配方式" class="headerlink" title="bean的装配方式"></a>bean的装配方式</h2><p>通过xml或Java代码的方式进行装配，官方推荐用<code>@Confinguration</code>加方法<code>@Bean</code>的方式进行装配</p>
-<h3 id="1、xml装配"><a href="#1、xml装配" class="headerlink" title="1、xml装配"></a>1、xml装配</h3><p>比较传统的装配</p>
+<h2 id="基础与名词解释"><a href="#基础与名词解释" class="headerlink" title="基础与名词解释"></a>基础与名词解释</h2><p>竞态条件: 多个线程竞争同一个资源，如果对资源的访问顺序敏感，就称存在竞态条件<br>临界区: 导致竞态条件发生的代码称为临界区</p>
+<p>Java运行至少启动两个线程，一个是main线程，一个是垃圾回收线程;Java启动的每一个进程都有一个独立的JVM</p>
+<p>JMM通过控制主内存与每个线程的本地内存之间的交互，来为java程序员提供内存可见性保证(也就是线程A要向线程B发送消息，线程A要把数据先写到主内存，由线程B去主内存读取数据)</p>
+<p>Java内存模型没有具体讲述前面讨论的执行策略是由编译器，CPU，缓存控制器还是其它机制促成的。甚至没有用开发人员所熟悉的类，对象及方法来讨论。取而代之，Java内存模型中仅仅定义了线程和内存之间那种抽象的关系。众所周知，每个线程都拥有自己的工作存储单元（缓存和寄存器的抽象）来存储线程当前使用的变量的值。Java内存模型仅仅保证了代码指令与变量操作的有序性，大多数规则都只是指出什么时候变量值应该在内存和线程工作内存之间传输。这些规则主要是为了解决如下三个相互牵连的问题：</p>
 <ol>
-<li>xml编写</li>
+<li>原子性：哪些指令必须是不可分割的。在Java内存模型中，这些规则需声明仅适用于-—实例变量和静态变量，也包括数组元素，但不包括方法中的局部变量-—的内存单元的简单读写操作。</li>
+<li>可见性：在哪些情况下，一个线程执行的结果对另一个线程是可见的。这里需要关心的结果有，写入的字段以及读取这个字段所看到的值。</li>
+<li>有序性：在什么情况下，某个线程的操作结果对其它线程来看是无序的。最主要的乱序执行问题主要表现在读写操作和赋值语句的相互执行顺序上。</li>
 </ol>
-<ul>
-<li><p>关于bean的name和id，id是唯一标识，name是别名，一个bean可用有多个name</p>
-</li>
-<li><p>配置文件中不允许出现两个id相同的，否则在初始化时即会报错</p>
-</li>
-<li><p>但配置文件中允许出现两个name相同的，在用getBean()返回实例时，后面一个Bean被返回，应该是前面那个被后面同名的 覆盖了为了避免不经意的同名覆盖的现象，尽量用id属性而不要用name属性。如果id和name都没有指定，则用类全名作为name，如，则你可以通过getBean(“com.stamen.BeanLifeCycleImpl”)返回该实例</p>
-</li>
+<p>访问临界区，需要获取到锁，操作完，释放锁。而对于锁本身，也是一种临界资源，是不允许多个线程共同持有的，同一时刻，只能够一个线程持有</p>
+<p>Java中有另外一个概念，叫做监视器，《深入Java虚拟机》中如下描述监视器：</p>
+<p>可以将监视器比作一个建筑，它有一个很特别的房间，房间里有一些数据，而且在同一时间只能被一个线程占据。<br>一个线程从进入这个房间到它离开前，它可以独占地访问房间中的全部数据。如果用一些术语来定义这一系列动作：</p>
+<p>进入这个建筑叫做“进入监视器”<br>进入建筑中的那个特别的房间叫作“获得监视器”<br>占据房间叫做“持有监视器”<br>离开房间叫做“释放监视器”<br>离开建筑叫做“退出监视器”</p>
+<p>（对于开发者来说，你使用一个synchronized关键字就有了监视器的效果，监视器依赖JVM，而JVM依赖操作系统，操作系统则会进一步依赖软件甚至硬件，就是这样层层封装）<br>其实废话这么多，一个同步方法内（同步代码块）中所有的内容，就是属于同一个监视区域</p>
+<p>现代处理器，单CPU多核，共享三级缓存，每个核心有2个二级缓存，上面是一级缓存。数据必须通过缓存加载到寄存器，CPU不会直接从内存加载数据</p>
+<p>要理解JMM是一种抽象的概念，不是真实存在的，是一组规则，通过这组规则控制程序中各个变量在共享数据域和私有数据域的访问方式，什么规则呢？<br>就是围绕原子性，可见性，有序性展开的</p>
+<p>操作系统进程创建调用fork，线程的创建调用pthread_create</p>
+<p>编译优化: JIT除了具有缓存的功能外，还会对代码做各种优化。比如 逃逸分析、 锁消除、 锁膨胀、 方法内联、 空值检查消除、 类型检测消除、公共子表达式消除</p>
+<p>JTI即时编译，通过热点探测机制把解释器翻译执行的热点代码编译成机器码，缓存起来，方便下次调用，通过对栈顶计数，对程序计数(超过阈值认为它是热点代码)，然后触发JIT，在HotSpot虚拟机中使用的是第二种——基于计数器的热点探测方法，因此它为每个方法准备了两个计数器:方法调用计数器和回边计数器</p>
+<h2 id="并发编程模型的分类"><a href="#并发编程模型的分类" class="headerlink" title="并发编程模型的分类"></a>并发编程模型的分类</h2><p><code>在并发编程中，我们需要处理两个关键问题：</code></p>
+<p>线程之间如何通信及线程之间如何同步（这里的线程是指并发执行的活动实体），通信是指线程之间以何种机制来交换信息。</p>
+<p><code>在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递</code></p>
+<p>在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信。<br>在消息传递的并发模型里，线程之间没有公共状态，线程之间必须通过明确的发送消息来显式进行通信。</p>
+<p><code>同步是指程序用于控制不同线程之间操作发生相对顺序的机制</code></p>
+<p>在共享内存并发模型里，同步是显式进行的。程序员必须显式指定某个方法或某段代码需要在线程之间互斥执行。<br>在消息传递的并发模型里，由于消息的发送必须在消息的接收之前，因此同步是隐式进行的。</p>
+<h2 id="JMM"><a href="#JMM" class="headerlink" title="JMM"></a>JMM</h2><p>Java线程之间的通信由Java内存模型（简称为JMM）控制，JMM决定一个线程对共享变量的写入何时对另一个线程可见。</p>
+<p>从抽象的角度来看，JMM定义了线程和主内存之间的抽象关系：线程之间的共享变量存储在主内存（main memory）中，每个线程都有一个私有的本地内存（local memory），本地内存中存储了该线程以读/写共享变量的副本。本地内存是JMM的一个抽象概念，并不真实存在。</p>
+<h2 id="JMM相关操作"><a href="#JMM相关操作" class="headerlink" title="JMM相关操作"></a>JMM相关操作</h2><p>lock(锁定)：作用于主内存的变量，把一个变量标记为一条线程独占状态<br>unlock(解锁)：作用于主内存的变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定<br>read(读取)：作用于主内存的变量，把一个变量值从主内存传输到线程的工作内存中，以便随后的load动作使用<br>load(载入)：作用于工作内存的变量，它把read操作从主内存中得到的变量值放入工作内存的变量副本中<br>use(使用)：作用于工作内存的变量，把工作内存中的一个变量值传递给执行引擎<br>assign(赋值)：作用于工作内存的变量，它把一个从执行引擎接收到的值赋给工作内存的变量<br>store(存储)：作用于工作内存的变量，把工作内存中的一个变量的值传送到主内存中，以便随后的write的操作<br>write(写入)：作用于工作内存的变量，它把store操作从工作内存中的一个变量的值传送到主内存的变量中</p>
+<p>这个只需要知道个大概就行了:</p>
+<p>从主存复制到工作内存 -&gt; 就需要按顺序地执行read和load操作<br>从工作内存复制到主存 -&gt; 就需要按顺序地执行store和write操作</p>
+<h2 id="Java内存模型同步规则"><a href="#Java内存模型同步规则" class="headerlink" title="Java内存模型同步规则"></a>Java内存模型同步规则</h2><p>不允许一个线程无原因地（没有发生过任何assign操作）把数据从工作内存同步回主内存中</p>
+<p>一个新的变量只能在主内存中诞生，不允许在工作内存中直接使用一个未被初始化（load或者assign）的变量。即就是对一个变量实施use和store操作之前，必须先自行assign和load操作</p>
+<p>一个变量在同一时刻只允许一条线程对其进行lock操作，但lock操作可以被同一线程重复执行多次，多次执行lock后，只有执行相同次数的unlock操作，变量才会被解锁。lock和unlock必须成对出现</p>
+<p>如果对一个变量执行lock操作，将会清空工作内存中此变量的值，在执行引擎使用这个变量之前需要重新执行load或assign操作初始化变量的值</p>
+<p>如果一个变量事先没有被lock操作锁定，则不允许对它执行unlock操作；也不允许去unlock一个被其他线程锁定的变量。<br>对一个变量执行unlock操作之前，必须先把此变量同步到主内存中（执行store和write操作）</p>
+<h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><p>volatile缓存可见性实现原理</p>
+<p>JMM内存交互层面：volatile修饰的变量的read、load、use操作和assign、store、write必须是连续的，即修改后必须立即同步会主内存，使用时必须从主内存刷新，由此保证volatile变量的可见性。<br>底层实现：通过汇编lock前缀指令，它会锁定变量缓存行区域并写回主内存，这个操作称为“缓存锁定”，缓存一致性机制会阻止同时修改被两个以上处理器缓存的内存区域数据。一个处理器的缓存回写到内存内存会导致其他处理器的缓存无效</p>
+<p>汇编代码查看 -XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly -Xcomp (可以借助idea工具，把参数加到执行后面，观察汇编指令)</p>
+<h2 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h2><ul>
+<li>实现Runnable接口</li>
+<li>继承Thread类</li>
 </ul>
-<ol start="2">
-<li>通过上下文获取</li>
-</ol>
-<pre class="line-numbers language-java"><code class="language-java">ApplicationContext context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"spring.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>记得使用ClassPathXmlApplicationContext类创建上下文</p>
-<h3 id="2、-Configuration-Bean"><a href="#2、-Configuration-Bean" class="headerlink" title="2、@Configuration + @Bean"></a>2、@Configuration + @Bean</h3><p>用@Configuration注释类，表明这个类是一个Bean的定义源<br>@Configuration允许调用同类中的其它@Bean方法来定义bean之间的关系，如下面的address中，调用了@Bean注释的user方法</p>
-<p>一个被 @Configuration 标注的类，相当于一个 applicationContext.xml 的配置文件，这句话的意思就是，xml能做到的事情，可以用@Configuration 标注一个类来做到，除了@Bean外，还有很多的注解来对应xml中的标签</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AppConfig</span> <span class="token punctuation">{</span> 
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> currency<span class="token punctuation">;</span>
 
-    <span class="token annotation punctuation">@Bean</span>
-    <span class="token keyword">public</span> User <span class="token function">user</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyThread</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"run method"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-    <span class="token annotation punctuation">@Bean</span>
-    <span class="token keyword">public</span> Address <span class="token function">address</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Address</span><span class="token punctuation">(</span><span class="token function">user</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Thread thread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MyThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        thread<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"线程唯一标识符："</span> <span class="token operator">+</span> thread<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"线程名称："</span> <span class="token operator">+</span> thread<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"线程状态："</span> <span class="token operator">+</span> thread<span class="token punctuation">.</span><span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"线程优先级："</span> <span class="token operator">+</span> thread<span class="token punctuation">.</span><span class="token function">getPriority</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="3、-ComponentScan-Component"><a href="#3、-ComponentScan-Component" class="headerlink" title="3、@ComponentScan + @Component"></a>3、@ComponentScan + @Component</h3><p>比较常用的方式，记得ComponentScan配置正确的包的扫描范围，否则报错找不到<code>BeanDefinition</code></p>
-<p>配置包扫描后，类被 @Component 注解标识后，类就被注入</p>
-<p>包扫描配置示例: <code>@ComponentScan(basePackages="com.learn.spring.bean")</code></p>
-<p>spring boot的包扫描</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@ComponentScan</span><span class="token punctuation">(</span>excludeFilters <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token annotation punctuation">@Filter</span><span class="token punctuation">(</span>type <span class="token operator">=</span> FilterType<span class="token punctuation">.</span>CUSTOM<span class="token punctuation">,</span> classes <span class="token operator">=</span> TypeExcludeFilter<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token annotation punctuation">@Filter</span><span class="token punctuation">(</span>type <span class="token operator">=</span> FilterType<span class="token punctuation">.</span>CUSTOM<span class="token punctuation">,</span> classes <span class="token operator">=</span> AutoConfigurationExcludeFilter<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>细心的人会发现，在我们单独使用这个注解的时候，需要配置扫描路径，而spring boot没有配置，其实注解只是标识，spring boot在自动装配中去做这个事情，它要取主启动类所在包及子包下的组件。就呼应了文档注释中的描述，也解释了为什么 SpringBoot 的启动器一定要在所有类的最外层</p>
-<p>特别注意：</p>
-<ul>
-<li>针对2和3的情况中，也就是用Java代码的方式装配，关于Configuration的作用</li>
-<li>在2中，可以不用Configuration，也可以在3中，ComponentScan注解的类上加入Configuration，那么这个Configuration有什么作用？</li>
-<li>在Configuration注解后，获取的bean都是同一个，也就是从缓存获取的</li>
-</ul>
-<p>用@Configuration注解标注的类表明其主要目的是作为bean定义的源，@Configuration类允许通过调用同一类中的其他@Bean方法来定义bean之间的依赖关系</p>
-<blockquote><p>补充 @Indexed 注解</p>
-<p><a href="https://www.cnblogs.com/aflyun/p/11992101.html" target="_blank" rel="noopener">https://www.cnblogs.com/aflyun/p/11992101.html</a> 发现有这么一个东西，@Indexed注解，默认@Component就被@Indexed注解的，说是用了@Indexed，打包项目后读取META-INT/spring.components，不做包扫描，提高性能，不过要配置开启才行（我测试了确实如此）这个东西作用大吗？难道它这个转换比IOC反射效率高吗？还是强在省去了扫描步骤，该反射还是逃不过的</p>
-</blockquote>
+<span class="token punctuation">}</span>
 
+<span class="token keyword">class</span> <span class="token class-name">MyThread2</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span> <span class="token punctuation">{</span>
 
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"run myThread2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        MyThread2 myThread2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyThread2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        myThread2<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="线程优先级"><a href="#线程优先级" class="headerlink" title="线程优先级"></a>线程优先级</h2><p>从1到10，1最低，10最高</p>
+<h2 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h2><p>new 新建<br>runnable 可运行<br>blocked 阻塞<br>waiting 等待<br>time waiting 定时等待<br>terminated 终止</p>
+<p>状态转换流程</p>
+<ol>
+<li>线程创建，进入new状态</li>
+<li>调用 start 或者 run 方法，进入 runnable 状态</li>
+<li>JVM 按照线程优先级及时间分片等执行 runnable 状态的线程。开始执行时，进入 running 状态</li>
+<li>如果线程执行 sleep、wait、join，或者进入 IO 阻塞等。进入 wait 或者 blocked 状态</li>
+<li>线程执行完毕后，线程被线程队列移除。最后为 terminated 状态</li>
+</ol>
+<h2 id="缓存一致性协议"><a href="#缓存一致性协议" class="headerlink" title="缓存一致性协议"></a>缓存一致性协议</h2><p>CPU多个核是共享内存的，当2个核都要去操作变量i的时候，如何保证数据一致性？</p>
+<p>方式:</p>
+<ol>
+<li>总线加锁(非常耗损性能)</li>
+<li>缓存一致性协议</li>
+</ol>
+<p>现代处理器通过操作系统和处理器架构，配合特定的指令集实现缓存一致性</p>
+<p>比较常见的协议: MESI</p>
+<p>M 修改 Modified<br>E 独占 Exclusive<br>S 共享 Shared<br>I 无效 Invalid</p>
+<p>流程举例:</p>
+<ol>
+<li>主存有变量i，CPU1读取变量i，变量变成E(独占)</li>
+<li>CPU2读取变量i，通过广播和<code>总线嗅探机制</code>，此时变量i在CPU1和CPU2中都变成S(共享)</li>
+<li>CPU1修改了变量i，在CPU1中，i变成M(修改)，通过总线嗅探，CPU2中i变成I(无效)</li>
+<li>如果CPU2需要用到i，就需要从主存重新读取，此时就等待CPU1的i回写到主存。注意CPU1修改了i之后，由于CPU2的i I(无效)，此时CPU1的i是E(独占)，并且这个修改不会直接写到主存，需要在某个特定的时间点才会写入</li>
+<li>i写入后，CPU2读取到，此时CPU1和CPU2的i又变成S(共享)</li>
+</ol>
+<h3 id="锁缓存行"><a href="#锁缓存行" class="headerlink" title="锁缓存行"></a>锁缓存行</h3><p>通过LOCK指令来实现的缓存一致性协议，有一个缓存行的概念 cache line 64byte</p>
+<p>什么情况下不能用缓存一致性协议</p>
+<ol>
+<li>不支持(现代处理器都支持)</li>
+<li>跨缓存行，就是超过了cache line的大小，此时就会用锁总线</li>
+</ol>
+<p><code>/sys/devices/system/cpu/cpu0/cache/index0/coherency_line_size</code> 感兴趣可以看看这里的东西，这个文件记录了cache line大小，为64</p>
+<h3 id="缓存淘汰策略"><a href="#缓存淘汰策略" class="headerlink" title="缓存淘汰策略"></a>缓存淘汰策略</h3><p>LRU 最近最少使用的，会被淘汰掉，在CPU的cache中就是被踢出了</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -527,7 +578,7 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.liuzhidream.com" rel="external nofollow noreferrer">vanliuzh</a>
+                    <a href="https://www.liuzhidream.com" rel="external nofollow noreferrer">Liu Zhi</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -537,7 +588,7 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.liuzhidream.com/2019/11/01/Java/Spring-IOC/">https://www.liuzhidream.com/2019/11/01/Java/Spring-IOC/</a>
+                    <a href="https://www.liuzhidream.com/2019/04/05/Review/currency/">https://www.liuzhidream.com/2019/04/05/Review/currency/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -550,7 +601,7 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="https://www.liuzhidream.com" target="_blank">vanliuzh</a>
+                    <a href="https://www.liuzhidream.com" target="_blank">Liu Zhi</a>
                     !
                 </span>
             </div>
@@ -575,12 +626,12 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Java/">
-                                    <span class="chip bg-color">Java</span>
+                                <a href="/tags/note/">
+                                    <span class="chip bg-color">note</span>
                                 </a>
                             
-                                <a href="/tags/Note/">
-                                    <span class="chip bg-color">Note</span>
+                                <a href="/tags/java/">
+                                    <span class="chip bg-color">java</span>
                                 </a>
                             
                         </div>
@@ -1009,30 +1060,33 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/11/01/Java/Spring-IOC/">
+                <a href="/2019/04/05/Review/problem/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Spring IOC 源码分析">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Java review">
                         
-                        <span class="card-title">Spring IOC 源码分析</span>
+                        <span class="card-title">Java review</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            IoC也称为依赖注⼊(dependency injection, DI)。它是⼀个对象定义依赖关系的过程，也就是说，对象只通过构造函数参数。⼯⼚⽅法的参数或对象实例构造或从⼯⼚⽅法返回后在对象实例上设置的属性来定义它们所使⽤的其他对象
+                            review
+
+
+problem泊松分布的参数λ是单位时间(或单位面积)内随机事件的平均发生次数。 泊松分布适合于描述单位时间内随机事件发生的次数。
+一致性哈希先了解一个概念，取模和取余，如果除数都是正整数，那么取余和取模都是一样的，求余数
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-01
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-04-05
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1045,16 +1099,15 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/note/">
+                        <span class="chip bg-color">note</span>
                     </a>
                     
-                    <a href="/tags/Note/">
-                        <span class="chip bg-color">Note</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                 </div>
@@ -1068,41 +1121,35 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/20/blog/computer-base/">
+                <a href="/2019/03/19/Web/Kafka/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="计算机基础知识补充">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Kafka 学习笔记">
                         
-                        <span class="card-title">计算机基础知识补充</span>
+                        <span class="card-title">Kafka 学习笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            计算机基础知识补充，基础是重中之重
+                            消息队列Kafka
 
 
-补码这里只讨论整数
-
-正数的原码和反码，补码是一样的
-
-负数的反码等于原码保留符号位，其余位取反；补码为保留符号位，其余位取反加1
-
-
-两个整数相加，无论正负，可以转换成两个数的补码相加，相加的结果进
+基础概念和术语Partition 分区，Partition是物理上的概念，每个Topic包含一个或多个Partition
+Consumer 消费者 向Kafka broker读取消息的客户端Consumer Grou
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-20
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-03-19
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/technology-%E6%8A%80%E6%9C%AF/" class="post-category">
-                                    technology 技术
+                            <a href="/categories/web%E5%BC%80%E5%8F%91/" class="post-category">
+                                    web开发
                                 </a>
                             
                             
@@ -1112,8 +1159,12 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/technology/">
-                        <span class="chip bg-color">technology</span>
+                    <a href="/tags/linux/">
+                        <span class="chip bg-color">linux</span>
+                    </a>
+                    
+                    <a href="/tags/note/">
+                        <span class="chip bg-color">note</span>
                     </a>
                     
                 </div>
@@ -1259,7 +1310,7 @@ Ioc 设计理念IoC也称为依赖注⼊(dependency injection, DI)。它是⼀�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

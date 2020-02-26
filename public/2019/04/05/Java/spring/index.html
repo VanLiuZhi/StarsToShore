@@ -9,7 +9,7 @@
 
 
 应用服务器SpringBoot已经内置了Servlet容器，包括tomcat，jetty，Undertow
-Spring基础IoC 控制反转：Spring所倡导的开发方式就是如此，所有的类都会在sprin">
+Spring基础IoC 控制反转(Inversion of Control，缩写为IoC)：Sp">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -405,21 +405,21 @@ Spring基础IoC 控制反转：Spring所倡导的开发方式就是如此，所�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-12-05
+                    2020-02-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    3.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    12 分
                 </div>
                 
 				
@@ -439,7 +439,7 @@ Spring基础IoC 控制反转：Spring所倡导的开发方式就是如此，所�
 <a id="more"></a>
 
 <h2 id="应用服务器"><a href="#应用服务器" class="headerlink" title="应用服务器"></a>应用服务器</h2><p>SpringBoot已经内置了Servlet容器，包括tomcat，jetty，Undertow</p>
-<h2 id="Spring基础"><a href="#Spring基础" class="headerlink" title="Spring基础"></a>Spring基础</h2><p>IoC 控制反转：Spring所倡导的开发方式就是如此，所有的类都会在spring容器中登记，告诉spring你是个什么东西，你需要什么东西，然后spring会在系统运行到适当的时候，把你要的东西主动给你，同时也把你交给其他需要你的东西。所有的类的创建、销毁都由spring来控制，也就是说控制对象生存周期的不再是引用它的对象，而是spring。对于某个具体的对象而言，以前是它控制其他对象，现在是所有对象都被spring控制，所以这叫控制反转。<br>IoC的一个重点是在系统运行中，动态的向某个对象提供它所需要的其他对象。这一点是通过DI（Dependency Injection，依赖注入）来实现的。比如对象A需要操作数据库，以前我们总是要在A中自己编写代码来获得一个Connection对象，有了 spring我们就只需要告诉spring，A中需要一个Connection，至于这个Connection怎么构造，何时构造，A不需要知道。在系统运行时，spring会在适当的时候制造一个Connection，然后像打针一样，注射到A当中，这样就完成了对各个对象之间关系的控制。A需要依赖 Connection才能正常运行，而这个Connection是由spring注入到A中的，依赖注入的名字就这么来的。<br><code>Spring的IoC容器就是实现控制反转和依赖注入</code></p>
+<h2 id="Spring基础"><a href="#Spring基础" class="headerlink" title="Spring基础"></a>Spring基础</h2><p>IoC 控制反转(Inversion of Control，缩写为IoC)：Spring所倡导的开发方式就是如此，所有的类都会在spring容器中登记，告诉spring你是个什么东西，你需要什么东西，然后spring会在系统运行到适当的时候，把你要的东西主动给你，同时也把你交给其他需要你的东西。所有的类的创建、销毁都由spring来控制，也就是说控制对象生存周期的不再是引用它的对象，而是spring。对于某个具体的对象而言，以前是它控制其他对象，现在是所有对象都被spring控制，所以这叫控制反转。<br>IoC的一个重点是在系统运行中，动态的向某个对象提供它所需要的其他对象。这一点是通过DI（Dependency Injection，依赖注入）来实现的。比如对象A需要操作数据库，以前我们总是要在A中自己编写代码来获得一个Connection对象，有了 spring我们就只需要告诉spring，A中需要一个Connection，至于这个Connection怎么构造，何时构造，A不需要知道。在系统运行时，spring会在适当的时候制造一个Connection，然后像打针一样，注射到A当中，这样就完成了对各个对象之间关系的控制。A需要依赖 Connection才能正常运行，而这个Connection是由spring注入到A中的，依赖注入的名字就这么来的。<br><code>Spring的IoC容器就是实现控制反转和依赖注入</code></p>
 <ul>
 <li><p>JavaBean<br>JavaBean 是一种JAVA语言写成的可重用组件。为写成JavaBean，类必须是具体的和公共的，并且具有无参数的构造器。JavaBean 通过提供符合一致性设计模式的公共方法将内部域暴露成员属性，set和get方法获取。众所周知，属性名称符合这种模式，其他Java 类可以通过自省机制(反射机制)发现和操作这些JavaBean 的属性。</p>
 </li>
@@ -456,7 +456,30 @@ Spring基础IoC 控制反转：Spring所倡导的开发方式就是如此，所�
 <p>在控制器对象中通过注解定义shiyanlou，变量shiyanlou的值就是配置中的值Hello_shiyanlou</p>
 <pre><code>@Value("${shiyanlou.springboot}")
 private String shiyanlou;</code></pre><h2 id="模板引擎"><a href="#模板引擎" class="headerlink" title="模板引擎"></a>模板引擎</h2><p>freemarker<br>Thymeleaf<br>velocity</p>
-<h2 id="AOP-在-spring中的运用"><a href="#AOP-在-spring中的运用" class="headerlink" title="AOP 在 spring中的运用"></a>AOP 在 spring中的运用</h2><p>面向切面编程</p>
+<h2 id="关于controller层"><a href="#关于controller层" class="headerlink" title="关于controller层"></a>关于controller层</h2><p>有两种风格的代码，主要是注解的运用，具体看源码注释</p>
+<ol>
+<li>风格一</li>
+</ol>
+<ul>
+<li>对主类使用@RequestMapping(“/movies”) @RestController</li>
+<li>对方法使用@GetMapping(“/users/{id}”)</li>
+</ul>
+<ol start="2">
+<li>风格二</li>
+</ol>
+<ul>
+<li>对主类使用@RequestMapping(“/brand”) @Controller</li>
+<li>对方法使用@RequestMapping(value = “/delete/{id}”, method = RequestMethod.GET) @ResponseBody</li>
+</ul>
+<p>使用了RestController，就包含了Controller，ResponseBody<br>使用了GetMapping，包含了RequestMapping</p>
+<h2 id="AOP-在-spring中的运用"><a href="#AOP-在-spring中的运用" class="headerlink" title="AOP 在 spring中的运用"></a>AOP 在 spring中的运用</h2><p>OOP面向对象，允许开发者定义纵向的关系，但并适用于定义横向的关系，导致了大量代码的重复，而不利于各个模块的重用。<br>AOP，一般称为面向切面，作为面向对象的一种补充，用于将那些与业务无关，但却对多个对象产生影响的公共行为和逻辑，抽取并封装为一个可重用的模块，这个模块被命名为“切面”（Aspect），减少系统中的重复代码，降低了模块间的耦合度，同时提高了系统的可维护性。可用于权限认证、日志、事务处理。<br>AOP实现的关键在于 代理模式，AOP代理主要分为静态代理和动态代理。静态代理的代表为AspectJ；动态代理则以Spring AOP为代表。<br>（1）AspectJ是静态代理的增强，所谓静态代理，就是AOP框架会在编译阶段生成AOP代理类，因此也称为编译时增强，他会在编译阶段将AspectJ(切面)织入到Java字节码中，运行的时候就是增强之后的AOP对象。<br>（2）Spring AOP使用的动态代理，所谓的动态代理就是说AOP框架不会去修改字节码，而是每次运行时在内存中临时为方法生成一个AOP对象，这个AOP对象包含了目标对象的全部方法，并且在特定的切点做了增强处理，并回调原对象的方法。<br>Spring AOP中的动态代理主要有两种方式，JDK动态代理和CGLIB动态代理：<br>①JDK动态代理只提供接口的代理，不支持类的代理。核心InvocationHandler接口和Proxy类，InvocationHandler通过invoke()方法反射来调用目标类中的代码，动态地将横切逻辑和业务编织在一起；接着，Proxy利用 InvocationHandler动态创建一个符合某一接口的的实例, 生成目标类的代理对象。<br>②如果代理类没有实现 InvocationHandler 接口，那么Spring AOP会选择使用CGLIB来动态代理目标类。CGLIB（Code Generation Library），是一个代码生成的类库，可以在运行时动态的生成指定类的一个子类对象，并覆盖其中特定方法并添加增强代码，从而实现AOP。CGLIB是通过继承的方式做的动态代理，因此如果某个类被标记为final，那么它是无法使用CGLIB做动态代理的。<br>（3）静态代理与动态代理区别在于生成AOP代理对象的时机不同，相对来说AspectJ的静态代理方式具有更好的性能，但是AspectJ需要特定的编译器进行处理，而Spring AOP则无需特定的编译器处理。<br>InvocationHandler 的 invoke(Objectproxy,Methodmethod,Object[] args)：proxy是最终生成的代理实例;method 是被代理目标实例的某个具体方法;args 是被代理目标实例某个方法的具体入参, 在方法反射调用时使用。</p>
+<p>面向切面编程</p>
+<p>在Spring中的AOP是依靠动态代理来实现切面编程的.<br>而这两者又是有区别的.</p>
+<p>JDK是基于反射机制,生成一个实现代理接口的匿名类,然后重写方法,实现方法的增强.<br>它生成类的速度很快,但是运行时因为是基于反射,调用后续的类操作会很慢.<br>而且他是只能针对接口编程的.</p>
+<p>CGLIB是基于继承机制,继承被代理类,所以方法不要声明为final,然后重写父类方法达到增强了类的作用.<br>它底层是基于asm第三方框架,是对代理对象类的class文件加载进来,通过修改其字节码生成子类来处理.<br>生成类的速度慢,但是后续执行类的操作时候很快.<br>可以针对类和接口.</p>
+<p>因为jdk是基于反射,CGLIB是基于字节码.所以性能上会有差异.<br>在老版本CGLIB的速度是JDK速度的10倍左右,但是CGLIB启动类比JDK慢8倍左右,但是实际上JDK的速度在版本升级的时候每次都提高很多性能,而CGLIB仍止步不前.</p>
+<p>在对JDK动态代理与CGlib动态代理的代码实验中看，1W次执行下，JDK7及8的动态代理性能比CGlib要好20%左右。</p>
+<p>具体应用:<br>如果目标对象实现了接口,默认情况下是采用JDK动态实现AOP<br>如果目标对象没有实现接口,必须采用CGLIB库.</p>
 <h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><p>注解说明</p>
 <h3 id="Resource和-Autowired"><a href="#Resource和-Autowired" class="headerlink" title="@Resource和@Autowired"></a>@Resource和@Autowired</h3><p>共同点</p>
 <p>@Resource和@Autowired都可以作为注入属性的修饰，在接口仅有单一实现类时，两个注解的修饰效果相同，可以互相替换，不影响使用。</p>
@@ -994,28 +1017,24 @@ private String shiyanlou;</code></pre><h2 id="模板引擎"><a href="#模板引�
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/04/05/Java/RocketMQ/">
+                <a href="/2019/04/05/Java/maven/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="RocketMQ">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Maven 总结">
                         
-                        <span class="card-title">RocketMQ</span>
+                        <span class="card-title">Maven 总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            title: RocketMQ
+                            Maven的使用与学习总结
 
 
-安装这个安装还是特别容易的，下载对应程序，配置参数，启动，和Tomcat差不多
-遇到的问题:
-
-网卡绑定错误
-
-虚拟机测试很容易遇到这个问题，手动设置ip解决
-RocketMQ中broker配置brokc
+basePOM 项目对象模型
+构建生命周期：包含三个标准生命周期，clean default site，每个生命周期都包含若干个阶段，执行某个阶段的时候，该阶段之前的其它阶段都会被执行
+仓库：在 Maven 
                         
                     </div>
                     <div class="publish-info">
@@ -1037,12 +1056,12 @@ RocketMQ中broker配置brokc
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/note/">
-                        <span class="chip bg-color">note</span>
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
                     </a>
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
+                    <a href="/tags/Note/">
+                        <span class="chip bg-color">Note</span>
                     </a>
                     
                 </div>
@@ -1056,24 +1075,22 @@ RocketMQ中broker配置brokc
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/04/05/Java/maven/">
+                <a href="/2019/04/05/JavaScript/G2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Maven">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="G2">
                         
-                        <span class="card-title">Maven</span>
+                        <span class="card-title">G2</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Maven的使用与学习总结
+                            G2，一种全新的画图工具，有自己的一套设计语言
 
 
-basePOM 项目对象模型
-构建生命周期：包含三个标准生命周期，clean default site，每个生命周期都包含若干个阶段，执行某个阶段的时候，该阶段之前的其它阶段都会被执行
-仓库：在 Maven 
+基础Chart 对象和 View 对象G2 的图表可以由多个视图 View 构成，同时各个视图可以拥有各自的数据源，即支持异构数据。在结构上，视图和 chart 相同，拥有自己独立的数据源
                         
                     </div>
                     <div class="publish-info">
@@ -1084,8 +1101,8 @@ basePOM 项目对象模型
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Java/" class="post-category">
-                                    Java
+                            <a href="/categories/javascript/" class="post-category">
+                                    javascript
                                 </a>
                             
                             
@@ -1099,8 +1116,8 @@ basePOM 项目对象模型
                         <span class="chip bg-color">note</span>
                     </a>
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
+                    <a href="/tags/javascript/">
+                        <span class="chip bg-color">javascript</span>
                     </a>
                     
                 </div>
@@ -1246,7 +1263,7 @@ basePOM 项目对象模型
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

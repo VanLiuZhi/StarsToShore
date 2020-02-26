@@ -405,21 +405,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-11-30
+                    2020-01-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    367
+                    455
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 				
@@ -438,8 +438,12 @@
                 <p>Gunicorn ‘Green Unicorn’ is a Python WSGI HTTP Server for UNIX. It’s a pre-fork worker model. The Gunicorn server is broadly compatible with various web frameworks, simply implemented, light on server resources, and fairly speedy.</p>
 <a id="more"></a>
 
-<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><pre><code>gunicorn -w 2 --threads=4 application:app -b localhost:8080</code></pre><p>-w 指启动的进程数量如2</p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><pre><code>gunicorn -w 2 --threads=4 application:app -b localhost:8080
+
+gunicorn -c HttpTest/gunicorn.py HttpTest.wsgi:application 指定配置文件</code></pre><p>-w 指启动的进程数量如2</p>
 <p><code>ps -ef|grep python</code> 可以看到python共有3个进程，其中一个主进程和两个work进程（两个work进程是master的子进程）</p>
+<p>注意，线程配置<br>threads = 100 </p>
+<p>假如用sync模式，线程数不能不设置，否则就是1，即分发到每个工作进程的线程只能有1，一定要配，如果是其它模式，协程和io多路复用都只需要1个线程，配置无用</p>
 <p>gunicorn 工作模式</p>
 <ul>
 <li>sync 默认使用同步阻塞的网络模型（-k sync）</li>
@@ -983,24 +987,21 @@ urlpatterns <span class="token operator">+=</span> staticfiles_urlpatterns<span 
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2018/10/22/Python/Flask/">
+                <a href="/2018/10/22/Python/Django/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Flask 框架学习笔记">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Django 框架学习笔记">
                         
-                        <span class="card-title">Flask 框架学习笔记</span>
+                        <span class="card-title">Django 框架学习笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Flask框架学习笔记
-Flask 也是Python web 开发中很重要的框架，相比Django来说，它体现在一个“微型”上，只提供核心功能，其余功能由模块来扩展。拥有很强大的灵活性，通过核心来不断的扩展实现需求。
-
-
-Flask
-关于扩
+                            django学习笔记 🎉 🎉
+对文档阅读的大致补充，框架拥有功能的概述，详细内容查阅文档。
+在使用前后端分离的项目中，模版相关的内容基本没什么用了，对于Django如果不是快速开发的应用，基本也不用它提供的功能（认证，表单等），使用较多
                         
                     </div>
                     <div class="publish-info">
@@ -1011,8 +1012,8 @@ Flask
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/python%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    python编程
+                            <a href="/categories/Python%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    Python编程
                                 </a>
                             
                             
@@ -1022,16 +1023,16 @@ Flask
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/note/">
-                        <span class="chip bg-color">note</span>
+                    <a href="/tags/Note/">
+                        <span class="chip bg-color">Note</span>
                     </a>
                     
-                    <a href="/tags/framework/">
-                        <span class="chip bg-color">framework</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
                     </a>
                     
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
+                    <a href="/tags/FrameWork/">
+                        <span class="chip bg-color">FrameWork</span>
                     </a>
                     
                 </div>
@@ -1045,28 +1046,20 @@ Flask
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/10/22/Python/patter/">
+                <a href="/2018/10/22/Python/virtualenv/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="python-patter 相关设计模式">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="python-virtualenv 虚拟环境使用总结">
                         
-                        <span class="card-title">python-patter 相关设计模式</span>
+                        <span class="card-title">python-virtualenv 虚拟环境使用总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Python常见设计模式总结
-
-
-Borg 模式这个模式创建的实例，属性都是共享的
-
-def borg(cls):
-    cls._state = {}
-    orig_init = cls.__init__
-
-    def new_
+                            python 虚拟环境总结，总有一款适合你
+使用虚拟环境是很有必要的，另外在windows和Linux上还是有区别的，windows上的支持要差些，我用过的虚拟环境太多了，和IDE的配合也很熟练了，总结下来虚拟环境还是只能用来创建运行环境，
                         
                     </div>
                     <div class="publish-info">
@@ -1239,7 +1232,7 @@ def borg(cls):
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

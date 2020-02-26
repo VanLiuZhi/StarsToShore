@@ -405,21 +405,21 @@ each( )">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-11-30
+                    2020-01-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 				
@@ -478,6 +478,19 @@ p标签原内容和执行结果同上。</code></pre><p>find（）方法 由给�
 <h2 id="scroll"><a href="#scroll" class="headerlink" title="scroll()"></a>scroll()</h2><p>dom调用，可以在滚动条滚动的时候触发，只要有滚动就触发。这里注意如果逻辑涉及到滚动的数值判断，使用比较不要使用相等，因为滚动很快，相关的判断不一定每次执行到。</p>
 <h2 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h2><p>直接写在dom上，相当于 <code>style : dom.css('color', 'red')</code></p>
 <p>hasClass()   addClass()   removClass()   对dom类的控制</p>
+<h2 id="js拼接字符串，传递对象"><a href="#js拼接字符串，传递对象" class="headerlink" title="js拼接字符串，传递对象"></a>js拼接字符串，传递对象</h2><p>在JS中拼接html字符串，遇到的坑往往是由书写格式引起的。<br>注意以下几点：</p>
+<p>单双引号需嵌套使用；<br>传入 JSON 对象需要使用 JSON.stringify() 序列化为一个 JSON 字符串，并且更需要注意单双引号嵌套问题。<br>示例：</p>
+<pre class="line-numbers language-html"><code class="language-html">let html = "";
+for(var i=0;i&lt;data.length;i++){
+    html += '<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>tr</span><span class="token punctuation">></span></span>'+
+            '<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">></span></span>'+ data[i].appName +'<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">></span></span>'+
+            '<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">></span></span>'+ '&lt;button type="button" onclick="edit('+JSON.stringify(data[i]).replace(/\"/g,"'")+')">按钮1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>'+'<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">></span></span>'+
+            '<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">></span></span>'+ "<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>button<span class="token punctuation">'</span></span> <span class="token attr-name">onclick</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>del(<span class="token punctuation">"</span>+JSON.stringify(data[i])+<span class="token punctuation">"</span>)<span class="token punctuation">'</span></span><span class="token punctuation">></span></span>按钮2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>"+'<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">></span></span>'+
+            +'<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>tr</span><span class="token punctuation">></span></span>'
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上述代码中，使用了两种不同的引号嵌套格式。按钮1外层使用单引号，因此需要将JSON字符串中所有双引号转化成单引号，比较繁琐。从语法角度考虑，JavaScript 字符串与 JSON 字符串的最大区别在于，JSON 字符串必须使用双引号（单引号会导致语法错误），因此不推荐此写法。</p>
+<p>推荐第二种写法，直接在外层嵌套双引号，无需进行额外操作</p>
+<pre class="line-numbers language-js"><code class="language-js">htmlstr <span class="token operator">+</span><span class="token operator">=</span> <span class="token string">"&lt;a class='opt ib upd' href="</span> <span class="token operator">+</span> <span class="token string">'javascript:void(0);'</span> <span class="token operator">+</span> <span class="token string">" onclick='updateGetData("</span> <span class="token operator">+</span> JSON<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>useData<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">")'>修改&lt;/a>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -997,24 +1010,20 @@ p标签原内容和执行结果同上。</code></pre><p>find（）方法 由给�
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2018/10/22/JavaScript/Vue/">
+                <a href="/2018/10/22/MongoDB/MongoEngine/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Vue 渐进式前端框架">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="MongoEngine 官方文档学习笔记">
                         
-                        <span class="card-title">Vue 渐进式前端框架</span>
+                        <span class="card-title">MongoEngine 官方文档学习笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Vue是MVVM框架，一个构建数据驱动的 web 界面的渐进式框架。Vue.js 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合的视图组件。它不仅易于上手，还便于与第三方库或既有项目整合。
-
-
-Vue一个不错的“简书”入门
-
-基
+                            文档http://docs.mongoengine.org/index.htmlMongoEngine是Python操作MongoDB的ORM封装，可以看到很多ORM框架的影子，比如Django的ORM。底层调用了pymongo。
+基本用法
                         
                     </div>
                     <div class="publish-info">
@@ -1025,8 +1034,8 @@ Vue一个不错的“简书”入门
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/javascript/" class="post-category">
-                                    javascript
+                            <a href="/categories/database/" class="post-category">
+                                    database
                                 </a>
                             
                             
@@ -1040,16 +1049,12 @@ Vue一个不错的“简书”入门
                         <span class="chip bg-color">note</span>
                     </a>
                     
-                    <a href="/tags/javascript/">
-                        <span class="chip bg-color">javascript</span>
+                    <a href="/tags/database/">
+                        <span class="chip bg-color">database</span>
                     </a>
                     
-                    <a href="/tags/framework/">
-                        <span class="chip bg-color">framework</span>
-                    </a>
-                    
-                    <a href="/tags/Vue/">
-                        <span class="chip bg-color">Vue</span>
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
                     </a>
                     
                 </div>
@@ -1063,25 +1068,23 @@ Vue一个不错的“简书”入门
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/10/22/JavaScript/element-UI/">
+                <a href="/2018/10/22/Locust/base/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="element-UI 前端 Vue UI 组件">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Locust测试工具">
                         
-                        <span class="card-title">element-UI 前端 Vue UI 组件</span>
+                        <span class="card-title">Locust测试工具</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            饿了么前端团队出品的Vue UI框架
+                            locust 是一个简单易用的测试工具。
+官方文档：https://docs.locust.io/en/stable/what-is-locust.html
 
 
-from rulesfrom rules 是表单组件中用于在表单验证规则的属性，把rules绑定给一个对象，对象的属性即为需要做验证的字段，属性值为验证规则
-
-rules: {
-type: [{ r
+文件描述符限制如果做高并发测试，操作系统会限制一个进程能够创建的文件描述符上限
                         
                     </div>
                     <div class="publish-info">
@@ -1092,8 +1095,8 @@ type: [{ r
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/javascript/" class="post-category">
-                                    javascript
+                            <a href="/categories/web%E5%BC%80%E5%8F%91/" class="post-category">
+                                    web开发
                                 </a>
                             
                             
@@ -1103,16 +1106,12 @@ type: [{ r
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/javascript/">
-                        <span class="chip bg-color">javascript</span>
+                    <a href="/tags/web/">
+                        <span class="chip bg-color">web</span>
                     </a>
                     
-                    <a href="/tags/framework/">
-                        <span class="chip bg-color">framework</span>
-                    </a>
-                    
-                    <a href="/tags/Vue/">
-                        <span class="chip bg-color">Vue</span>
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
                     </a>
                     
                 </div>
@@ -1258,7 +1257,7 @@ type: [{ r
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

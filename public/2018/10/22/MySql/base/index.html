@@ -411,7 +411,7 @@ sho">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-11-30
+                    2019-12-27
                 </div>
                 
 
@@ -547,7 +547,6 @@ collation-server=utf8_general_ci<span aria-hidden="true" class="line-numbers-row
 <p>(1) 显式提交<br>用COMMIT命令直接完成的提交为显式提交。其格式为：<br>SQL&gt;COMMIT；</p>
 <p>(2) 隐式提交<br>用SQL命令间接完成的提交为隐式提交。这些命令是：<br>ALTER，AUDIT，COMMENT，CONNECT，CREATE，DISCONNECT，DROP，<br>EXIT，GRANT，NOAUDIT，QUIT，REVOKE，RENAME。</p>
 <p>(3) 自动提交<br>若把AUTOCOMMIT设置为ON，则在插入、修改、删除语句执行后，<br>系统将自动进行提交，这就是自动提交。其格式为：<br>SQL&gt;SET AUTOCOMMIT ON；</p>
-<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p>共享锁，排它锁，意向锁</p>
 <h2 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h2><p>SELECT @@tx_isolation 查看数据库隔离级别，版本不一致命令也不同，8.0 为 select @@transaction_isolation</p>
 <p>start transaction;<br>update abc ts set ts.name=’abc’ where ts.id=’1’;</p>
 <p>ACID 原子性 一致性 隔离性 持久性</p>
@@ -1091,20 +1090,23 @@ collation-server=utf8_general_ci<span aria-hidden="true" class="line-numbers-row
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2018/10/22/MongoDB/MongoEngine/">
+                <a href="/2018/10/22/MySql/sqlAlchemy-query/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="MongoEngine 官方文档学习笔记">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="sqlAlchemy-query 常见操作总结">
                         
-                        <span class="card-title">MongoEngine 官方文档学习笔记</span>
+                        <span class="card-title">sqlAlchemy-query 常见操作总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            文档http://docs.mongoengine.org/index.htmlMongoEngine是Python操作MongoDB的ORM封装，可以看到很多ORM框架的影子，比如Django的ORM。底层调用了pymongo。
-基本用法
+                            MySQL 的 Python 版 ORM
+
+
+sqlAlchemy 数据库操作sqlAlchemy提供了数据库的很多封装
+模型创建模型需要继承 db.Model ，db.Colum类描述table的字段，__tablename__ 描述ta
                         
                     </div>
                     <div class="publish-info">
@@ -1130,12 +1132,12 @@ collation-server=utf8_general_ci<span aria-hidden="true" class="line-numbers-row
                         <span class="chip bg-color">note</span>
                     </a>
                     
-                    <a href="/tags/python/">
-                        <span class="chip bg-color">python</span>
-                    </a>
-                    
                     <a href="/tags/database/">
                         <span class="chip bg-color">database</span>
+                    </a>
+                    
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
                     </a>
                     
                 </div>
@@ -1149,23 +1151,22 @@ collation-server=utf8_general_ci<span aria-hidden="true" class="line-numbers-row
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/10/22/MySql/install-problem/">
+                <a href="/2018/10/22/Other/base/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="MySQL install-problem">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="计算机知识补充">
                         
-                        <span class="card-title">MySQL install-problem</span>
+                        <span class="card-title">计算机知识补充</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            安装MySQL遇到的问题
+                            计算机知识补充
 
 
-安装遇到的问题安装软件总会遇到很多问题，很多问题仅在当时情况下出现，其实解决的思路都是大致的，多看报错和官方文档。
-mysql.sock 无法被创建mysql 的链接需要借助这个套接字，如果不小心删除了，会导致
+为什么不要用记事本来写代码？可能有人会怪windows怎么那么傻，一个\n不就可以了，为什么要用\r\n呢，给我们造成了多大的麻烦。其实这也不能怪windows。使用\r\n的历史可以追溯到遥远的19世纪。 那时候发明的
                         
                     </div>
                     <div class="publish-info">
@@ -1176,8 +1177,8 @@ mysql.sock 无法被创建mysql 的链接需要借助这个套接字，如果不
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/database/" class="post-category">
-                                    database
+                            <a href="/categories/other/" class="post-category">
+                                    other
                                 </a>
                             
                             
@@ -1187,12 +1188,12 @@ mysql.sock 无法被创建mysql 的链接需要借助这个套接字，如果不
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/note/">
-                        <span class="chip bg-color">note</span>
+                    <a href="/tags/learn/">
+                        <span class="chip bg-color">learn</span>
                     </a>
                     
-                    <a href="/tags/database/">
-                        <span class="chip bg-color">database</span>
+                    <a href="/tags/other/">
+                        <span class="chip bg-color">other</span>
                     </a>
                     
                 </div>
@@ -1338,7 +1339,7 @@ mysql.sock 无法被创建mysql 的链接需要借助这个套接字，如果不
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

@@ -401,21 +401,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-12-06
+                    2020-02-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    17.6k
+                    22.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    65 分
+                    82 分
                 </div>
                 
 				
@@ -432,6 +432,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>Java 学习笔记，Java是一门面向对象编程语言，不仅吸收了C++语言的各种优点，还摒弃了C++里难以理解的多继承、指针等概念，因此Java语言具有功能强大和简单易用两个特征。Java语言作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程</p>
+<p><img src="/images/Java/Java-base.jpg" alt="image"></p>
 <a id="more"></a>
 
 <h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><p>大部分都是通用的，或者是设计模式，只是第一次接触难免有些生疏晦涩。</p>
@@ -442,6 +443,34 @@
 <p>JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问，它由一组用Java语言编写的类和接口组成。JDBC提供了一种基准，据此可以构建更高级的工具和接口，使数据库开发人员能够编写数据库应用程序，同时，JDBC也是个商标名。</p>
 <p>JPA是Java Persistence API的简称，中文名Java持久层API，是JDK 5.0注解或XML描述对象－关系表的映射关系，并将运行期的实体对象持久化到数据库中。<br>Sun引入新的JPA ORM规范出于两个原因：其一，简化现有Java EE和Java SE应用开发工作；其二，Sun希望整合ORM技术，实现天下归一。</p>
 <p>JNDI(Java Naming and Directory Interface,Java命名和目录接口)是SUN公司提供的一种标准的Java命名系统接口，JNDI提供统一的客户端API，通过不同的访问提供者接口JNDI服务供应接口(SPI)的实现，由管理者将JNDI API映射为特定的命名服务和目录系统，使得Java应用程序可以和这些命名服务和目录服务之间进行交互。</p>
+<ul>
+<li><p>PO：persistent object 持久对象<br>1 ．有时也被称为Data对象，对应数据库中的entity，可以简单认为一个PO对应数据库中的一条记录<br>2 ．在hibernate持久化框架中与insert/delet操作密切相关<br>3 ．PO中不应该包含任何对数据库的操作</p>
+</li>
+<li><p>POJO ：plain ordinary java object 无规则简单java对象<br>一个中间对象，可以转化为PO、DTO、VO</p>
+</li>
+</ul>
+<p>1 ．POJO持久化之后==〉PO<br>（在运行期，由Hibernate中的cglib动态把POJO转换为PO，PO相对于POJO会增加一些用来管理数据库entity状态的属性和方法。PO对于programmer来说完全透明，由于是运行期生成PO，所以可以支持增量编译，增量调试）<br>2 ．POJO传输过程中==〉DTO<br>3 ．POJO用作表示层==〉VO</p>
+<p>PO 和VO都应该属于它</p>
+<ul>
+<li>BO：business object 业务对象<br>业务对象主要作用是把业务逻辑封装为一个对象。这个对象可以包括一个或多个其它的对象</li>
+</ul>
+<p>比如一个简历，有教育经历、工作经历、社会关系等等。我们可以把教育经历对应一个PO，工作经历对应一个PO，社会关系对应一个PO<br>建立一个对应简历的BO对象处理简历，每个BO包含这些PO</p>
+<p>这样处理业务逻辑时，我们就可以针对BO去处理<br>封装业务逻辑为一个对象（可以包括多个PO，通常需要将BO转化成PO，才能进行数据的持久化，反之，从DB中得到的PO，需要转化成BO才能在业务层使用）</p>
+<p>关于BO主要有三种概念</p>
+<p>1 、只包含业务对象的属性<br>2 、只包含业务方法<br>3 、两者都包含</p>
+<p>在实际使用中，认为哪一种概念正确并不重要，关键是实际应用中适合自己项目的需要</p>
+<ul>
+<li>VO：value object 值对象 / view object 表现层对象</li>
+</ul>
+<p>1 ．主要对应页面显示（web页面/swt、swing界面）的数据对象<br>2 ．可以和表对应，也可以不，这根据业务的需要</p>
+<ul>
+<li>DTO（TO）：Data Transfer Object 数据传输对象</li>
+</ul>
+<p>1 ．用在需要跨进程或远程传输时，它不应该包含业务逻辑<br>2 ．比如一张表有100个字段，那么对应的PO就有100个属性（大多数情况下，DTO内的数据来自多个表）。但view层只需显示10个字段，没有必要把整个PO对象传递到client，这时我们就可以用只有这10个属性的DTO来传输数据到client，这样也不会暴露server端表结构。到达客户端以后，如果用这个对象来对应界面显示，那此时它的身份就转为VO</p>
+<ul>
+<li>DAO：data access object数据访问对象</li>
+</ul>
+<p>1 ．主要用来封装对DB的访问（CRUD操作）<br>2 ．通过接收Business层的数据，把POJO持久化为PO</p>
 <h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>配置环境变量，保证 java javac java -version 都能输出正确信息</p>
 <h2 id="classpath路径"><a href="#classpath路径" class="headerlink" title="classpath路径"></a>classpath路径</h2><p>Java项目中classpath路径<br>1、src不是classpath, WEB-INF/classes、lib、resources才是classpath，WEB-INF/是资源目录, 客户端不能直接访问。</p>
 <p>2、WEB-INF/classes目录存放src目录java文件编译之后的class文件，xml、properties等资源配置文件，这是一个定位资源的入口。</p>
@@ -510,7 +539,7 @@ Integer j <span class="token operator">=</span> <span class="token keyword">new<
 <p>原始类型和封装类型的行为完全不同，并且它们具有不同的语义。引用类型和原始类型具有不同的特征和用法，它们包括：大小和速度问题，这种类型以哪种类型的数据结构存储，当引用类型和原始类型用作某个类的实例数据时所指定的缺省值。对象引用实例变量的缺省值为null，而原始类型实例变量的缺省值与它们的类型有关。</p>
 <p>int(原始类型)   一般做为数值参数就够了<br>integer (封装类型)  一般做类型转换的时候用的较</p>
 <h3 id="大数值"><a href="#大数值" class="headerlink" title="大数值"></a>大数值</h3><p>java.math中的 <code>BigInteger</code> 和 <code>BigDecimal</code> 可以处理包含任意长度数字序列的数值<br>BigInteger 任意精度的整数运算<br>BigDecimal 任意精度的浮点数运算</p>
-<h3 id="equals"><a href="#equals" class="headerlink" title="equals"></a>equals</h3><p>别名对象, 可以强制类型转换<br>equals()<br>直接常量可以添加标识符，使表达更加清晰<br>类型转换操作符 long i = (long) j  将整形j转换成长整形并赋值给i，转换总是截尾，要想四舍五入需要使用round库<br>提升：对基本类型执行按位运算或算术运算，只要类型比int小（比如char,byte,short），那么在运算之前，会自动转换成int。较大的数据类型决定了结果，比如double和float相乘，结果是double<br>sizeof：c,c++中用来计算数据占的字节，这导致移植代码很头疼，不同的处理器对数据存储所占的字节是不一样的，而Java不会这样，它的数据类型在所有机器上都是一样的</p>
+<h3 id="算术运算的强制转换"><a href="#算术运算的强制转换" class="headerlink" title="算术运算的强制转换"></a>算术运算的强制转换</h3><p>直接常量可以添加标识符，使表达更加清晰<br>类型转换操作符 long i = (long) j  将整形j转换成长整形并赋值给i，转换总是截尾，要想四舍五入需要使用round库<br>提升：对基本类型执行按位运算或算术运算，只要类型比int小（比如char,byte,short），那么在运算之前，会自动转换成int。较大的数据类型决定了结果，比如double和float相乘，结果是double<br>sizeof：c,c++中用来计算数据占的字节，这导致移植代码很头疼，不同的处理器对数据存储所占的字节是不一样的，而Java不会这样，它的数据类型在所有机器上都是一样的</p>
 <h3 id="初始化与清理"><a href="#初始化与清理" class="headerlink" title="初始化与清理"></a>初始化与清理</h3><p>构造器：构造器的命名和类名相同，可以带访问修饰符，不能有返回值。</p>
 <p>方法重载：构造器也可以方法重载，方法重载要求函数名相同，参数不一样，参数的顺序不一样也是方法重载，但是一般不建议这么做。一般动态语言不需要方法重载。方法重载一定要写的明确，这样编译器在调用方法的时候才知道是调用哪个方法。</p>
 <p>缺省构造器：构造器可以不提供，编译器默认创建一个，这个时候构造器没做任何事情</p>
@@ -520,11 +549,65 @@ Integer j <span class="token operator">=</span> <span class="token keyword">new<
 <li>对象可能不被垃圾回收 </li>
 <li>垃圾回收并不等于析构</li>
 </ol>
-<h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3><p>将一个类的定义放在另一个类的定义中，称为内部类（暂时跳过这一章节）</p>
-<p>this的常见用法：调用构造器，直接this()。调用方法，指代当前调用对象。由于大括号内封闭作用域，如果形参定义了和对象成员同名的属性，直接使用该名称无法取到对象成员，此时应该用this关键字。</p>
+<h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3><p>内部类是指在一个外部类的内部再定义一个类。内部类作为外部类的一个成员，并且依附于外部类而存在的。内部类可为静态，可用protected和private修饰（而外部类只能使用public和缺省的包访问权限）。内部类主要有以下几类：成员内部类、局部内部类、静态内部类、匿名内部类</p>
+<p>内部类的共性:</p>
+<ol>
+<li><p>内部类仍然是一个独立的类，在编译之后内部类会被编译成独立的.class文件，但是前面冠以外部类的类名和$符号</p>
+</li>
+<li><p>内部类不能用普通的方式访问</p>
+</li>
+<li><p>内部类声明成静态的，就不能随便的访问外部类的成员变量了，此时内部类只能访问外部类的静态成员变量</p>
+</li>
+<li><p>外部类不能直接访问内部类的的成员，但可以通过内部类对象来访问</p>
+</li>
+</ol>
+<p>内部类是外部类的一个成员，因此内部类可以自由地访问外部类的成员变量，无论是否是private的。<br>因为当某个外围类的对象创建内部类的对象时，此内部类会捕获一个隐式引用，它引用了实例化该内部对象的外围类对象。通过这个指针，可以访问外围类对象的全部状态，主要是通过以下几步做到的:</p>
+<p>1 编译器自动为内部类添加一个成员变量，这个成员变量的类型和外部类的类型相同， 这个成员变量就是指向外部类对象的引用</p>
+<p>2 编译器自动为内部类的构造方法添加一个参数，参数的类型是外部类的类型， 在构造方法内部使用这个参数为1中添加的成员变量赋值</p>
+<p>3 在调用内部类的构造函数初始化内部类对象时，会默认传入外部类的引用</p>
+<p>那静态内部类与普通内部类有什么区别呢？<br>问得好，区别如下：</p>
+<p>1 静态内部类不持有外部类的引用 在普通内部类中，我们可以直接访问外部类的属性、方法，即使是private类型也可以访问，这是因为内部类持有一个外部类的引用，可以自由访问。而静态内部类，则只可以访问外部类的静态方法和静态属性（如果是private权限也能访问，这是由其代码位置所决定的），其他则不能访问。</p>
+<p>2 静态内部类不依赖外部类 普通内部类与外部类之间是相互依赖的关系，内部类实例不能脱离外部类实例，也就是说它们会同生同死，一起声明，一起被垃圾回收器回收。而静态内部类是可以独立存在的，即使外部类消亡了，静态内部类还是可以存在的。</p>
+<p>3 普通内部类不能声明static的方法和变量 普通内部类不能声明static的方法和变量，注意这里说的是变量，常量（也就是final static修饰的属性）还是可以的，而静态内部类形似外部类，没有任何限制。</p>
+<p>为什么普通内部类不能有静态变量呢？</p>
+<p>1 成员内部类 之所以叫做成员 就是说他是类实例的一部分 而不是类的一部分</p>
+<p>2 结构上来说 他和你声明的成员变量是一样的地位 一个特殊的成员变量 而静态的变量是类的一部分和实例无关</p>
+<p>3 你若声明一个成员内部类 让他成为主类的实例一部分 然后又想在内部类声明和实例无关的静态的东西 你让JVM情何以堪啊</p>
+<p>4 若想在内部类内声明静态字段 就必须将其内部类本身声明为静态</p>
+<p>例子</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> interior<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Interior</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> Integer a <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+
+    Test test<span class="token punctuation">;</span>
+
+    <span class="token function">Interior</span><span class="token punctuation">(</span>Integer a<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>a <span class="token operator">=</span> a<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">func1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Interior<span class="token punctuation">.</span><span class="token keyword">this</span><span class="token punctuation">.</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Test test <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        test<span class="token punctuation">.</span><span class="token function">func1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Interior integer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Interior</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//        Test test = new Test(); 内部类依托于当前实例，不能在这里创建实例，如果是静态内部类就可以了</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><p>类之间的关系: 继承，接口实现，依赖，聚合，关联，直接关联</p>
 <p>方法签名: 只有方法名，参数类型才能描述方法签名，不包含返回类型，所以不能定义两个返回类型不同方法名参数类型相同的方法</p>
 <p>在构造器中调用this()将调用另外的构造器，根据参数来决定</p>
+<p>this的常见用法：调用构造器，直接this()。调用方法，指代当前调用对象。由于大括号内封闭作用域，如果形参定义了和对象成员同名的属性，直接使用该名称无法取到对象成员，此时应该用this关键字。</p>
 <p>静态块的初始化</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> nextId<span class="token punctuation">;</span>
 
@@ -541,13 +624,13 @@ Integer j <span class="token operator">=</span> <span class="token keyword">new<
 <p>理解编译单元，默认包，friendly权限是java的默认权限，也称作包（package）访问权限</p>
 <p>public private</p>
 <ol>
-<li><p>默认包：同一个包下的两个类，可以做到A类访问B类的未修饰方法，如果C类和A类不属于同一个包，那么C类的方法要修饰为public，A类才能访问到。这种默认的机制保护了包下的类，但是最好做修饰，在IDEA中，你不对类的方法做修饰，会有告警级别的提示，因为默认的包访问权限可以方便包，对不属于同一个包的访问做保护，但是最好考虑清楚，然后合理运用private。</p>
+<li><p>默认包：同一个包下的两个类，可以做到A类访问B类的未修饰方法，如果C类和A类不属于同一个包，那么C类的方法要修饰为public，A类才能访问到。这种默认的机制保护了包下的类，但是最好做修饰，在IDEA中，你不对类的方法做修饰，会有告警级别的提示，因为默认的包访问权限可以访问包，对不属于同一个包的访问做保护，但是最好考虑清楚，然后合理运用private。</p>
 </li>
 <li><p>另外即使使用了private修饰，仍然可以在当前类定义新的方法去访问private，所有不能因为在类中某个对象的引用是private，就认为其他的对象无法拥有该对象的public引用</p>
 </li>
 </ol>
 <p>protected: 受保护的</p>
-<p>一个类继承了另一个包中的类，那么唯一可访问的成员就是源包的public成员。（如果继承在同一个包中，就可以访问所有的拥有包访问权限的成员）。基类的创建者希望某个成员，把他的访问权限给予派生类而不是所有类，这时候就可以使用protected，protected也提供包访问权限，同意包内的其它类可以访问protected元素。这是为了在拥有包访问权限下，为了让跨包继承类也能访问的一种做法，否则就要用public来修饰。</p>
+<p>一个类继承了另一个包中的类，那么唯一可访问的成员就是源包的public成员。（如果继承在同一个包中，就可以访问所有的拥有包访问权限的成员）。基类的创建者希望某个成员，把他的访问权限给予派生类而不是所有类，这时候就可以使用protected，protected也提供包访问权限，同一包内的其它类可以访问protected元素。这是为了在拥有包访问权限下，为了让跨包继承类也能访问的一种做法，否则就要用public来修饰。</p>
 <p><code>访问权限的控制常被称为是具体实现的隐藏</code></p>
 <p>类的访问权限：一个包下的类，要遵守他的文件名定义规则，然后只能有一个public类，可以把public去掉，这样该类就只有包访问权限，其它包即使导入他，也不能访问，通过也很少这么做。另外当不用public修饰类时，类命可以不和文件名一致。</p>
 <p>再次强调，类前面不加修饰，权限就是包访问权限，当前包内的其它类可以访问，跨包不行。</p>
@@ -618,8 +701,7 @@ Integer j <span class="token operator">=</span> <span class="token keyword">new<
 <li>修饰方法，防止方法被继承类修改。</li>
 <li>类修饰，那么该类无法被继承。类方法都会隐式的指向final。</li>
 </ol>
-<p>private 和 final: 类中的private方法都隐式的指定为final。可以对private添加final，但这并不能给该方法增加任何额外的意义。 “覆盖”只有在某方法是基类的接口的一部分才会出现，即<code>必须能将一个对象向上转型</code>为它的基本类型并调用相同的方法。如果某方法为private，它就不是基类接口的一部分，用private修饰的方法在基类中同名方法不是方法覆盖，而是生成一个新的方法。</p>
-<p>static、final、static final的区别(转自：<a href="http://blog.csdn.net/qq1623267754/article/details/36190715" target="_blank" rel="noopener">http://blog.csdn.net/qq1623267754/article/details/36190715</a>)</p>
+<p>private 和 final: 类中的private方法都隐式的指定为final。可以对private添加final，但这并不能给该方法增加任何额外的意义。 “覆盖”只有在某方法是基类的接口的一部分才会出现，即<code>必须能将一个对象向上转型</code>为它的基本类型并调用相同的方法。如果某方法为private，它就不是基类接口的一部分，用private修饰的方法在基类中同名方法不是方法覆盖，而是生成一个新的方法。<br>static、final、static final的区别(转自：<a href="http://blog.csdn.net/qq1623267754/article/details/36190715" target="_blank" rel="noopener">http://blog.csdn.net/qq1623267754/article/details/36190715</a>)</p>
 <ol>
 <li>final </li>
 </ol>
@@ -876,6 +958,92 @@ Integer j <span class="token operator">=</span> <span class="token keyword">new<
 <p>嵌套接口：接口可以嵌套在类中，可能这种运用有点少见，要知道可以这么做，遇到了可以来看看书</p>
 <p>接口特性：接口不能被实例化，可以声明接口类型的变量，接口可以包含常量</p>
 <p>在JavaSE8中，可以在接口中定义默认方法，default关键字修饰。接口的在实现的时候，默认方法可以不用覆盖</p>
+<p>特点:</p>
+<ol>
+<li>接口不能用于实例化对象。</li>
+<li>接口没有构造方法。</li>
+<li>接口中所有的方法必须是抽象方法。</li>
+<li>接口不能包含成员变量，除了 static 和 final 变量。</li>
+<li>接口不是被类继承了，而是要被类实现。</li>
+<li>接口支持多继承。</li>
+</ol>
+<ul>
+<li><p>接口并不是类，编写接口的方式和类很相似，但是它们属于不同的概念。类描述对象的属性和方法。接口则包含类要实现的方法。</p>
+</li>
+<li><p>除非实现接口的类是抽象类，否则该类要定义接口中的所有方法。</p>
+</li>
+<li><p>接口无法被实例化，但是可以被实现。一个实现接口的类，必须实现接口内所描述的所有方法，否则就必须声明为抽象类。另外，在 Java 中，接口类型可用来声明一个变量，他们可以成为一个空指针，或是被绑定在一个以此接口实现的对象。</p>
+</li>
+<li><p>接口中每一个方法也是隐式抽象的,接口中的方法会被隐式的指定为 public abstract（只能是 public abstract，其他修饰符都会报错）。</p>
+</li>
+<li><p>接口中可以含有变量，但是接口中的变量会被隐式的指定为 public static final 变量（并且只能是 public，用 private 修饰会报编译错误）。</p>
+</li>
+<li><p>接口中的方法是不能在接口中实现的，只能由实现接口的类来实现接口中的方法。</p>
+</li>
+</ul>
+<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>abstract 修饰抽象类或抽象方法</p>
+<p>特点:</p>
+<ol>
+<li>方法和类都可以被修饰为抽象</li>
+<li>只要类中有一个方法被修饰为抽象，这个类就必须加上抽象修饰</li>
+<li>抽象方法不能有方法体</li>
+<li>抽象类不能被实例化</li>
+<li>abstract interfact 可以修饰接口，不过其实从本质上来说接口就是抽象的，这么写不会报错，但是没意义(具体没考证过，不过没有这么写的，写了也不会报错)</li>
+<li>由于抽象类不能被实例化，它都是用来被继承的，但是它本身也有类的大多数功能，比如成员变量，自己的方法，构造函数等，抽象类的构造函数由子类去调用</li>
+<li>不能有抽象构造方法或抽象静态方法</li>
+</ol>
+<p>第6点举例</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> polymophIntface<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">BaoMa</span> <span class="token keyword">implements</span> <span class="token class-name">Car</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Integer price<span class="token punctuation">;</span>
+
+    <span class="token function">BaoMa</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> Integer price<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>price <span class="token operator">=</span> price<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">abstract</span> <span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Integer <span class="token function">getPrice</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> price<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">package</span> polymophIntface<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">QQCar</span> <span class="token keyword">extends</span> <span class="token class-name">BaoMa</span> <span class="token punctuation">{</span>
+    <span class="token function">QQCar</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> Integer price<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> price<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token comment" spellcheck="true">// 抽象类有构造函数，其实结合前面聊到的构造函数的东西，就能理解抽象类需要调用构造函数对成员变量赋值</span>
+        <span class="token comment" spellcheck="true">// 如果是无参构造器，当然就不需要子类去帮抽象类初始化了</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="接口和抽象类"><a href="#接口和抽象类" class="headerlink" title="接口和抽象类"></a>接口和抽象类</h2><ol>
+<li>抽象类中的方法可以有方法体，就是能实现方法的具体功能，但是接口中的方法不行。</li>
+<li>抽象类中的成员变量可以是各种类型的，而接口中的成员变量只能是 public static final 类型的。</li>
+<li>接口中不能含有静态代码块以及静态方法(用 static 修饰的方法)，而抽象类是可以有静态代码块和静态方法。</li>
+<li>一个类只能继承一个抽象类，而一个类却可以实现多个接口。</li>
+</ol>
+<blockquote><p>注：JDK 1.8 以后，接口里可以有静态方法和方法体了，静态方法直接用接口类名调用，也不需要实现</p>
+</blockquote>
+
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">static</span> String <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>java 8 以后还可以定义默认方法，不过这个默认方法要接口的实现类才可以调用</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">default</span> <span class="token keyword">void</span> <span class="token function">stu</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"stu"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h2 id="容器和基本对象"><a href="#容器和基本对象" class="headerlink" title="容器和基本对象"></a>容器和基本对象</h2><p>容器相关知识点</p>
 <h3 id="容器类-持有对象"><a href="#容器类-持有对象" class="headerlink" title="容器类(持有对象)"></a>容器类(持有对象)</h3><p>容器类是整个语言最重要的一部分，或者称为集合框架，记住，定义容器类的时候，最好使用泛型</p>
 <p>Java集合主要有两个接口派生而出：Collection和Map，这个两个接口是Java集合框架的根接口</p>
@@ -1331,6 +1499,249 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
 <p>(1).绝对路径：javac -classpath c:/junit3.8.1/junit.jar Xxx.java</p>
 <p>(2).相对路径：javac -classpath ../junit3.8.1/Junit.javr Xxx.java</p>
 <p>(3).系统变量：javac -classpath %CLASSPATH% Xxx.java (注意：%CLASSPATH%表示使用系统变量CLASSPATH的值进行查找，这里假设Junit.jar的路径就包含在CLASSPATH系统变量中)</p>
+<h2 id="Java中的代码块"><a href="#Java中的代码块" class="headerlink" title="Java中的代码块"></a>Java中的代码块</h2><p>Java中，静态代码块、构造代码块、构造函数、普通代码块，要记住和理解它们的执行顺序</p>
+<ol>
+<li>静态代码块</li>
+</ol>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">static</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"静态代码块"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>特点: 程序启动就执行，所以不能在方法，也不能访问普通变量，只能访问静态变量</p>
+<ol start="2">
+<li>构造代码块</li>
+</ol>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"构造代码块"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>执行时机，在对象被创建的时候就会执行一次，所以可以用来统计对象创建的次数，存在多个构造代码块，按顺序执行它们</p>
+<ol start="3">
+<li>构造函数</li>
+</ol>
+<p>这个就不展开说了</p>
+<ol start="4">
+<li>普通代码块</li>
+</ol>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通代码块"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>普通代码块和构造代码块的区别是，构造代码块是在类中定义的，而普通代码块是在方法体中定义的。且普通代码块的执行顺序和书写顺序一致</p>
+<ul>
+<li>执行顺序</li>
+</ul>
+<p><code>静态代码块&gt;构造代码块&gt;构造函数&gt;普通代码块</code></p>
+<p>对象的初始化顺序：</p>
+<p>首先执行父类静态的内容，父类静态的内容执行完毕后，接着去执行子类的静态的内容，当子类的静态内容执行完毕之后，再去看父类有没有构造代码块，如果有就执行父类的构造代码块，父类的构造代码块执行完毕，接着执行父类的构造方法；父类的构造方法执行完毕之后，它接着去看子类有没有构造代码块，如果有就执行子类的构造代码块。子类的构造代码块执行完毕再去执行子类的构造方法。</p>
+<p>总之一句话，静态代码块内容先执行，接着执行父类构造代码块和构造方法，然后执行子类构造代码块和构造方法。</p>
+<h2 id="jdk工具"><a href="#jdk工具" class="headerlink" title="jdk工具"></a>jdk工具</h2><table>
+<thead>
+<tr>
+<th>Command</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>appletviewer.exe</td>
+<td align="center">用于运行并浏览applet小程序。</td>
+</tr>
+<tr>
+<td>apt.exe</td>
+<td align="center">注解处理工具(AnnotationProcessingTool)，主要用于注解处理。</td>
+</tr>
+<tr>
+<td>extcheck.exe</td>
+<td align="center">扩展检测工具，主要用于检测指定jar文件与当前已安装的JavaSDK扩展之间是否存在版本冲突。</td>
+</tr>
+<tr>
+<td>idlj.exe</td>
+<td align="center">IDL转Java编译器(IDL-to-JavaCompiler)，用于为指定的IDL文件生成Java绑定。IDL意即接口定义语言(InterfaceDefinitionLanguage)。</td>
+</tr>
+<tr>
+<td>jabswitch.exe</td>
+<td align="center">Java访问桥开关(JavaAccessBridgeswitch)，用于启用/禁用Java访问桥。Java访问桥内置于Java7Update6及以上版本，主要为Windows系统平台提供一套访问Java应用的API。</td>
+</tr>
+<tr>
+<td>jar.exe</td>
+<td align="center">jar文件管理工具，主要用于打包压缩、解压jar文件。</td>
+</tr>
+<tr>
+<td>jarsigner.exe</td>
+<td align="center">jar密匙签名工具。</td>
+</tr>
+<tr>
+<td>java.exe</td>
+<td align="center">Java运行工具，用于运行.class字节码文件或.jar文件。</td>
+</tr>
+<tr>
+<td>javac.exe</td>
+<td align="center">Java编译工具(JavaCompiler)，用于编译Java源代码文件。</td>
+</tr>
+<tr>
+<td>javadoc.exe</td>
+<td align="center">Java文档工具，主要用于根据Java源代码中的注释信息生成HTML格式的API帮助文档。</td>
+</tr>
+<tr>
+<td>javafxpackager.exe</td>
+<td align="center">JavaFX包装器，用于执行与封装或签名JavaFX应用有关的任务。</td>
+</tr>
+<tr>
+<td>javah.exe</td>
+<td align="center">Java头文件工具，用于根据Java类生成C/C++头文件和源文件(主要用于JNI开发领域)。</td>
+</tr>
+<tr>
+<td>javap.exe</td>
+<td align="center">Java反编译工具，主要用于根据Java字节码文件反汇编为Java源代码文件。</td>
+</tr>
+<tr>
+<td>java-rmi.exe</td>
+<td align="center">Java远程方法调用(JavaRemoteMethodInvocation)工具，主要用于在客户机上调用远程服务器上的对象。</td>
+</tr>
+<tr>
+<td>javaw.exe</td>
+<td align="center">Java运行工具，用于运行.class字节码文件或.jar文件，但不会显示控制台输出信息，适用于运行图形化程序。</td>
+</tr>
+<tr>
+<td>javaws.exe</td>
+<td align="center">JavaWebStart，使您可以从Web下载和运行Java应用程序，下载、安装、运行、更新Java应用程序都非常简单方便。</td>
+</tr>
+<tr>
+<td>jcmd.exe</td>
+<td align="center">Java命令行(JavaCommand)，用于向正在运行的JVM发送诊断命令请求。</td>
+</tr>
+<tr>
+<td>jconsole.exe</td>
+<td align="center">图形化用户界面的监测工具，主要用于监测并显示运行于Java平台上的应用程序的性能和资源占用等信息。</td>
+</tr>
+<tr>
+<td>jdb.exe</td>
+<td align="center">Java调试工具(JavaDebugger)，主要用于对Java应用进行断点调试。</td>
+</tr>
+<tr>
+<td>jhat.exe</td>
+<td align="center">Java堆分析工具(JavaHeapAnalysisTool)，用于分析Java堆内存中的对象信息。</td>
+</tr>
+<tr>
+<td>jinfo.exe</td>
+<td align="center">Java配置信息工具(JavaConfigurationInformation)，用于打印指定Java进程、核心文件或远程调试服务器的配置信息。</td>
+</tr>
+<tr>
+<td>jmap.exe</td>
+<td align="center">Java内存映射工具(JavaMemoryMap)，主要用于打印指定Java进程、核心文件或远程调试服务器的共享对象内存映射或堆内存细节。</td>
+</tr>
+<tr>
+<td>jmc.exe</td>
+<td align="center">Java任务控制工具(JavaMissionControl)，主要用于HotSpotJVM的生产时间监测、分析、诊断。</td>
+</tr>
+<tr>
+<td>jps.exe</td>
+<td align="center">JVM进程状态工具(JVMProcessStatusTool)，用于显示目标系统上的HotSpotJVM的Java进程信息。</td>
+</tr>
+<tr>
+<td>jrunscript.exe</td>
+<td align="center">Java命令行脚本外壳工具(commandlinescriptshell)，主要用于解释执行javascript、groovy、ruby等脚本语言。</td>
+</tr>
+<tr>
+<td>jsadebugd.exe</td>
+<td align="center">Java可用性代理调试守护进程(JavaServiceabilityAgentDebugDaemon)，主要用于附加到指定的Java进程、核心文件，或充当一个调试服务器。</td>
+</tr>
+<tr>
+<td>jstack.exe</td>
+<td align="center">Java堆栈跟踪工具，主要用于打印指定Java进程、核心文件或远程调试服务器的Java线程的堆栈跟踪信息。</td>
+</tr>
+<tr>
+<td>jstat.exe</td>
+<td align="center">JVM统计监测工具(JVMStatisticsMonitoringTool)，主要用于监测并显示JVM的性能统计信息。</td>
+</tr>
+<tr>
+<td>jstatd.exe</td>
+<td align="center">jstatd(VMjstatdDaemon)工具是一个RMI服务器应用，用于监测HotSpotJVM的创建和终止，并提供一个接口，允许远程监测工具附加到运行于本地主机的JVM上。</td>
+</tr>
+<tr>
+<td>jvisualvm.exe</td>
+<td align="center">JVM监测、故障排除、分析工具，主要以图形化界面的方式提供运行于指定虚拟机的Java应用程序的详细信息。</td>
+</tr>
+<tr>
+<td>keytool.exe</td>
+<td align="center">密钥和证书管理工具，主要用于密钥和证书的创建、修改、删除等。</td>
+</tr>
+<tr>
+<td>kinit.exe</td>
+<td align="center">主要用于获取或缓存Kerberos协议的票据授权票据。</td>
+</tr>
+<tr>
+<td>klist.exe</td>
+<td align="center">允许用户查看本地凭据缓存和密钥表中的条目(用于Kerberos协议)。</td>
+</tr>
+<tr>
+<td>ktab.exe</td>
+<td align="center">Kerberos密钥表管理工具，允许用户管理存储于本地密钥表中的主要名称和服务密钥。</td>
+</tr>
+<tr>
+<td>native2ascii.exe</td>
+<td align="center">本地编码到ASCII编码的转换器(Native-to-ASCIIConverter)，用于”任意受支持的字符编码”和与之对应的”ASCII编码和(或)Unicode转义”之间的相互转换。</td>
+</tr>
+<tr>
+<td>orbd.exe</td>
+<td align="center">对象请求代理守护进程(ObjectRequestBrokerDaemon)，它使客户端能够透明地定位和调用位于CORBA环境的服务器上的持久对象。</td>
+</tr>
+<tr>
+<td>pack200.exe</td>
+<td align="center">JAR文件打包压缩工具，它可以利用Java类特有的结构，对普通JAR文件进行高效压缩，以便于能够更快地进行网络传输。</td>
+</tr>
+<tr>
+<td>packager.exe</td>
+<td align="center">这是微软提供的对象包装程序，用于对象安装包。</td>
+</tr>
+<tr>
+<td>policytool.exe</td>
+<td align="center">策略工具，用于管理用户策略文件(.java.policy)。</td>
+</tr>
+<tr>
+<td>rmic.exe</td>
+<td align="center">JavaRMI编译器，为使用JRMP或IIOP协议的远程对象生成stub、skeleton、和tie类，也用于生成OMGIDL。</td>
+</tr>
+<tr>
+<td>rmid.exe</td>
+<td align="center">JavaRMI激活系统守护进程，rmid启动激活系统守护进程，允许在虚拟机中注册或激活对象。</td>
+</tr>
+<tr>
+<td>rmiregistry.exe</td>
+<td align="center">Java远程对象注册表，用于在当前主机的指定端口上创建并启动一个远程对象注册表。</td>
+</tr>
+<tr>
+<td>schemagen.exe</td>
+<td align="center">XMLschema生成器，用于生成XMLschema文件。</td>
+</tr>
+<tr>
+<td>serialver.exe</td>
+<td align="center">序列版本命令，用于生成并返回serialVersionUID。</td>
+</tr>
+<tr>
+<td>servertool.exe</td>
+<td align="center">JavaIDL服务器工具，用于注册、取消注册、启动和终止持久化的服务器。</td>
+</tr>
+<tr>
+<td>tnameserv.exe</td>
+<td align="center">JavaIDL瞬时命名服务。</td>
+</tr>
+<tr>
+<td>unpack200.exe</td>
+<td align="center">JAR文件解压工具，将一个由pack200打包的文件解压提取为JAR文件。</td>
+</tr>
+<tr>
+<td>wsgen.exe</td>
+<td align="center">XMLWebService2.0的JavaAPI，生成用于JAX-WSWebService的JAX-WS便携式产物。</td>
+</tr>
+<tr>
+<td>wsimport.exe</td>
+<td align="center">XMLWebService2.0的JavaAPI，主要用于根据服务端发布的wsdl文件生成客户端存根及框架</td>
+</tr>
+<tr>
+<td>xjc.exe</td>
+<td align="center">主要用于根据XMLschema文件生成对应的Java类。</td>
+</tr>
+</tbody></table>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1850,24 +2261,28 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2018/09/07/Java/java-jar/">
+                <a href="/2018/04/05/Java/util/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="jar包结构讲解">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Java工具类整理">
                         
-                        <span class="card-title">jar包结构讲解</span>
+                        <span class="card-title">Java工具类整理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            jar包结构讲解，搞懂哪些META-INF/MANIFEST.MF是什么意思
+                            Java工具类整理，收集和整理的Java相关工具类，大部分来源网络，不过我都测试过了，哈哈
+Byte[]与hex互相转换，用在某些数据传输场景下import java.util.Arrays;
+
+/**
+ * Byte[]与hex的相互转换
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2018-09-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-04-05
                         </span>
                         <span class="publish-author">
                             
@@ -2089,7 +2504,7 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

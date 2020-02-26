@@ -405,21 +405,21 @@ mysql.sock 无法被创建mysql 的链接需要借助这个套接字，如果不
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-11-30
+                    2020-01-02
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    981
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 				
@@ -468,6 +468,29 @@ brew unlink mysql-connector-c
 brew link --overwrite mysql</code></pre><p>解决参考<a href="https://stackoverflow.com/questions/12218229/my-config-h-file-not-found-when-intall-mysql-python-on-osx-10-8/12233148" target="_blank" rel="noopener">Stackoverflow</a></p>
 <p>如果MySQL安装了，那么安装mysql-connector-c后，执行 <code>sed -i -e 's/libs="$libs -l "/libs="$libs -lmysqlclient -lssl -lcrypto"/g' /usr/local/bin/mysql_config</code> 差不多就可以安装成功了。</p>
 <p>本质就是读取配置文件错误，通过文本替换命令sed修改配置。</p>
+<h2 id="解决Access-denied-for-user-‘’-’localhost’-to-database-‘mysql"><a href="#解决Access-denied-for-user-‘’-’localhost’-to-database-‘mysql" class="headerlink" title="解决Access denied for user ‘’@’localhost’ to database ‘mysql"></a>解决Access denied for user ‘’@’localhost’ to database ‘mysql</h2><p>Access denied for user ‘’@’localhost’ to database ‘</p>
+<p>出现原因是MySQL的密码有问题，使用yum安装的时候，没设置密码进入交互环境后不能创建用户</p>
+<p>用mysql匿名用户可以进入数据库，但是看不见mysql数据库.</p>
+<p>解决办法：</p>
+<p>具体操作步骤：</p>
+<p>关闭mysql:</p>
+<ol>
+<li>service mysqld stop</li>
+</ol>
+<p>然后:</p>
+<ol start="2">
+<li>mysqld_safe –skip-grant-tables</li>
+</ol>
+<p>启动mysql:</p>
+<ol start="3">
+<li>service mysqld start</li>
+</ol>
+<p>mysql -u root</p>
+<p>mysql&gt; use mysql</p>
+<p>mysql&gt; UPDATE user SET Password=PASSWORD(‘xxx’) WHERE user=’root’;</p>
+<p>mysql&gt; flush privileges;</p>
+<p>到这里密码已经修改成功，</p>
+<p>mysql -u root -p</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -987,69 +1010,6 @@ brew link --overwrite mysql</code></pre><p>解决参考<a href="https://stackove
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2018/10/22/MySql/base/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Mysql 数据库基本">
-                        
-                        <span class="card-title">Mysql 数据库基本</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            mysql学习笔记
-
-
-基础一般对于命令是不区分大小写的，为了区分保留关键字，一般保留关键字大写，变量和数据小写。
-sudo service mysql start
-
-mysql -u root
-
-mysql -u root -p
-
-sho
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2018-10-22
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/database/" class="post-category">
-                                    database
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/note/">
-                        <span class="chip bg-color">note</span>
-                    </a>
-                    
-                    <a href="/tags/database/">
-                        <span class="chip bg-color">database</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/2018/10/22/Other/base/">
                     <div class="card-image">
                         
@@ -1069,9 +1029,9 @@ sho
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-22
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-10-22
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1093,6 +1053,69 @@ sho
                     
                     <a href="/tags/other/">
                         <span class="chip bg-color">other</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/10/22/Other/yaml/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="yaml 标记语言">
+                        
+                        <span class="card-title">yaml 标记语言</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            yaml 语言
+
+
+基本语法
+大小写敏感
+使用缩进表示层级关系
+缩进时不允许使用Tab键，只允许使用空格。
+缩进的空格数目不重要，只要相同层级的元素左侧对齐即可
+
+注释YAML 支持的数据结构有三种
+对象：键值对的集合，又称为映射（mapp
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-22
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/other/" class="post-category">
+                                    other
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/other/">
+                        <span class="chip bg-color">other</span>
+                    </a>
+                    
+                    <a href="/tags/yaml/">
+                        <span class="chip bg-color">yaml</span>
                     </a>
                     
                 </div>
@@ -1238,7 +1261,7 @@ sho
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

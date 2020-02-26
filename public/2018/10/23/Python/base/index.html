@@ -404,21 +404,21 @@ callable(object)检查对象object是否可调用。如果返回True">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-12-02
+                    2020-01-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    23.7k
+                    23.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    89 分
+                    90 分
                 </div>
                 
 				
@@ -709,6 +709,22 @@ ws = wb.active #激活 worksheet，就是创建一张表，表名默认，worksh
 </ul>
 <pre class="line-numbers language-py"><code class="language-py">t = (2016,7,21,22,47,45,0,0,0）<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ul>
+<li>时间戳返回日期</li>
+</ul>
+<pre class="line-numbers language-py"><code class="language-py">import time
+
+timeStamp = 1557502800
+timeArray = time.localtime(timeStamp)
+otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+print(otherStyleTime)
+
+import datetime
+
+timeStamp = 1557502800
+dateArray = datetime.datetime.utcfromtimestamp(timeStamp)
+otherStyleTime = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+print(otherStyleTime)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li>英文显示：time.asctime(t)</li>
 <li>格式化结果：time.strftime()，time模块是封装好的一个类，可以理解为直接的time就是时间，但是你不能这么用，得调用类的方法，而strftime方法是将结果格式化的方法</li>
 <li>时区转换：<code>time.gmtime()</code> 将时间戳转换成UTC时区，这里的时间戳就是time.time()</li>
@@ -950,6 +966,8 @@ ws = wb.active #激活 worksheet，就是创建一张表，表名默认，worksh
 <li>sort：修改原列表 </li>
 <li>sorted：产生一个新的列表</li>
 </ul>
+<p>多条件排序，按set_name升排序，然后按cluster_type降序，cluster_type是字符串的，如果是数字的，可以 <code>-x['cluster_type']</code></p>
+<p>sorted(b, key=lambda x: (x[‘set_name’], x[‘cluster_type’][::-1]))</p>
 <p>字符串处理，分割用split()，替换用replace() ，strip，lstrip, rstrip分别用于去除首位，左边，右边的指定字符串。替换可以把换行去了，str.replace(‘\n’, ‘’)，或者去空格。</p>
 <p>python是没有null类型的，这个类型其它语言的，如js，sql。所以当前端传过这样的类型来需要注意，sql也是，如果一个没有赋值的字段，他可能是null的，但是判断布尔会出错，你会取得一个‘null’字符串。</p>
 <p>python dict函数：一般用法传入关键字，其它方法：</p>
@@ -2615,24 +2633,25 @@ fget is a function to be used
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/10/22/Collect/collect/">
+                <a href="/2018/10/22/Algorithm/base/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Collect 站点收藏">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Algorithm 算法学习">
                         
-                        <span class="card-title">Collect 站点收藏</span>
+                        <span class="card-title">Algorithm 算法学习</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            常用内容收集整理，内容来自网络与个人整理
+                            算法相关，对于非科班出身的人来说，只能慢慢学习和体会了
 
 
-收藏内容内容来自某位大佬，网络收集与个人整理
-注册码IntelliJ IDEA
-https://blog.csdn.net/songfei_dream/article/details/93161
+算法
+有穷性(Finiteness)算法的有穷性是指算法必须能在执行有限个步骤之后终止；
+确切性(Definiteness)算法的每一步骤必须有确切的定义；
+输入项(Input)一
                         
                     </div>
                     <div class="publish-info">
@@ -2643,8 +2662,8 @@ https://blog.csdn.net/songfei_dream/article/details/93161
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/collect/" class="post-category">
-                                    collect
+                            <a href="/categories/algorithm%E7%AE%97%E6%B3%95/" class="post-category">
+                                    algorithm算法
                                 </a>
                             
                             
@@ -2654,8 +2673,12 @@ https://blog.csdn.net/songfei_dream/article/details/93161
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/water/">
-                        <span class="chip bg-color">water</span>
+                    <a href="/tags/note/">
+                        <span class="chip bg-color">note</span>
+                    </a>
+                    
+                    <a href="/tags/algorithm/">
+                        <span class="chip bg-color">algorithm</span>
                     </a>
                     
                 </div>
@@ -2801,7 +2824,7 @@ https://blog.csdn.net/songfei_dream/article/details/93161
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             

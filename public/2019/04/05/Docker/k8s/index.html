@@ -4,11 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Kubernetes(k8s) 安装过程, Java，Python，JavaScript，Linux">
-    <meta name="description" content="Kubernetes(k8s) 安装过程
+    <meta name="keywords" content="Kubernetes 笔记, Java，Python，JavaScript，Linux">
+    <meta name="description" content="Kubernetes 笔记
 
 
-基本名称解释etcd: 是一个高可用的分布式键值(key-value)数据库。etcd内部采用raft协议作为一致性算法，有点像zk，k8s集群使用etcd作为它的数据后端，etcd是一种无状态">
+基础协议规范:
+CNI( Container Network Interface)CSI（Container Storage Interface）CRI（Container Runtime Interface">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Kubernetes(k8s) 安装过程 | VanLiuZhi</title>
+    <title>Kubernetes 笔记 | VanLiuZhi</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -244,13 +245,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Kubernetes(k8s) 安装过程
+                        Kubernetes 笔记
                     </div>
                 </div>
             </div>
@@ -408,21 +409,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-11-30
+                    2020-02-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    143
+                    578
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 				
@@ -438,10 +439,103 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Kubernetes(k8s) 安装过程</p>
+                <p>Kubernetes 笔记</p>
 <a id="more"></a>
 
-<h2 id="基本名称解释"><a href="#基本名称解释" class="headerlink" title="基本名称解释"></a>基本名称解释</h2><p>etcd: 是一个高可用的分布式键值(key-value)数据库。etcd内部采用raft协议作为一致性算法，有点像zk，k8s集群使用etcd作为它的数据后端，etcd是一种无状态的分布式数据存储集群。数据以key-value的形式存储在其中</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>协议规范:</p>
+<p>CNI( Container Network Interface)<br>CSI（Container Storage Interface）<br>CRI（Container Runtime Interface）</p>
+<p>etcd: 是一个高可用的分布式键值(key-value)数据库。etcd内部采用raft协议作为一致性算法，有点像zk，k8s集群使用etcd作为它的数据后端，etcd是一种无状态的分布式数据存储集群。数据以key-value的形式存储在其中</p>
+<p>swap: 在k8s中最好禁用swap，以免发生集群无法调度问题</p>
+<p>flannel: 用来通信的网络插件。要符号CNI规范</p>
+<h2 id="k8s-用的的镜像"><a href="#k8s-用的的镜像" class="headerlink" title="k8s 用的的镜像"></a>k8s 用的的镜像</h2><p>master节点</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>REPOSITORY</td>
+<td align="center">TAGIMAGEIDCREATEDSIZE</td>
+</tr>
+<tr>
+<td>registry.aliyuncs.com/google_containers/kube-proxy</td>
+<td align="center">v1.14.120a2d703516510monthsago82.1MB</td>
+</tr>
+<tr>
+<td>registry.aliyuncs.com/google_containers/kube-apiserver</td>
+<td align="center">v1.14.1cfaa4ad74c3710monthsago210MB</td>
+</tr>
+<tr>
+<td>registry.aliyuncs.com/google_containers/kube-controller-manager</td>
+<td align="center">v1.14.1efb3887b411d10monthsago158MB</td>
+</tr>
+<tr>
+<td>registry.aliyuncs.com/google_containers/kube-scheduler</td>
+<td align="center">v1.14.18931473d5bdb10monthsago81.6MB</td>
+</tr>
+<tr>
+<td>quay-mirror.qiniu.com/coreos/flannel</td>
+<td align="center">v0.11.0-amd64ff281650a72112monthsago52.6MB</td>
+</tr>
+<tr>
+<td>quay.io/coreos/flannel</td>
+<td align="center">v0.11.0-amd64ff281650a72112monthsago52.6MB</td>
+</tr>
+<tr>
+<td>registry.aliyuncs.com/google_containers/coredns</td>
+<td align="center">1.3.1eb516548c18012monthsago40.3MB</td>
+</tr>
+<tr>
+<td>registry.aliyuncs.com/google_containers/etcd</td>
+<td align="center">3.3.102c4adeb21b4f14monthsago258MB</td>
+</tr>
+<tr>
+<td>registry.aliyuncs.com/google_containers/pause</td>
+<td align="center">3.1da86e6ba6ca12yearsago742kB</td>
+</tr>
+</tbody></table>
+<p>node节点</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>REPOSITORY</td>
+<td align="center">TAGIMAGEIDCREATEDSIZE</td>
+</tr>
+<tr>
+<td>registry.aliyuncs.com/google_containers/kube-proxy</td>
+<td align="center">v1.14.120a2d703516510monthsago82.1MB</td>
+</tr>
+<tr>
+<td>quay-mirror.qiniu.com/coreos/flannel</td>
+<td align="center">v0.11.0-amd64ff281650a72112monthsago52.6MB</td>
+</tr>
+<tr>
+<td>quay.io/coreos/flannel</td>
+<td align="center">v0.11.0-amd64ff281650a72112monthsago52.6MB</td>
+</tr>
+<tr>
+<td>registry.aliyuncs.com/google_containers/pause</td>
+<td align="center">3.1da86e6ba6ca12yearsago742kB</td>
+</tr>
+</tbody></table>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>kubectl explain node</p>
+<p>kubectl get pods -n kube-system -o wide<br>kubectl get nodes -o wide  </p>
+<p><code>kubectl get node</code> 可以使用 -o 配合 wide json yaml</p>
+<p>配合jq做内容提取</p>
+<p>kubectl get nodes -o json | jq “.items[] | {name: .metadata.name} + .status.nodeInfo”</p>
+<h2 id="与k8s交互"><a href="#与k8s交互" class="headerlink" title="与k8s交互"></a>与k8s交互</h2><p>在 K8S 中进行部署或者说与 K8S 交互的方式主要有三种：</p>
+<p>命令式<br>命令式对象配置<br>声明式对象配置</p>
+<h2 id="镜像拉取策略"><a href="#镜像拉取策略" class="headerlink" title="镜像拉取策略"></a>镜像拉取策略</h2><p>默认值是IfNotPresent</p>
+<p>Always<br>总是拉取：<br>首先获取仓库镜像信息，如果仓库中的镜像与本地不同，那么仓库中的镜像会被拉取并覆盖本地。<br>如果仓库中的镜像与本地一致，那么不会拉取镜像。<br>如果仓库不可用，那么pod运行失败。</p>
+<p>IfNotPresent<br>优先使用本地：<br>如果本地存在镜像，则使用本地的，<br>不管仓库是否可用。<br>不管仓库中镜像与本地是否一致。</p>
+<p>Never<br>只使用本地镜像，如果本地不存在，则pod运行失败</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -965,64 +1059,6 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/04/13/Linux/shell/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Linux 开发环境 shell 配置">
-                        
-                        <span class="card-title">Linux 开发环境 shell 配置</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            shell 配置和使用 zsh
-
-
-Xshell在使用Xshell的时候，出现本地终端排版错误问题，解决方案：文件 - 属性 - 终端 - 高级 - 用CR-LF接受LF(R)
-安装 zsh通过命令就可以安装了
-CentOS 安装：sudo
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-04-13
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-category">
-                                    操作系统
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/linux/">
-                        <span class="chip bg-color">linux</span>
-                    </a>
-                    
-                    <a href="/tags/note/">
-                        <span class="chip bg-color">note</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/2019/04/05/Docker/k8s-install/">
                     <div class="card-image">
                         
@@ -1044,9 +1080,9 @@ K8S DashBoard服务创建服务后通过代理访问
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-05
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-04-05
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1072,6 +1108,68 @@ K8S DashBoard服务创建服务后通过代理访问
                     
                     <a href="/tags/note/">
                         <span class="chip bg-color">note</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/04/05/Java/RocketMQ/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="RocketMQ">
+                        
+                        <span class="card-title">RocketMQ</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            title: RocketMQ
+
+
+安装这个安装还是特别容易的，下载对应程序，配置参数，启动，和Tomcat差不多
+遇到的问题:
+
+网卡绑定错误
+
+虚拟机测试很容易遇到这个问题，手动设置ip解决
+RocketMQ中broker配置brokc
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java/" class="post-category">
+                                    Java
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/note/">
+                        <span class="chip bg-color">note</span>
+                    </a>
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                 </div>
@@ -1217,7 +1315,7 @@ K8S DashBoard服务创建服务后通过代理访问
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">190.7k</span>&nbsp;字
+                class="white-color">223.6k</span>&nbsp;字
             
             
             
