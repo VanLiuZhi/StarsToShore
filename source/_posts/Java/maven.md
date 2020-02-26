@@ -1,5 +1,5 @@
 ---
-title: Java8 new语法特性
+title: Maven 总结
 date: 2019-04-05 00:00:00
 author: vanliuzh
 top: true
@@ -181,8 +181,6 @@ A项目
 ```
 
 这个项目的父pom是Spring-boot，却可以使用Spring-cloud的，不用声名版本号，就是因为import的特性
-
-
 
 ## 项目聚合与继承
 

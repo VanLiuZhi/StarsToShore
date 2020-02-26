@@ -6,15 +6,17 @@ top: true
 cover: false
 toc: true
 mathjax: false
-summary: Spring Cloud 微服务实践，是一系列框架的有序集合。它利用Spring Boot的开发便利性巧妙地简化了分布式系统基础设施的开发，如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等
+summary: Spring Cloud 是一系列框架的有序集合。它利用Spring Boot的开发便利性巧妙地简化了分布式系统基础设施的开发，如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等
 categories: Java
 tags: [Java, Note]
 reprintPolicy: cc_by
 ---
 
+![image](/images/Java/Java-spring.jpg)
+
 ## 版本简介
 
-spring cloud的版本比较特殊，它不是常见的版本号形式，而是由英文单词+SR+数字的形式，英文单词由伦敦地铁明明。这种版本命名也不是什么新鲜事，比如英伟达就用物理学家名字命名自己的GPU架构
+spring cloud的版本比较特殊，它不是常见的版本号形式，而是由英文单词+SR+数字的形式，英文单词由伦敦地铁命名。这种版本命名也不是什么新鲜事，比如英伟达就用物理学家名字命名自己的GPU架构
 
 Spring Cloud版本发布记录可详见：https://github.com/spring-cloud/spring-cloud-release/releases ，从中我们可清晰看到Spring Cloud版本发布的时间及先后顺序
 
@@ -35,12 +37,17 @@ Spring Cloud版本演进计划：https://github.com/spring-cloud/spring-cloud-re
 `Sleuth`: 提供服务调用链，用于排查问题，和ZipKin配合使用，ZipKin提供可视化页面
 
 `Consul`: 是一个服务网格（微服务间的 TCP/IP，负责服务之间的网络调用、限流、熔断和监控）解决方案，它是一个一个分布式的，高度可用的系统，而且开发使用都很简便。它提供了一个功能齐全的控制平面，主要特点是：服务发现、健康检查、键值存储、安全服务通信、多数据中心
+`Gateway`: Spring-cloud 的网关服务
 
 ## Eureka
 
 如何使用: 启动一个eureka service，各个微服务通过配置client把自己注册到eureka service
 
-eureka service主要配置，起多个服务实现高可用，注意它是CA架构。下面通过一个工程的不同profiles启动多个service实现高可用，如果是部署在一台主机上，hostname不能少
+eureka service主要配置，起多个服务实现高可用，注意它是AP架构。下面通过一个工程的不同profiles启动多个service实现高可用，如果是部署在一台主机上，hostname不能少
+
+依赖: spring-cloud-starter-netflix-eureka-client spring-cloud-starter-netflix-eureka-server，在启动类上加上`@EnableEurekaServer`注解
+
+service端配置
 
 ```yaml
 eureka:
@@ -83,10 +90,236 @@ eureka:
     prefer-ip-address: true
 ```
 
+## Ribbon
 
-## consule
+Ribbon不在本节讨论
 
-目前，我对这个服务网格的理解还不是很深入，也看到有一些人分析这个东西并不是什么微服务的未来，总的来说比eureka更加底层的服务发现和注册
+依赖: spring-cloud-starter-netfilx-ribbon
+
+可以把ip+端口用服务名来代替，Ribbon可实现精确到目标服务的细粒度配置
+
+## Feign
+
+1. 依赖: spring-cloud-starter-openfeign
+
+2. 添加注解到启动类上
+
+```java
+// 扫描api包里的FeignClient
+@EnableFeignClients(basePackages = {CommonConstant.BASE_PACKAGE})
+```
+
+4. 编写Feign Client：
+
+```java
+@FeignClient(name = "microservice-provider-user")
+public interface UserFeignClient {
+  @GetMapping("/users/{id}")
+  User findById(@PathVariable("id") Long id);
+}
+```
+
+这样一个Feign Client就完成了，其中，@FeignClient 注解中的microservice-provider-user是想要请求服务的名称，这是用来创建Ribbon Client的（Feign整合了Ribbon）。在本例中，由于使用了Eureka，所以Ribbon会把microservice-provider-user 解析成Eureka Server中的服务。
+
+除此之外，还可使用url属性指定请求的URL（URL可以是完整的URL或主机名），例如@FeignClient(name = "abcde", url = "http://localhost:8000/") 。此时，name可以是任意值，但不可省略，否则应用将无法启动！
+
+5. 通过Feign Client访问服务接口
+
+```java
+@RequestMapping("/movies")
+@RestController
+public class MovieController {
+  @Autowired
+  private UserFeignClient userFeignClient;
+
+  @GetMapping("/users/{id}")
+  public User findById(@PathVariable Long id) {
+    return this.userFeignClient.findById(id);
+  }
+}
+```
+
+
+## 应用容错
+
+什么是容错，就是当服务中的某个服务挂了的时候，允许这种情况，并有对应的补救。如果没有容错机制，那么A请求B，B挂了，但是A还要一直请求B，导致系统大量的资源被占用无法释放
+
+1. 超时
+
+超时是一种比较容易的机制，比如就设置2秒，2秒没返回就释放资源
+
+2. 舱壁模式
+
+先了解一下船舱构造——一般来说，现代的轮船都会分很多舱室，舱室之间用钢板焊死，彼此隔离。这样即使有某个/某些船舱进水，也不会影响其他舱室，浮力够，船不会沉
+
+这种机制在程序上就是分配资源，比如A服务和B服务都只能使用系统资源的20%，这样B服务挂了也就会影响系统20%的资源
+
+或者这样：A调用a，B调用b。AB共享同样的资源，比如线程池，当a挂了，那么B服务就被A拖死了，如果AB使用独立的线程池，那么顶多就是A把自己的线程池占满了，不会影响B
+
+3. 断路器
+
+软件世界的断路器可以这样理解：实时监测应用，如果发现在一定时间内失败次数/失败率达到一定阈值，就“跳闸”，断路器打开——此时，请求直接返回，而不去调用原本调用的逻辑。
+
+跳闸一段时间后（例如15秒），断路器会进入半开状态，这是一个瞬间态，此时允许一次请求调用该调的逻辑，如果成功，则断路器关闭，应用正常调用；
+如果调用依然不成功，断路器继续回到打开状态，过段时间再进入半开状态尝试——通过”跳闸“，应用可以保护自己，而且避免浪费资源；
+而通过半开的设计，可实现应用的“自我修复“。
+
+## Hystrix
+
+监控端点配置
+
+```yaml
+management:
+  endpoint:
+    health:
+      show-details: always
+```
+
+注解用法: @HystrixCommand(fallbackMethod = "findByIdFallback") 用注解的形式加到方法上，不过一都是配合Feign使用，不推荐单独使用
+
+默认Feign是不启用Hystrix的，需要添加如下配置启用Hystrix，这样所有的Feign Client都会受到Hystrix保护
+
+```yaml
+feign:
+  hystrix:
+    enabled: true
+```
+
+`断路器实现`
+
+在注解上配置，有fallback和fallbackFactory，工厂多了一层封装(就是为了工厂模式嘛)，工厂模式有异常(不知道是不是要用异常一定要用工厂模式，fallback没有传递异常的地方)
+
+`@FeignClient(value = ServiceConstant.USER_SERVICE, configuration = CustomFeignConfig.class, fallbackFactory = UserServiceClientFallbackFactory.class)`
+
+Feign本身已经整合了Hystrix，可直接使用@FeignClient(value = "microservice-provider-user", fallback = XXX.class) 来指定fallback类，fallback类继承@FeignClient所标注的接口
+
+启动类加@EnableCircuitBreaker，引入spring-cloud-starter-hystrix(整合hystrix，其实feign中自带了hystrix，引入该依赖主要是为了使用其中的hystrix-metrics-event-stream，用于dashboard)
+
+Hystrix服务监控点暴露
+
+```yaml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'hystrix.stream'
+```
+
+访问任意Feign Client接口的API后，再访问http://IP:PORT/actuator/hystrix.stream ，就会展示一大堆Hystrix监控数据了
+
+1. fallback
+
+```java
+public class ExaminationServiceClientFallbackImpl implements ExaminationServiceClient {
+    // 对 ExaminationServiceClient 的各个接口实现，做短路时的处理
+}
+```
+
+2. fallbackFactory
+
+可以看到实现方法`T create(Throwable cause);`可以获取到异常
+
+```java
+public class ExaminationServiceClientFallbackFactory implements FallbackFactory<ExaminationServiceClient> {
+
+    @Override
+    public ExaminationServiceClient create(Throwable throwable) {
+        ExaminationServiceClientFallbackImpl examinationServiceClientFallback = new ExaminationServiceClientFallbackImpl();
+        examinationServiceClientFallback.setThrowable(throwable);
+        return examinationServiceClientFallback;
+    }
+}
+```
+
+从源码中可以看到，不做配置，默认实现类是抛出FINE级别日志，当然前提是配置了日志
+
+```java
+public interface FallbackFactory<T> {
+
+  /**
+   * Returns an instance of the fallback appropriate for the given cause
+   *
+   * @param cause corresponds to {@link com.netflix.hystrix.AbstractCommand#getExecutionException()}
+   *        often, but not always an instance of {@link FeignException}.
+   */
+  T create(Throwable cause);
+
+  /** Returns a constant fallback after logging the cause to FINE level. */
+  final class Default<T> implements FallbackFactory<T> {
+    // jul to not add a dependency
+    final Logger logger;
+    final T constant;
+
+    public Default(T constant) {
+      this(constant, Logger.getLogger(Default.class.getName()));
+    }
+
+    Default(T constant, Logger logger) {
+      this.constant = checkNotNull(constant, "fallback");
+      this.logger = checkNotNull(logger, "logger");
+    }
+
+    @Override
+    public T create(Throwable cause) {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE, "fallback due to: " + cause.getMessage(), cause);
+      }
+      return constant;
+    }
+
+    @Override
+    public String toString() {
+      return constant.toString();
+    }
+  }
+}
+```
+
+### 监控可视化
+
+添加依赖spring-cloud-starter-netflix-hystrix-dashboard，启动类加注解：@EnableHystrixDashboard
+
+但是这个只能监控一个服务，还可以配合Turbine，监控数据聚合-Turbine
+
+添加依赖
+
+```xml
+<!--监控可视化-->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+</dependency>
+
+<!--监控数据聚合-Turbine-->
+<!-- 因为用了consul，需要排除eureka依赖 -->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-turbine</artifactId>
+    <exclusions>
+        <exclusion>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+```
+
+配置要监控的服务，这样在这个服务下就能监控到其它服务了
+
+```yml
+server:
+  port: 9186
+
+# 监控数据聚合
+turbine:
+  appConfig: consul,auth-service,exam-service,user-service,gateway-service,msc-service
+  aggregator:
+    clusterConfig: CONSUL,AUTH-SERVICE,EXAM-SERVICE,USER-SERVICE,GATEWAY-SERVICE,MSC-SERVICE
+```
+
+## Consule
+
+服务网格是把现有的微服务直接的通信部分整合，更加的细致
 
 如何使用: 由于consule是go编写的，CP架构，部署完成后，Spring只需要关注clien如何加入即可完成集成
 
@@ -96,9 +329,7 @@ consule的功能比较丰富，也可以用它来代替config-service，依赖 `
 
 consul agent -server -client=0.0.0.0 -bootstrap-expect=3 -data-dir=/Users/liuzhi/cloud/data/ -node=server1
 
-consul agent -server -client=0.0.0.0 -bootstrap-expect=3 -data-dir=/Users/liuzhi/cloud/data/ -node=server2
-
-consul agent -server -bind=0.0.0.2 -client=0.0.0.0 -bootstrap-expect=3 -data-dir=/Users/liuzhi/cloud/data/ -node=server3
+consul agent -dev
 
 ## Spring Cloud Config
 
@@ -115,6 +346,10 @@ consul agent -server -bind=0.0.0.2 -client=0.0.0.0 -bootstrap-expect=3 -data-dir
 
 关于动态刷新: 这里我有个疑问，假如是通过`@Value`读取的配置文件，那么刷新后用新的值，确实没问题，但是像数据库配置这种，刷新后应该是要重启才行吧(简单属性和比较复杂的配置属性)，未完待续
 
+实现动态刷新:
+1. 引入依赖
+2. 开启监控点
+3. 加上注解
 
 ### git
 
