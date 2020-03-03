@@ -98,6 +98,8 @@ Ribbon不在本节讨论
 
 可以把ip+端口用服务名来代替，Ribbon可实现精确到目标服务的细粒度配置
 
+Ribbon的负载均衡和Nginx的区别：Nginx是集中式的，把所有请求发到Nginx上，然后分发到服务消费者。ribbon是在客户端做的负载均衡，然后去请求服务消费者。Nginx多了一层客户端发到Nginx的过程
+
 ## Feign
 
 1. 依赖: spring-cloud-starter-openfeign
@@ -350,6 +352,10 @@ consul agent -dev
 1. 引入依赖
 2. 开启监控点
 3. 加上注解
+
+bus，是通过消息广播，一个客户端刷新后，通知其它服务刷新
+
+注意，在使用了security后，刷新接口会报403异常，需要加入访问权限
 
 ### git
 

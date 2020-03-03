@@ -61,6 +61,15 @@ IDEA更新classpath的方法：【Build】->【Build Project】，如果你设�
 2. 快捷键Ctrl + Shift + Alt + /，选择Registry  让running能自动编译
 3. 勾选 Compiler autoMake allow when app running
 
+上述情况的热部署，有些时候需要手动点击编译(我在Windows上会自动重启)，推测和idea版本有关系，不过手动控制其实挺好的
+另外通过上述做的热部署，是会重启(可能依赖比较复杂的情况下会这样，有些时候又不会)，推荐使用插件jrebel，它也是走上面的流程，然后可以只加载需要重新加载的类，效果很好
+
+spring-boot-devtools依赖 注入的时候，通过idea可以看到服务后面有devtool的标识
+
+jrebel xrebel 有2个东西，xrebel是分析程序用的，jrebel是热部署
+
+百度一下安装和激活：两个要分别激活，激活后大都改用离线模式，可以用好几个月
+
 ## gradle 编译，只运行所选测试
 
 Delegate IDE build开启，选择 reun tests using下拉选项

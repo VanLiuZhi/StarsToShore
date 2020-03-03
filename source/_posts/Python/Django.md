@@ -7,7 +7,7 @@ cover: true
 toc: true
 mathjax: false
 categories: Python编程
-tags: [Python, Note, FrameWork]
+tags: [python, Note, FrameWork]
 reprintPolicy: cc_by
 ---
 

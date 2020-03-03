@@ -20,6 +20,46 @@ review
 
 在分布式中，或者用分库分表来说明，user表存在在3台机器上，用`用户id的hashcode % 3`来决定该用户的数据存储在哪台机器上。当机器增加到4台的时候，此时的模3就不对了，造成数据混乱。而一致性哈希算法就是解决这个问题的，一致性哈希保证当分布式环境的节点增加的时候，原来请求分配到的节点还是原来的节点
 
+```java
+public static void main(String[] args) {
+    // 有5个用户
+    Integer a = 123456;
+    Integer b = 123457;
+    Integer c = 123458;
+    Integer d = 123459;
+    Integer e = 123460;
+
+    // 平均分配到3台机器
+    System.out.println(a.hashCode() % 3);
+    System.out.println(b.hashCode() % 3);
+    System.out.println(c.hashCode() % 3);
+    System.out.println(d.hashCode() % 3);
+    System.out.println(e.hashCode() % 3);
+    System.out.println("--------------");
+    // 平均分配到4台机器
+    System.out.println(a.hashCode() % 4);
+    System.out.println(b.hashCode() % 4);
+    System.out.println(c.hashCode() % 4);
+    System.out.println(d.hashCode() % 4);
+    System.out.println(e.hashCode() % 4);
+
+    //        结果
+    //        0
+    //        1
+    //        2
+    //        0
+    //        1
+    //                --------------
+    //        0
+    //        1
+    //        2
+    //        3
+    //        0
+
+    // 对于d,e来说，增加机器的时候就错乱了
+}
+```
+
 ## http无状态
 
 这句话体现在每个请求都是独立的，第二次的请求和第一次不会有关联
@@ -53,7 +93,7 @@ review
 
 4. spring-cloud-config-client 和 spring-cloud-starter-config 都是配置依赖，区别是一个是starter风格的
 
-5. @Component(组件) @Service(业务层) @Controller(web控制层) @Repository(持久层) 都是组件，等效的，不过语义不一样
+5. @Component(组件) @Service(业务层) @Controller(web控制层) @Repository(持久层，持久层数据一般提供CURD) 都是组件，等效的，不过语义不一样
 
 @Controller，装载的bean名称默认是类名首字母小写的名称，可以指定名称
 
@@ -136,4 +176,8 @@ tcc lcn mq atomik seata
 ## 分布式session
 
 Spring-boot-statrte-data-redis
+
+## 静态化
+
+velocity freemarker 模板引擎
 
