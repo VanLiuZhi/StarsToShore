@@ -39,6 +39,64 @@ Spring Cloud版本演进计划：https://github.com/spring-cloud/spring-cloud-re
 `Consul`: 是一个服务网格（微服务间的 TCP/IP，负责服务之间的网络调用、限流、熔断和监控）解决方案，它是一个一个分布式的，高度可用的系统，而且开发使用都很简便。它提供了一个功能齐全的控制平面，主要特点是：服务发现、健康检查、键值存储、安全服务通信、多数据中心
 `Gateway`: Spring-cloud 的网关服务
 
+## 如何使用多实例
+
+这个也是我从接口api中摸索出来的，如果有更好的方式可以改进
+
+首先服务是支持多实例的，以consul为例，我们可以配置服务名称和实例名称，服务名称通过下面两种方式设置
+
+```
+spring.cloud.consul.discovery.service-name  显示设置
+spring.application.name  默认
+```
+
+服务名称相同的归为同一个服务，然后有实例名称
+
+```
+spring.cloud.consul.discovery.instance-id 显示设置，不设置，默认是服务名称加port
+```
+
+当我们只有一个服务的时候，实例只有一个，当我们启动多个实例的时候，服务名称相同的归在一起
+
+1. 如何启动多个实例？可以用profiles的形式
+
+```yml
+spring:
+  application:
+    name: rrdtool-store-service-star
+  cloud:
+    consul:
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
+      discovery:
+        instance-id: ${spring.application.name}-${server.port}
+---
+server:
+  port: 8920
+spring:
+  profiles: node1
+---
+server:
+  port: 8921
+spring:
+  profiles: node2
+
+```
+
+但是这样会有问题
+
+Consul把InstanceId作为唯一标识，而Spring Cloud Consul默认的InstanceId是 `${spring.application.name}-${server.port}` 。
+
+这样导致的问题是：某个微服务即使有多个实例，只要端口相同，那么Consul上依然只会保留1条数据！也就是说我们如果在不同的机器上用一样的端口，就会有这个问题。要想解决这个问题，只需要让不同实例，拥有不同的InstanceId即可。
+
+解决方案: 再加一个唯一标识，或者自定义实例id，当然这个做法就不推荐了，除非有必要(ConsulAutoRegistration相关代码可以做)
+
+`${spring.cloud.client.ip-address}` 或 `${spring.cloud.client.hostname}`
+
+2. 多个实例有什么用？
+
+在feign请求服务的时候，我们设置的是服务名称，然后负载均衡策略会轮询调用具体的实例
+
 ## Eureka
 
 如何使用: 启动一个eureka service，各个微服务通过配置client把自己注册到eureka service
@@ -208,6 +266,8 @@ management:
 ```
 
 访问任意Feign Client接口的API后，再访问http://IP:PORT/actuator/hystrix.stream ，就会展示一大堆Hystrix监控数据了
+
+**特别注意：如果没有指定fallback，接口报500，但是我们可以修改默认的设置，这样就不用每个接口都在不可用的情况下返回异常了**
 
 1. fallback
 

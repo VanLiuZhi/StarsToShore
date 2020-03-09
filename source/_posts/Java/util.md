@@ -317,3 +317,27 @@ public class ReflectionUtils {
     }
 }
 ```
+
+## restTemplate 响应泛型
+
+```java
+public static <T, A> T exchange(String url, HttpMethod method, ParameterizedTypeReference<T> responseBodyType, A requestBody) {
+        RestTemplate restTemplate = new RestTemplate();
+        // 请求头
+        HttpHeaders headers = new HttpHeaders();
+        MimeType mimeType = MimeTypeUtils.parseMimeType("application/json");
+        MediaType mediaType = new MediaType(mimeType.getType(), mimeType.getSubtype(), StandardCharsets.UTF_8);
+        // 请求体
+        headers.setContentType(mediaType);
+        // 发送请求
+        HttpEntity<A> entity = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<T> resultEntity = restTemplate.exchange(url, method, entity, responseBodyType);
+        return resultEntity.getBody();
+    }
+
+// 调用
+
+ParameterizedTypeReference<ResponseBean<BasePushData>> responseBodyType = new ParameterizedTypeReference<ResponseBean<BasePushData>>() {};
+//        String res = restTemplate.postForObject("http://localhost:8920/store", basePushData, String.class);
+        ResponseBean<BasePushData> ret = exchange("http://localhost:8920/store", HttpMethod.POST, responseBodyType, basePushData);
+```

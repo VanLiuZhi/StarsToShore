@@ -19,6 +19,12 @@ ntellig idea 使用@Resource或者@Autowire报错，出现红色波浪线；
 
 解决方法：Settings - Editor - Inspections - Spring - Spring Core - Code - Autowiring for Bean Class 修改成告警级别
 
+## idea 错误提示取消和恢复
+
+idea提供了很强大的错误提示功能，但是有些不一定是错误的，强迫症患者可能会取消，下图展示 spring yaml配置错误提示 取消和开启的设置的图片
+
+![image](/images/Java/java-idea-inspections.png)
+
 ## 热部署
 
 静态语言不像动态语言，要实现热部署要程序和IDEA配合才行

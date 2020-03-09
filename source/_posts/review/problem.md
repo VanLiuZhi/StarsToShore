@@ -1,5 +1,5 @@
 ---
-title: Java review
+title: Java review Spring
 date: 2019-04-05 00:00:00
 tags: [java, note]
 categories: Java
@@ -8,10 +8,6 @@ categories: Java
 review
 
 <!-- more -->
-
-# problem
-
-泊松分布的参数λ是单位时间(或单位面积)内随机事件的平均发生次数。 泊松分布适合于描述单位时间内随机事件发生的次数。
 
 ## 一致性哈希
 
@@ -169,6 +165,31 @@ public class HystrixIndexController {
 }
 ```
 
+10. @PathVariable("patientId") Long id
+
+把路由中匹配的参数在方法中形参重定义，下面的例子中，注解不传递参数，默认就是把形参和url参数对应，可以传参数然后重新定义形参
+
+```java
+@GetMapping("/get/{id}/{ex}")
+    public ResponseBean<String> getCacheValue(@PathVariable String id, @PathVariable(value = "ex") String abc){
+        String data = metricCacheService.getData(id);
+        return new ResponseBean<>(data);
+    }
+```
+
+11. profiles
+
+```yml
+profiles: dev
+```
+
+```yml
+profiles:
+  active: dev
+```
+
+要记住上面两种写法是不一样的，第二种是”激活“的意思，就是激活哪个profiles文件，而第一个是准备多个profiles文件的时候用
+
 ## 分布式事务
 
 tcc lcn mq atomik seata
@@ -180,4 +201,21 @@ Spring-boot-statrte-data-redis
 ## 静态化
 
 velocity freemarker 模板引擎
+
+## @Component 需不需要 @Autowired
+
+该问题还没解决，我自定义一个普通的类，用component注解
+`private MyUser myUser;` 去使用报空指针错误，必须要加上Autowired注解
+
+如果我在构造器中
+
+```java
+public MyUser(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+```
+
+RedisTemplate是框架带的，加了这个后，可以不用Autowired注解访问
+
+这个问题值得探讨，以前全都用Autowired，后来我发现有些人的不用也行，但是不是全部这样的，猜测是有依赖可以
 

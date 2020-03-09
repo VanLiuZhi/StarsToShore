@@ -1,5 +1,5 @@
 ---
-title: Java review
+title: Java review 散问题
 date: 2019-04-05 00:00:00
 tags: [java, note]
 categories: Java
@@ -84,6 +84,26 @@ Nginx7层，硬件4层
     <version>1.16.18</version>
     <optional>true</optional>
 </dependency>
+<!--A set of annotations used for code inspection support and code documentation.-->
+<dependency>
+    <groupId>org.jetbrains</groupId>
+    <artifactId>annotations</artifactId>
+    <version>18.0.0</version>
+    <scope>compile</scope>
+</dependency>
+<!--security-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+<!--配置文件转换支持，主要是旧体系框架向Spring boot转换-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-configuration-processor</artifactId>
+    <optional>true</optional>
+</dependency>
 
+# problem
 
+泊松分布的参数λ是单位时间(或单位面积)内随机事件的平均发生次数。 泊松分布适合于描述单位时间内随机事件发生的次数。
 
