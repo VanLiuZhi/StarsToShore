@@ -18,11 +18,23 @@ Spring framework
 
 ## Ioc 设计理念
 
-IoC也称为依赖注⼊(dependency injection, DI)。它是⼀个对象定义依赖关系的过程，也就是说，对象只通过构造函数参数、⼯⼚⽅法的参数或对象实例构造或从⼯⼚⽅法返回后在对象实例上设置的属性来定义它们所使⽤的其他对象。
+IoC(Inversion of Control)控制反转；依赖注⼊(dependency injection, DI)。它是⼀个对象定义依赖关系的过程，也就是说，对象只通过构造函数参数、⼯⼚⽅法的参数或对象实例构造或从⼯⼚⽅法返回后在对象实例上设置的属性来定义它们所使⽤的其他对象。
 
 然后容器在创建bean时注⼊这些依赖项。这个过程基本上是bean的逆过程，因此称为控制反转(IoC) 在Spring中，构成应⽤程序主⼲并由Spring IoC容器管理的对象称为bean。
 
 bean是由Spring IoC容器实例化、组装和管理的对象。IoC容器设计理念: 通过容器统⼀对象的构建⽅式，并且⾃动维护对象的依赖关系。
+
+IOC流程: `装配`-->`解析`-->`注册`
+
+本次笔记会比较乱，主要围绕各个散的知识点补充，然后就是`装配`-->`解析`-->`注册`这个流程，这个流程完成后，才能拿到bean，我们通常都是通过ApplicationContext来操作，不直接通过BeanFactory，下面是AnnotationConfigApplicationContext的构造器，传递的是Class对象，之后register(componentClasses)，注册，refresh()，刷新，得到上下文，bean可以获取到
+
+```java
+public AnnotationConfigApplicationContext(Class<?>... componentClasses) {
+		this();
+		register(componentClasses);
+		refresh();
+	}
+```
 
 ## bean的装配方式
 
@@ -157,6 +169,225 @@ BeanPostProcessor的执行时机
 
 before：构造方法之后，@PostConstruct之前
 after：afterPropertiesSet之后
+
+## refresh 方法
+
+```java
+public void refresh() throws BeansException, IllegalStateException {
+    synchronized (this.startupShutdownMonitor) {
+        // Prepare this context for refreshing.
+        prepareRefresh();
+
+        // Tell the subclass to refresh the internal bean factory.
+        // 获得刷新的beanFactory
+        // 对于AnnotationConfigApplicationContext，作用：
+        // 1.调用org.springframework.context.support.GenericApplicationContext.refreshBeanFactory，
+        // 只是指定了SerializationId
+        // 2.直接返回beanFactory(不用创建，容器中已存在)
+        //  对于ClassPathXmlApplicationContext，作用：
+        // 1.调用AbstractRefreshableApplicationContext.refreshBeanFactory
+        // 2.如果存在beanFactory，先销毁单例bean，关闭beanFactory，再创建beanFactory
+        // 3.注册传入的spring的xml配置文件中配置的bean，注册到beanFactory
+        // 4.将beanFactory赋值给容器，返回beanFactory
+
+        // 这里就体现了注解和xml的区别，注解是先创建工厂，再注册bean，而xml是先把bean加载了，放到工厂中，再把准备好的工厂赋值给容器
+        // 注解: 在容器启动之前就创建beanFactory
+        // xml: 即容器启动过程中创建beanFactory
+
+        ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+
+        // Prepare the bean factory for use in this context.
+        // 准备bean工厂： 指定beanFactory的类加载器， 添加后置处理器，注册缺省环境bean等
+        // beanFactory添加了2个后置处理器 ApplicationContextAwareProcessor, ApplicationListenerDetector (new )
+        prepareBeanFactory(beanFactory);
+
+        try {
+            // Allows post-processing of the bean factory in context subclasses.
+            // 空方法
+            // 允许在上下文的子类中对beanFactory进行后处理
+            // 比如 AbstractRefreshableWebApplicationContext.postProcessBeanFactory
+            postProcessBeanFactory(beanFactory);
+
+            // Invoke factory processors registered as beans in the context.
+            // 1.通过beanFactory.getBean(ppName, BeanDefinitionRegistryPostProcessor.class)
+            //   拿到ConfigurationClassPostProcessor
+            // 2.通过ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry，注册所有注解配置的bean
+            // 注册的顺序： @ComponentScan>实现ImportSelector>方法bean>@ImportResource("spring.xml")
+            //  > 实现 ImportBeanDefinitionRegistrar  (相对的顺序，都在同一个配置类上配置)
+            // 3. 调用ConfigurationClassPostProcessor#postProcessBeanFactory
+            //  增强@Configuration修饰的配置类  AppConfig--->AppConfig$$EnhancerBySpringCGLIB
+            // (可以处理内部方法bean之间的调用，防止多例)
+            //  添加了后置处理器 ConfigurationClassPostProcessor.ImportAwareBeanPostProcessor (new)
+            invokeBeanFactoryPostProcessors(beanFactory);
+
+            // Register bean processors that intercept bean creation.
+            // 注册拦截bean创建的后置处理器：
+            // 1.添加Spring自身的：  BeanPostProcessorChecker （new）  以及注册了beanDefinition的两个
+            //  CommonAnnotationBeanPostProcessor AutowiredAnnotationBeanPostProcessor
+            //  重新添加ApplicationListenerDetector(new ) ，删除旧的，移到处理器链末尾
+            // 2.用户自定义的后置处理器
+            // 注册了beanDefinition的会通过 beanFactory.getBean(ppName, BeanPostProcessor.class) 获取后置处理器
+            registerBeanPostProcessors(beanFactory);
+
+            // Initialize message source for this context.
+            initMessageSource();
+
+            // Initialize event multicaster for this context.
+            // 初始化事件多播器
+            initApplicationEventMulticaster();
+
+            // Initialize other special beans in specific context subclasses.
+            // 空方法
+            onRefresh();
+
+            // Check for listener beans and register them.
+            registerListeners();
+
+            // Instantiate all remaining (non-lazy-init) singletons.
+            // 实例化所有剩余的(非懒加载)单例。
+            finishBeanFactoryInitialization(beanFactory);
+
+            // Last step: publish corresponding event.
+            finishRefresh();
+        }
+
+        catch (BeansException ex) {
+            if (logger.isWarnEnabled()) {
+                logger.warn("Exception encountered during context initialization - " +
+                        "cancelling refresh attempt: " + ex);
+            }
+
+            // Destroy already created singletons to avoid dangling resources.
+            destroyBeans();
+
+            // Reset 'active' flag.
+            cancelRefresh(ex);
+
+            // Propagate exception to caller.
+            throw ex;
+        }
+
+        finally {
+            // Reset common introspection caches in Spring's core, since we
+            // might not ever need metadata for singleton beans anymore...
+            resetCommonCaches();
+        }
+    }
+}
+```
+
+## AbstractBeanDefinition
+
+是BeanDefinition的实现类，除了bean的id和name，bean的各种属性可以在这里面找到
+
+`org.springframework.beans.factory.support.AbstractBeanDefinition`
+
+## DefaultListableBeanFactory 类
+
+容器底层用DefaultListableBeanFactory，即实现了BeanDefinitionRegistry，又实现了BeanFactory
+
+它是在我们实例化 AnnotationConfigApplicationContext 的时候，由构造器调用父类构造器去实例化的，主要是GenericApplicationContext
+
+`public class AnnotationConfigApplicationContext extends GenericApplicationContext implements AnnotationConfigRegistry`
+
+在构造器中实例化，所以上下文已经对beanFactory成员变量完成初始化了
+
+```java
+public GenericApplicationContext() {
+		this.beanFactory = new DefaultListableBeanFactory();
+	}
+```
+
+全类名: `org.springframework.beans.factory.support.DefaultListableBeanFactory`
+
+BeanFactory接口的实现，有几个重要的属性和方法是需要关注的
+
+该成员变量存储bean名称到definition的映射
+
+```java
+/** Map of bean definition objects, keyed by bean name. */
+	private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
+```
+
+registerBeanDefinition用来向beanDefinitionMap注册beanDefinition，方法的逻辑不复杂，去掉各种校验核心代码也就几行
+
+```java
+	//---------------------------------------------------------------------
+	// Implementation of BeanDefinitionRegistry interface
+	//---------------------------------------------------------------------
+
+	@Override
+	public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition)
+			throws BeanDefinitionStoreException {
+
+		Assert.hasText(beanName, "Bean name must not be empty");
+		Assert.notNull(beanDefinition, "BeanDefinition must not be null");
+
+		if (beanDefinition instanceof AbstractBeanDefinition) {
+			try {
+				((AbstractBeanDefinition) beanDefinition).validate();
+			}
+			catch (BeanDefinitionValidationException ex) {
+				throw new BeanDefinitionStoreException(beanDefinition.getResourceDescription(), beanName,
+						"Validation of bean definition failed", ex);
+			}
+		}
+
+		BeanDefinition existingDefinition = this.beanDefinitionMap.get(beanName);
+		if (existingDefinition != null) {
+			if (!isAllowBeanDefinitionOverriding()) {
+				throw new BeanDefinitionOverrideException(beanName, beanDefinition, existingDefinition);
+			}
+			else if (existingDefinition.getRole() < beanDefinition.getRole()) {
+				// e.g. was ROLE_APPLICATION, now overriding with ROLE_SUPPORT or ROLE_INFRASTRUCTURE
+				if (logger.isInfoEnabled()) {
+					logger.info("Overriding user-defined bean definition for bean '" + beanName +
+							"' with a framework-generated bean definition: replacing [" +
+							existingDefinition + "] with [" + beanDefinition + "]");
+				}
+			}
+			else if (!beanDefinition.equals(existingDefinition)) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("Overriding bean definition for bean '" + beanName +
+							"' with a different definition: replacing [" + existingDefinition +
+							"] with [" + beanDefinition + "]");
+				}
+			}
+			else {
+				if (logger.isTraceEnabled()) {
+					logger.trace("Overriding bean definition for bean '" + beanName +
+							"' with an equivalent definition: replacing [" + existingDefinition +
+							"] with [" + beanDefinition + "]");
+				}
+			}
+			this.beanDefinitionMap.put(beanName, beanDefinition);
+		}
+		else {
+			if (hasBeanCreationStarted()) {
+				// Cannot modify startup-time collection elements anymore (for stable iteration)
+				synchronized (this.beanDefinitionMap) {
+					this.beanDefinitionMap.put(beanName, beanDefinition);
+					List<String> updatedDefinitions = new ArrayList<>(this.beanDefinitionNames.size() + 1);
+					updatedDefinitions.addAll(this.beanDefinitionNames);
+					updatedDefinitions.add(beanName);
+					this.beanDefinitionNames = updatedDefinitions;
+					removeManualSingletonName(beanName);
+				}
+			}
+			else {
+				// Still in startup registration phase
+				this.beanDefinitionMap.put(beanName, beanDefinition);
+				this.beanDefinitionNames.add(beanName);
+				removeManualSingletonName(beanName);
+			}
+			this.frozenBeanDefinitionNames = null;
+		}
+
+		if (existingDefinition != null || containsSingleton(beanName)) {
+			resetBeanDefinition(beanName);
+		}
+	}
+```
 
 
 

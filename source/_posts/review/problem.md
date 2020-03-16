@@ -219,3 +219,67 @@ RedisTemplate是框架带的，加了这个后，可以不用Autowired注解访�
 
 这个问题值得探讨，以前全都用Autowired，后来我发现有些人的不用也行，但是不是全部这样的，猜测是有依赖可以
 
+## 基本服务容器配置
+
+### nnginx
+
+docker run -p 80:80 --name nginx \
+-v /Users/liuzhi/mydata/nginx/html:/usr/share/nginx/html \
+-v /Users/liuzhi/mydata/nginx/logs:/var/log/nginx  \
+-d nginx:1.10
+
+docker run -p 8091:80 --name nginx \
+-v /Users/liuzhi/mydata/nginx/html:/usr/share/nginx/html \
+-v /Users/liuzhi/mydata/nginx/logs:/var/log/nginx  \
+-v /Users/liuzhi/mydata/nginx/conf:/etc/nginx \
+-d nginx:1.10
+
+### rabbitmq
+
+docker run -d --name rabbitmq \
+--publish 5671:5671 --publish 5672:5672 --publish 4369:4369 \
+--publish 25672:25672 --publish 15671:15671 --publish 15672:15672 \
+rabbitmq:3.7.15
+
+### elasticsearch
+
+docker run -p 9200:9200 -p 9300:9300 --name elasticsearch \
+-e "discovery.type=single-node" \
+-e "cluster.name=elasticsearch" \
+-d elasticsearch:6.4.0
+
+### mongo
+
+docker run -p 27017:27017 --name mongo-4-2-3 \
+-v /Users/liuzhi/mydata/mongo-4-2-3/db:/data/db \
+-d mongo:4.2.3
+
+### Redis
+
+docker run --name redis-5.7 --requirepass "$123qwe" -p 6377:6379 redis:5.0.7-buster
+
+appendonly yes 开启持久化，数据存储在data目录，所以这个目录要映射出来，不然重启数据丢失，持久化就没有意义
+
+docker run -p 6377:6379 --name redis-5.7 \
+-v /Users/liuzhi/mydata/redis/data:/data \
+-d redis:5.0.7-buster redis-server --appendonly yes --requirepass "qweEX123"
+
+docker run --name redis -d redis:5.0.7-buster -p 6379:6379 --requirepass "qweEX123"
+
+### mysql 启动容器时区配置
+
+docker run --name mysql2 -p 3506:3306 \ 
+-e MYSQL_ROOT_PASSWORD=test123456 \ 
+-e TZ=Asia/Shanghai -d mysql:5.7 \ 
+--default-time_zone='+8:00'
+
+docker run -p 5506:3306 --name mysql-5.7-docker \
+-v /Users/liuzhi/mydata/mysql/log:/var/log/mysql \
+-v /Users/liuzhi/mydata/mysql/data:/var/lib/mysql \
+-v /Users/liuzhi/mydata/mysql/conf:/etc/mysql \
+-e MYSQL_ROOT_PASSWORD=root123  \
+-d mysql:5.7 \
+--default-time_zone='+8:00'
+
+可以用TZ改时区，默认是UTC TZ=Asia/Shanghai 改成CST
+记得一定加default-time_zone

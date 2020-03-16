@@ -332,6 +332,8 @@ public class ClassLodersDemo {
 
 `System.out.println(Runtime.getRuntime().maxMemory());`可以打印，以我的计算机为例，结果是3817865216，差不多就是16GB的四分之一
 
+经过测试，spring boot项目，什么都不配置，每次启动的Heap可用空间会有不同，而且可用保持不变的，下次启动会改变。最大空间固定
+
 ## 参考
 
 https://www.cnblogs.com/duanxz/p/6076662.html

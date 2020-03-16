@@ -9,6 +9,12 @@ mybatis 学习笔记和基础概念，在spring boot中的使用配置总结
 
 <!-- more -->
 
+## JDBC 配置参数
+
+官方地址 https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html
+
+发现很多人都是抄一样的，有很多参数配置了是不对或者无效的，上面是官方参数说明地址，很详细，全文搜索一下你就知道各个参数的作用了
+
 ## 基础
 
 总共有两种使用方式：1. 无配置文件注解版，这种模式就不需要XML文件了；2. 使用传统的XML文件
