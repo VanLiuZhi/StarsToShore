@@ -1,8 +1,14 @@
 ---
 title: Redis在web开发中的运用
 date: 2018-10-22 00:00:00
-tags: [python, note, database]
-categories: database
+author: vanliuzh
+top: false
+cover: false
+toc: true
+mathjax: true
+categories: DataBase
+tags: [Web, Note, DataBase, Python]
+reprintPolicy: cc_by
 ---
 
 REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。

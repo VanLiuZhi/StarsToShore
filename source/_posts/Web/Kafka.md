@@ -5,9 +5,9 @@ author: vanliuzh
 top: false
 cover: false
 toc: true
-mathjax: false
-categories: web开发
-tags: [linux, Note]
+mathjax: true
+categories: Middleware
+tags: [Linux, Note]
 reprintPolicy: cc_by
 ---
 

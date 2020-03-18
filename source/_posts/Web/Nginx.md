@@ -1,8 +1,14 @@
 ---
 title: Nginx 学习笔记
 date: 2018-10-22 00:00:00
-tags: [linux, note]
-categories: web开发
+author: vanliuzh
+top: false
+cover: false
+toc: true
+mathjax: true
+categories: Web
+tags: [Linux, Web, Note]
+reprintPolicy: cc_by
 ---
 
 Nginx (engine x) 是一个高性能的HTTP和反向代理服务，也是一个IMAP/POP3/SMTP服务，静态文件应该交由 Web 服务器来处理，动态内容由应用服务器来处理。另外编译安装可以定制很多东西，有些包管理器安装的版本不能支持HTTPS，需要编译安装才行。关于HTTPS服务，由于自己创建的证书不被认可，浏览器会识别有风险，这就比较尴尬了，可以使用免费的SSL证书服务 [申请Let's Encrypt永久免费SSL证书](https://www.jianshu.com/p/3ae2f024c291)

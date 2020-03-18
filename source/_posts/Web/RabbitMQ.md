@@ -1,8 +1,14 @@
 ---
 title: RabbitMQ 消息队列
 date: 2018-10-22 00:00:00
-tags: [note, linux]
-categories: web开发
+author: vanliuzh
+top: false
+cover: false
+toc: true
+mathjax: true
+categories: Middleware
+tags: [Linux, Web, Note]
+reprintPolicy: cc_by
 ---
 
 MQ全称为Message Queue, 消息队列（MQ）是一种应用程序对应用程序的通信方法。应用程序通过读写出入队列的消息（针对应用程序的数据）来通信，而无需专用连接来链接它们。

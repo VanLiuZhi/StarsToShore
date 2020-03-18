@@ -1,18 +1,17 @@
 ---
-title: Spring framework
-date: 2019-11-01 00:00:00
+title: Spring Framework 与 Spring Boot
+date: 2018-11-01 00:00:00
 author: vanliuzh
 top: true
 cover: false
 toc: true
-mathjax: false
-summary: IoC也称为依赖注⼊(dependency injection, DI)。它是⼀个对象定义依赖关系的过程，也就是说，对象只通过构造函数参数。⼯⼚⽅法的参数或对象实例构造或从⼯⼚⽅法返回后在对象实例上设置的属性来定义它们所使⽤的其他对象
+mathjax: true
 categories: Java
 tags: [Java, Note]
 reprintPolicy: cc_by
 ---
 
-Spring framework
+Spring Framework
 
 <!-- more -->
 
@@ -139,6 +138,412 @@ public class CatBeanPostProcessor implements BeanPostProcessor {
     
 }
 ```
+
+## 使用@Autowired注解警告Field injection is not recommended
+
+这个警告的意思是 `使用变量依赖注入的方式是不被推荐的`，属于不严谨的警告
+
+idea推荐 Always use constructor based dependency injection in your beans. Always use assertions for mandatory dependencies
+
+意思是 `总是使用构造器的方式强制注入`
+
+依赖注入有三种方式：
+
+变量（filed）注入
+构造器注入
+set方法注入
+工厂注入(好像是xml才有的)
+
+```java
+private RestTemplate restTemplate;
+
+// set方法注入，不会有
+@Autowired
+public void setRestTemplate(RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
+}
+
+// 这么写就会有告警
+@Autowired
+private ConsistentHashing consistentHashing;
+
+// 构造器注入就不写了，和set注入类似，构造器注入可以不用@Autowired注解
+```
+
+其实这是一个很值得深挖的问题，因为我发现很多人都这么写，就是用变量注入。原因如下：
+
+1. 这整个问题只是一个规范性的问题，但是好的规范肯定有它存在的意义，后面会说
+2. 以前的idea是不会有这个问题的，新的版本有，说明spring在新版本中加强了规范
+
+要讨论这个问题前，先说2个概念
+
+1. 强制依赖: 在类被加载运行的时候就必须给他的依赖就是强制依赖，构造方法型依赖注入就是强制性，你初始化这个类就要给我这个依赖 
+
+2. 选择依赖: 就是它在初始化的时候IOC不会给你注入，直到你使用到这个依赖时它才会把这个依赖给这个类，比如当你调用这个依赖的方法时才会给你把这个依赖给你注入进去，变量注入和set方法注入都是选择依赖
+
+优点: 变量方式注入非常简洁，没有任何多余代码，非常有效的提高了java的简洁性。即使再多几个依赖一样能解决掉这个问题。
+
+缺点: 不能有效的指明依赖。相信很多人都遇见过一个bug，依赖注入的对象为null，在启动依赖容器时遇到这个问题都是配置的依赖注入少了一个注解什么的，然而这种方式就过于依赖注入容器了，当没有启动整个依赖容器时，这个类就不能运转，在反射时无法提供这个类需要的依赖。
+在使用set方式时，这是一种选择注入，可有可无，即使没有注入这个依赖，那么也不会影响整个类的运行。
+在使用构造器方式时已经显式注明必须强制注入。通过强制指明依赖注入来保证这个类的运行。
+
+另一个方面:
+依赖注入的核心思想之一就是被容器管理的类不应该依赖被容器管理的依赖，换成白话来说就是如果这个类使用了依赖注入的类，那么这个类摆脱了这几个依赖必须也能正常运行。然而使用变量注入的方式是不能保证这点的。
+既然使用了依赖注入方式，那么就表明这个类不再对这些依赖负责，这些都由容器管理，那么如何清楚的知道这个类需要哪些依赖呢？它就要使用set方法方式注入或者构造器注入
+
+总结下: 变量方式注入应该尽量避免，使用set方式注入或者构造器注入，这两种方式的选择就要看这个类是强制依赖的话就用构造器方式，选择依赖的话就用set方法注入
+
+看了上面的一些设计思想，再结合业务聊聊3个的区别
+
+`变量注入和set注入可以不强制依赖，看起来好像这两个是一样，但是set注入有方法啊，可以在方法里面做判断，比如依赖不存在就做其它事情(给一个默认的实例等w)，这样整个类下面的代码逻辑就不会因为选择依赖问题而报错null，没错，说这么多，这句话就是核心，这也是为什么idea不推荐用变量注入，如果注入失败，类后面依赖这个变量的代码都有问题`
+
+`好像依赖注入很好啊，为什么还有构造器注入呢？因为选择依赖不能暴露问题，如果你业务需求就是这个依赖没程序无法执行，那么构造器依赖就可以在程序运行的时候暴露出这个问题了`
+
+`最后一点，是构造器依赖才能做到的，那就是声名final类型，final类型变量要求实例化的时候要赋值，方法注入和set注入都不能实现`
+
+```java
+private RestTemplate restTemplate;
+
+@Autowired
+public RrdtoolController(ConsistentHashing consistentHashing) {
+    this.consistentHashing = consistentHashing;
+}
+
+@Autowired
+public void setRestTemplate(RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
+}
+
+private final ConsistentHashing consistentHashing;
+```
+
+参考原文链接：
+https://blog.csdn.net/zhangjingao/article/details/81094529
+
+https://blog.csdn.net/w57685321/article/details/86244753?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
+
+## 关于属性的含义与idea
+
+可以点击进去查看源码注释
+
+/Users/liuzhi/.m2/repository/org/springframework/boot/spring-boot-actuator-autoconfigure/2.2.2.RELEASE/spring-boot-actuator-autoconfigure-2.2.2.RELEASE.jar!/META-INF/spring-configuration-metadata.json
+
+在这个文件中，有相关的描述，idea就是读取了这个json文件做到属性预读取，和错误判断，比如你写的属性不支持是依据这个json文件来的
+
+另外这个json文件只是一部分，但是整个idea能够判断你的属性是否正确并给出提示，就是依赖于json文件
+
+可以自定义json，让不支持的属性也能被idea识别，该方法可以用来对大型项目做管理，对自定义的属性有严格的规范，这样就能通过idea一眼判断出是否有人写了不符合的属性
+
+## java -jar 和 直接main方法运行的区别
+
+把jar解压后，查看META-INF下的jar信息文件
+
+```
+Manifest-Version: 1.0
+Implementation-Title: kafka-demo
+Implementation-Version: 0.0.1-SNAPSHOT
+Start-Class: com.liuzhidream.kafka.demo.KafkaDemoApplication
+Spring-Boot-Classes: BOOT-INF/classes/
+Spring-Boot-Lib: BOOT-INF/lib/
+Build-Jdk-Spec: 1.8
+Spring-Boot-Version: 2.1.11.RELEASE
+Created-By: Maven Archiver 3.4.0
+Main-Class: org.springframework.boot.loader.JarLauncher
+```
+
+有一个`Start-Class`。jar包的规范是由Main-Class为入口的，如果我们写一个类打成jar，那个带main方法的类就会在`Main-Class`标注，注意这是jar包的规范。这里Main-Class是`org.springframework.boot.loader.JarLauncher`，说明启动类是org.springframework.boot.loader.JarLauncher，这和直接main运行有区别了，spring boot 的jar包是通过JarLauncher去调用Start-Class标注的我们自己的启动类`KafkaDemoApplication`来运行项目的
+
+这是一个扩展点，如果遇到一些问题，可以查看jar包信息是否正确
+
+如果想看源码，要引入spring-boot-loader依赖，`/Users/liuzhi/.m2/repository/org/springframework/boot/spring-boot-loader/2.1.11.RELEASE/spring-boot-loader-2.1.11.RELEASE.jar!/org/springframework/boot/loader/JarLauncher.class` main方法在这，感兴趣可以深入
+
+主要聊的是一些启动方式
+
+mvnspring‐boot:run
+
+boot早期版本可能会是直接启动JarLauncher javaorg.springframework.boot.loader.JarLauncher
+
+## 关于日志的使用和配置
+
+首先先回顾和总结一下各个日志模块，以及它们之间的关系
+
+Java提供的日志类是 `java.util.logging`，创建实例，然后调用对应日志级别的方法就能输出日志了
+
+`Commons Logging`是一个第三方日志库，特点是它可以挂接不同的日志系统，并通过配置文件指定挂接的日志系统
+默认情况下，Commons Loggin自动搜索并使用Log4j（Log4j是另一个流行的日志系统），如果没有找到Log4j，再使用JDK Logging
+
+`Log4j` 聊到了一个Log4j，Log4j是Commons Logging的实现，可以说Commons Logging是一个接口
+
+`SLF4J 和 Logback`，SLF4J类似于Commons Logging，也是一个日志接口，而Logback类似于Log4j，是一个日志的实现
+
+spring boot中主要使用SLF4J 和 Logback
+
+依赖是这个`spring-boot-starter-logging`，已经在父依赖中默认依赖了，所以不需要显示的依赖。日志很少去定制什么，我们关注如何配置就行了
+
+通过spring properties配置或者xml配置，都是为了读取文件给到logback工厂类创建日志，由于配置内容很多，一般都是用xml做，所以最好不要在properties中去设置了，都在xml中设置
+
+当然我们可以去配置日志配置文件的路径
+
+```yaml
+logging:
+  # 指明日志配置文件路径，默认是resource下。从父pom所在的目录加载，可以统一全部的日志配置
+  config: logs/logback-spring.xml
+
+logging:
+  # 指明日志配置文件路径，默认是resource下。从当前项目的classpath下加载，就是resource下
+  config: classpath:logs/logback-spring.xml
+```
+
+### if标签的运用
+
+如果要在xml配置中使用if标签需要加入下面的依赖
+
+```xml
+<dependency>
+    <groupId>org.codehaus.janino</groupId>
+    <artifactId>janino</artifactId>
+    <version>2.6.1</version>
+</dependency>
+```
+
+使用举例
+
+```xml
+<if condition='property("ifOpenConsol").contains("true")'>
+<then>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>${logback.charset}</charset>
+        </encoder>
+        <!--字符串 System.out 或者 System.err ，默认 System.out -->
+        <target>System.out</target>
+    </appender>
+</then>
+</if>
+```
+
+### 如何使用
+
+官方推荐使用的xml名字的格式为：logback-spring.xml而不是logback.xml，至于为什么，因为带spring后缀的可以使用`<springProfile>`这个标签，这样我们就可以一份日志配置满足不同环境，下面是配置示例，包含了详细的注释了
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 日志级别从低到高分为TRACE < DEBUG < INFO < WARN < ERROR < FATAL，如果设置为WARN，则低于WARN的信息都不会输出 -->
+<!-- scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true -->
+<!-- scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟 -->
+<!-- debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false -->
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml" />-->
+
+    <!-- 用来设置上下文名称，每个logger都关联到logger上下文，默认上下文名称为default -->
+    <!-- 可以使用<contextName>设置成其他名字，用于区分不同应用程序的记录。一旦设置，不能修改(这里指的是日志配置有些参数修改后生效，但是不能改这个)-->
+    <contextName>logback</contextName>
+    <!-- spring变量的值通过springProperty注入给logging的context-->
+    <springProperty scop="context" name="spring.application.name" source="spring.application.name" defaultValue="kafka-service"/>
+    <!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量 -->
+    <property name="log.path" value="logs/${spring.application.name}"/>
+
+    <!-- 彩色日志 -->
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+    <!-- 彩色日志格式 -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <!-- 其它主题风格 -->
+    <!-- <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}) %boldYellow([%thread]) %highlight(%-5level) %boldGreen(%logger{50}) - %msg%n" />-->
+    <!--文件-黑白-->
+    <!-- <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n" /> -->
+
+    <!-- <appender>：负责写日志的组件，它有两个必要属性name和class。name指定appender名称，class指定appender的全限定名 -->
+    <!-- class为ch.qos.logback.core.ConsoleAppender 把日志输出到控制台 -->
+    <!-- class为ch.qos.logback.core.FileAppender 把日志添加到文件 -->
+    <!-- class为ch.qos.logback.core.rolling.RollingFileAppender 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 -->
+
+    <!--输出到控制台-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <!-- 设置字符集 -->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <!--输出到文件-->
+
+    <!-- 时间滚动输出 level为 DEBUG 日志，本配置注释比较详细，作为配置参考 -->
+    <!-- 日志归档就是先把日志输出到<file>${log.path}/log_debug.log</file>记录的位置，满足条件的时候，截取该部分归档到 -->
+    <!-- <fileNamePattern>${log.path}/debug/log-debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>中 -->
+    <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">¬
+        <!-- 正在记录的日志文件的路径及文件名 -->
+        <file>${log.path}/log_debug.log</file>
+        <!-- 如果 true，事件被追加到现存文件尾部。如果 false，清空现存文件.默认为 true -->
+        <append>true</append>
+        <!--日志文件输出格式-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset> <!-- 设置字符集 -->
+        </encoder>
+        <!-- 日志记录器的滚动策略，按日期，按大小记录，不同的class实现不同的策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志归档 -->
+            <fileNamePattern>${log.path}/debug/log-debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!--日志文件保留天数-->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <!-- 此日志文件只记录debug级别的，通过配置onMatch和onMismatch实现，匹配的留下，不匹配的拒绝，所以只留下debug基本的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>debug</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 时间滚动输出 level为 INFO 日志 -->
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 正在记录的日志文件的路径及文件名 -->
+        <file>${log.path}/log_info.log</file>
+        <!--日志文件输出格式-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天日志归档路径以及格式 -->
+            <fileNamePattern>${log.path}/info/log-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!--日志文件保留天数-->
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <!-- 此日志文件只记录info级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 时间滚动输出 level为 WARN 日志 -->
+    <appender name="WARN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 正在记录的日志文件的路径及文件名 -->
+        <file>${log.path}/log_warn.log</file>
+        <!--日志文件输出格式-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+        </encoder>
+        <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/warn/log-warn-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!--日志文件保留天数-->
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <!-- 此日志文件只记录warn级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>warn</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 时间滚动输出 level为 ERROR 日志 -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 正在记录的日志文件的路径及文件名 -->
+        <file>${log.path}/log_error.log</file>
+        <!--日志文件输出格式-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+        </encoder>
+        <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/error/log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!--日志文件保留天数-->
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <!-- 此日志文件只记录ERROR级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+    <!-- <logger>用来设置某一个包或者具体的某一个类的日志打印级别、以及指定<appender> -->
+    <!-- <logger>仅有一个name属性，一个可选的level和一个可选的addtivity属性 -->
+    <!-- name:      用来指定受此logger约束的某一个包或者具体的某一个类 -->
+    <!-- level:     用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF -->
+    <!--            还有一个特俗值INHERITED或者同义词NULL，代表强制执行上级的级别 -->
+    <!--            如果未设置此属性，那么当前logger将会继承上级的级别 -->
+    <!-- addtivity: 是否向上级logger传递打印信息。默认是true-->
+
+    <!--<logger name="org.springframework.web" level="info"/>-->
+    <!--<logger name="org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor" level="INFO"/>-->
+
+    <!--
+        使用mybatis的时候，sql语句是debug下才会打印，而这里我们只配置了info，所以想要查看sql语句的话，有以下两种操作：
+        第一种把<root level="info">改成<root level="DEBUG">这样就会打印sql，不过这样日志那边会出现很多其他消息
+        第二种就是单独给dao下目录配置debug模式，这样配置sql语句会打印，其他还是正常info级别
+     -->
+
+    <!--
+        root节点是必选节点，用来指定最基础的日志输出级别，只有一个level属性
+        level:用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF
+        不能设置为INHERITED或者同义词NULL。默认是DEBUG
+        可以包含零个或多个元素，标识这个appender将会添加到这个logger
+        就是root节点是基本，通过配置appender-ref把它们整合到一个logger中，或者单独配置logger
+        <root>它也是<logger>元素，但是它是根logger,是所有<logger>的上级。只有一个level属性，因为name已经被命名为"root"，且已经是最上级了
+    -->
+
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="DEBUG_FILE"/>
+        <appender-ref ref="INFO_FILE"/>
+        <appender-ref ref="WARN_FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </root>
+
+    <!--开发环境:打印控制台-->
+    <springProfile name="dev">
+        <logger name="com.liuzhidream.kafka.demo" level="debug"/>
+    </springProfile>
+
+    <!--生产环境:输出到文件-->
+    <!--生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 -->
+    <springProfile name="pro">
+        <root level="info">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="DEBUG_FILE"/>
+            <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+            <appender-ref ref="WARN_FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>
+```
+
 
 ## InitializingBean接口
 

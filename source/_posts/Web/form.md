@@ -1,14 +1,15 @@
 ---
 title: FormData 表单对象
 date: 2019-08-06 11:31:00
-tags: [web]
-categories: web开发
+author: vanliuzh
+top: false
+cover: false
 toc: true
+mathjax: true
+categories: Web
+tags: [Web]
+reprintPolicy: cc_by
 ---
-
-表单请求类型
-
-<!-- more -->
 
 ## 基础
 

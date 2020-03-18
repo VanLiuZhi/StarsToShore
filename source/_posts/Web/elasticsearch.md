@@ -1,9 +1,14 @@
 ---
-title: elasticsearch 全文搜索解引擎在 web 开发中的运用
+title: Elasticsearch 全文搜索解引擎在 Web 开发中的运用
 date: 2019-01-11 12:26:46
-tags: [python, web]
-categories: web开发
+author: vanliuzh
+top: false
+cover: false
 toc: true
+mathjax: true
+categories: Middleware
+tags: [Python, Note]
+reprintPolicy: cc_by
 ---
 
 搜索服务是Web开发中非常常见的服务，一般比较基本的会直接访问到数据库，但是如果要查询多个数据库才能得到搜索结果，这无疑加大了数据库的负担，

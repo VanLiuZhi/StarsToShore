@@ -1,8 +1,14 @@
 ---
 title: RESTFulAPI
 date: 2018-10-22 00:00:00
-tags: [python, note]
-categories: web开发
+author: vanliuzh
+top: false
+cover: false
+toc: true
+mathjax: true
+categories: Web
+tags: [Web, Note]
+reprintPolicy: cc_by
 ---
 
 一种接口风格，使用一种通用的风格，在团队开发中，也便于沟通。

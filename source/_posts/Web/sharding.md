@@ -2,12 +2,12 @@
 title: 离散分片算法研究
 date: 2020-01-05 00:00:00
 author: vanliuzh
-top: true
+top: false
 cover: false
 toc: true
-mathjax: false
+mathjax: true
 categories: Web
-tags: [Web, Note]
+tags: [Web, Note, Algorithm]
 reprintPolicy: cc_by
 ---
 

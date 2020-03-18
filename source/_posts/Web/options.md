@@ -1,9 +1,14 @@
 ---
 title: 前后端分类中OPTIONS请求，如何避免OPTIONS请求
 date: 2019-08-06 11:31:00
-tags: [web]
-categories: web开发
+author: vanliuzh
+top: false
+cover: false
 toc: true
+mathjax: true
+categories: Web
+tags: [Web, Note]
+reprintPolicy: cc_by
 ---
 
 如何避免OPTIONS请求

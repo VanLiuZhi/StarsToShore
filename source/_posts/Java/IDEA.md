@@ -25,6 +25,10 @@ idea提供了很强大的错误提示功能，但是有些不一定是错误的�
 
 ![image](/images/Java/java-idea-inspections.png)
 
+## idea 注释调整
+
+我们在注释代码的时候，发现注释顶格了，这样的风格特别不好看，可以去editor code style中调整，不用语言用不同配置，找到code generatic，修改comment code配置
+
 ## 热部署
 
 静态语言不像动态语言，要实现热部署要程序和IDEA配合才行

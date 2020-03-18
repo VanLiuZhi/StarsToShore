@@ -408,6 +408,8 @@ consul agent -dev
 
 关于动态刷新: 这里我有个疑问，假如是通过`@Value`读取的配置文件，那么刷新后用新的值，确实没问题，但是像数据库配置这种，刷新后应该是要重启才行吧(简单属性和比较复杂的配置属性)，未完待续
 
+数据库配置是已经装配好bean工厂了，理论需要重启，没去式了。config服务会缓存配置信息，所以修改后其它服务取到的都是未修改之前的数据，所以热刷新还是有必要的，开发阶段就不用一直重启配置服务了(因为jrebel无法对资源文件监控，所以还是要重启，推荐尽快跟上热刷新)
+
 实现动态刷新:
 1. 引入依赖
 2. 开启监控点
@@ -441,6 +443,43 @@ config-service 的client配置的连接service端的配置文件要写bootstrap�
 
 当我们在代码中使用配置文件的值绑定到属性的时候，service端有用service，没有用本地，本地没有报错
 
+## spring boot admin
+
+用于管理和监控SpringBoot应用程序
+
+应用程序作为Spring Boot Admin Client向为Spring Boot Admin Server注册（通过HTTP）或使用SpringCloud注册中心（例如Eureka，Consul）发现
+UI是的AngularJs应用程序，展示Spring Boot Admin Client的Actuator端点上的一些监控
+
+如何使用
+
+1. 首先我们要单独部署一个服务，这个服务就是admin的服务，作为service端，其它spring boot应用作为client端。依赖spring-boot-admin-starter-server，然后启动类加上注解 @EnableAdminServer
+2. 其它spring boot应用作为client端加入到admin服务中，这里需要注意，具体如下
+
+如果没用注册中心，客户端是要配置下面的参数的，就是通过http去注册
+
+```yaml
+boot:
+    admin:
+      client:
+        url: http://${ADMIN_HOST:localhost}:${ADMIN_PORT:8520}/admin
+        username: ${ADMIN_USERNAME:admin}
+        password: ${ADMIN_PASSWORD:exVan1234}
+        instance:
+          service-base-url: http://${USER_SERVICE_HOST:localhost}:${server.port}
+          metadata:
+            tags:
+              environment: dev
+```
+
+如果配置了注册中心，可以不需要这个配置，甚至依赖都不需要。但是这种情况发现admin有些许差异
+
+推荐：使用注册中心的话，也把依赖和配置加上
+
+`注意`: Spring Boot Admin 不是 Spring Boot starter 风格的，需要注意版本号，启动失败，大概率是版本不兼容的问题
+
+关于存储: 发现监控服务的一些配置添加后，下次启动还有效，换浏览器无效，猜测是用了浏览器来缓存配置和添加的监控点设置吧，不深入了
+
+关于security: 配置后需要鉴权才能访问admin服务
 
 ## 触发自我保护机制
 

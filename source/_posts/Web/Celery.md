@@ -1,8 +1,14 @@
 ---
 title: Celery 在 web 开发中的运用
 date: 2018-10-22 00:00:00
-tags: [python, note]
-categories: web开发
+author: vanliuzh
+top: false
+cover: false
+toc: true
+mathjax: true
+categories: Middleware
+tags: [Python, Note]
+reprintPolicy: cc_by
 ---
 
 Celery - Distributed Task Queue。要理解 Celery 本身不是任务队列，它是管理分布式任务队列的工具，或者换一种说法，它封装好了操作常见任务队列的各种操作，我们用它可以快速进行任务队列的使用与管理，当然你也可以自己看 rabbitmq 等队列的文档然后自己实现相关操作都是没有问题的。

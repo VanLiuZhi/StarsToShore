@@ -1,8 +1,14 @@
 ---
 title: http-protocol 协议
 date: 2018-10-22 00:00:00
-tags: [http, note]
-categories: web开发
+author: vanliuzh
+top: false
+cover: false
+toc: true
+mathjax: true
+categories: Web
+tags: [Http, Note]
+reprintPolicy: cc_by
 ---
 
 超文本传输协议（HTTP，HyperText Transfer Protocol)是互联网上应用最为广泛的一种网络协议。所有的WWW文件都必须遵守这个标准。

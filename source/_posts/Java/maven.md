@@ -258,6 +258,39 @@ ${project.build.outputDirectory} 构建过程输出目录，缺省为target/clas
 </build>
 ```
 
+pluginManagement 的作用，就是声名，和依赖类似，一般是父pom来定义，子pom就可以直接用这个定义了
+
+```xml
+<pluginManagement>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.1</version>
+            <configuration>
+                <attach>true</attach>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>jar</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</pluginManagement>
+
+<!-- 子pom中 -->
+<plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+    </plugin>
+</plugins>
+```
+
 ## 关于测试
 
 maven测试为 default 生命周期中的test阶段

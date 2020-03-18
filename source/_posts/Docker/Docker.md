@@ -471,9 +471,16 @@ ff02::2	ip6-allrouters
 
 这里的名称被编码了，在程序中，通过名称来访问其它服务即可。
 
+## 修改参数解决拉取镜像超时问题
 
+vim /etc/profile
 
+export DOCKER_CLIENT_TIMEOUT=500
+export COMPOSE_HTTP_TIMEOUT=500
 
+source /etc/profile
+
+默认是60秒，可以改长一点
 
 
 

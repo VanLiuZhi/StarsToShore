@@ -1,8 +1,14 @@
 ---
-title: https ssl 证书
+title: Https SSL 证书
 date: 2018-10-22 00:00:00
-tags: [http, note]
-categories: web开发
+author: vanliuzh
+top: false
+cover: false
+toc: true
+mathjax: true
+categories: Web
+tags: [Web, Note, Http]
+reprintPolicy: cc_by
 ---
 
 使用https协议需要证书，可以自己创建，不足之处是不被认可，加密效果是一样的。本文记录一次ssh自生成的步骤，由于已经有免费且可以被认可的证书了，推荐使用该种方式

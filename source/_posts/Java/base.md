@@ -6,7 +6,6 @@ top: true
 cover: false
 toc: true
 mathjax: false
-summary: Java语言作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程
 categories: Java
 tags: [Java, Note]
 reprintPolicy: cc_by
