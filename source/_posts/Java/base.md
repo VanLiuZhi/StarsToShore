@@ -988,6 +988,28 @@ int n = list.get(i).intValue();
 
 装箱和拆箱是编译器认可的，而不是虚拟机。编译器在生成类的字节码时，插入必要的方法调用。虚拟机只是执行这些字节码。
 
+### Integer的自动装箱
+
+```java
+Integer f1 = 100, f2 = 100, f3 = 150, f4 = 150;
+System.out.println(f1 == f2);
+System.out.println(f3 == f4);
+```
+
+上面的代码，由于是引用比较，会认为都是false，但是f1 == f2是true，原因是:
+
+如果整型字面量的值在-128 到 127 之间，那么不会 new 新的 Integer对象，而是直接引用常量池中的 Integer 对象
+
+具体可以追溯到源码，自动装箱后调用valueof，IntegerCache做了判断，字面量的值在-128 到 127 之间
+
+```java
+public static Integer valueOf(int i) {
+        if (i >= IntegerCache.low && i <= IntegerCache.high)
+            return IntegerCache.cache[i + (-IntegerCache.low)];
+        return new Integer(i);
+    }
+```
+
 ### 数组
 
 数组声明方法：

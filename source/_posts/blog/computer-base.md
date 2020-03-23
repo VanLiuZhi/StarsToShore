@@ -99,3 +99,29 @@ RTTI（Run-Time Type Identification)，通过运行时类型信息程序能够�
 `TTL  Time to live` 域名解析在DNS服务器中存留时间        
 
 实际指转发的最大跳数，主机发送ip包的时候，在网络中转发，转发一次该值减1，为了防止无限转发和循环而设置这个值。如果变成1还没到目标地址，即为超时
+
+## 月份复习
+
+january 一月 简称 Jan
+
+February 二月 简称 Feb
+
+March 三月 简称 Mar
+
+April 四月 简称 Apr
+
+May 五月 简称 May
+
+June 六月 简称 Jun
+
+July 七月 简称 Jul
+
+August 八月 简称 Aug
+
+Septemper 九月 简称 Sep
+
+October 十月 简称 Oct
+
+November 十一 月 简称 Nov
+
+December 十二月 简称 Dec

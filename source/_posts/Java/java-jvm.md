@@ -339,6 +339,28 @@ public class ClassLodersDemo {
 https://www.cnblogs.com/duanxz/p/6076662.html
 https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/parallel.html#default_heap_size
 
+## 常量池、运行时常量池、字符串常量池
 
+经常会看到这些概念，这里做个总结
 
+`常量池`：即class文件常量池，是class文件的一部分，用于保存编译时确定的数据
 
+class文件常量池在元空间中
+
+![image](/images/Java/Java-jvm-const.png)
+
+可以用命令javap -verbose class文件(比如Test) Classfile class文件地址 查看
+
+`运行时常量池`：
+
+Java语言并不要求常量一定只能在编译期产生，运行期间也可能产生新的常量，这些常量被放在运行时常量池中。
+
+类加载后，常量池中的数据会在运行时常量池中存放！
+
+这里所说的常量包括：基本类型包装类（包装类不管理浮点型，整形只会管理-128到127，不在这个范围的包装类型会创建新的对象，在堆空间）和String（也可以通过String.intern()方法可以强制将String放入常量池）
+
+`字符串常量池`：
+
+HotSpot VM里，记录interned string的一个全局表叫做StringTable，它本质上就是个HashSet<String>。注意它只存储对java.lang.String实例的引用，而不存储String对象的内容。就是我们创建String包装类型，如果是同样的内容，那么引入指向同一个地方，就在字符串常量池存储引用，当然数据本身是在堆中分配的
+
+jdk 1.7后，移除了方法区(可能这么说也不规范，方法区是虚拟机规范的称呼，应该说是移除永久代吧)，`运行时常量池`在`方法区`里，`字符串常量池`在`堆`中

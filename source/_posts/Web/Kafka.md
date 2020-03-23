@@ -206,5 +206,40 @@ public interface ConsumerRebalanceListener{
 
 每个consumer会定期将自己消费分区的offsets提交给kafka内部topic:consumer_offsets，提交过去 的时候，key是consumerGroupId+topic+分区号，value就是当前offset的值，kafka会定期清理topic里的消息，最后就保留最新的那条数据。因为consumer_offsets可能会接收高并发的请求，kafka默认给其分配50个分区(可以通过offsets.topic.num.partitions设置)，这样可以通过加机器的方式抗大并发
 
+## 关于不信任包的问题
 
-## 时间轮
+先大致给下源码流程
+
+在序列化中的deserialize方法，this.typeMapper.toJavaType(headers)该语句
+
+```java
+@Override
+	public T deserialize(String topic, Headers headers, byte[] data) {
+		if (data == null) {
+			return null;
+		}
+		ObjectReader deserReader = null;
+		if (this.typeMapper.getTypePrecedence().equals(TypePrecedence.TYPE_ID)) {
+			JavaType javaType = this.typeMapper.toJavaType(headers);
+			if (javaType != null) {
+				deserReader = this.objectMapper.readerFor(javaType);
+			}
+		}
+```
+
+toJavaType是接口的方法，实现`org.springframework.kafka.support.converter.DefaultJackson2JavaTypeMapper#getClassIdType`，主要是这个方法中
+
+```java
+if (!isTrustedPackage(classId)) {
+					throw new IllegalArgumentException("The class '" + classId
+							+ "' is not in the trusted packages: "
+							+ this.trustedPackages + ". "
+							+ "If you believe this class is safe to deserialize, please provide its name. "
+							+ "If the serialization is only done by a trusted source, you can also enable "
+							+ "trust all (*).");
+				}
+```
+
+这个地方判断
+
+解决办法，Spring中可以去设置它，如果是写一个普通类，可能需要我们继承序列化类去重新一些参数，把新的序列化类给consumer

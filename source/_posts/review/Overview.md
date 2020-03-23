@@ -16,8 +16,6 @@ review
 2. 去重表
 3. 状态机
 
-JVM 运行时常量池，字符串常量到底是存储在堆还是元空间，原来是常量和静态变量存储在堆，但是部分不在，比如字符串常量
-
 创建多线程有几种方式？
 
 UDP是基于报文发送的，从UDP的帧结构可以看出，在UDP首部采用了16bit来指示UDP数据报文的长度，因此在应用层能很好的将不同的数据报文区分开，从而避免粘包和拆包的问题。
@@ -42,6 +40,16 @@ RMI（Remote Method Invocation）远程方法调用。能够让在客户端Java�
 RPC（Remote Procedure Call Protocol）远程过程调用协议，通过网络从远程计算机上请求调用某种服务。它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。 使用代表：Dubbo
 
 CAP原则
+一致性（Consistency）、可用性（Availability）、分区容错性（Partition tolerance）
+
+BASE是Basically Available（基本可用）、Soft state（软状态）和Eventually consistent（最终一致性）三个短语的简写
+
+ACID
+原子性（atomicity)
+一致性（consistency)
+隔离性（isolation）
+持久性（durability）
+
 
 1. 传统集中式代理:基于反向代理的中心化架构
 2. 客户端嵌入式代理:嵌入应用内部的去中心化架构
