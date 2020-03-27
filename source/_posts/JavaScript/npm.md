@@ -29,3 +29,4 @@ npm是node的包管理工具，不建议使用任何第三方的工具，也不�
 | npm view jquery versions      | 查看模块版本号，这里举例的是jQuery
 
 要更新某个包到最新版本，直接安装即可 npm install element-ui 直接把当前包安装到最新版本
+

@@ -248,6 +248,14 @@ docker run -p 9200:9200 -p 9300:9300 --name elasticsearch \
 -e "cluster.name=elasticsearch" \
 -d elasticsearch:6.4.0
 
+docker run -p 9201:9200 --name elasticsearch2 \
+-d elasticsearch:5.2.2
+
+docker run -p 9200:9200 -p 9300:9300 --name elasticsearch-5 \
+-e "discovery.type=single-node" \
+-e "cluster.name=elasticsearch" \
+-d elasticsearch:5.2.2
+
 ### mongo
 
 docker run -p 27017:27017 --name mongo-4-2-3 \

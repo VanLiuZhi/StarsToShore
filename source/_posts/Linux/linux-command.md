@@ -33,9 +33,12 @@ scp命令 （主机和服务器相互拷贝数据，该命令要求开启scp服�
 差不多都是这个套路，cp也是
 
 本地weixin_ip，服务器没有weixin_ip，不过这种情况，第二次拷贝是不会覆盖原来的
-scp -r /Users/liuzhi/PycharmProjects/weixin_ip root@121.41.87.22:/root/app/weixin_ip
+scp -r /Users/liuzhi/PycharmProjects/weixin_ip root@ :/root/app/weixin_ip
 覆盖服务器文件夹
-scp -r /Users/liuzhi/PycharmProjects/weixin_ip root@121.41.87.22:/root/app/
+scp -r /Users/liuzhi/PycharmProjects/weixin_ip root@1.1.1.1:/root/app/
+
+scp -r /Users/liuzhi/Downloads/DBUtils-1.3.tar.gz zdhadmin@:/app
+
 
 ## cp
 

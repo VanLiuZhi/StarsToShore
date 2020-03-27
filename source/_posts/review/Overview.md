@@ -111,7 +111,35 @@ Nginx7层，硬件4层
     <optional>true</optional>
 </dependency>
 
-# problem
+# problem 遇到的问题大汇总
 
+1. 泊松分布
 泊松分布的参数λ是单位时间(或单位面积)内随机事件的平均发生次数。 泊松分布适合于描述单位时间内随机事件发生的次数。
 
+2. concurrentHashMap锁分段的思想是怎么做的？
+
+3. CAS算法是什么？
+参考 https://zhuanlan.zhihu.com/p/93418208
+
+3. 下面的main中，调用方法A创建了线程，然后执行方法B，谁先执行？
+
+```java
+public static void main(String[] args) throws Exception {
+        instance = new Instance();
+        Thread thread = new Thread(instance);
+        thread.start(); // run 中执行方法A
+        instance.BMethod();
+    }
+```
+正常情况下，方法B先执行。主线程启动起来，因为创建线程等的资源消耗，所以主线程会先执行，然后才到子线程，也不排斥代码复杂的情况下，子线程准备就绪，先main线程执行
+
+4. 操作系统中，CPU竞争有很多种策略。Unix系统使用的是时间片算法，而Windows则属于抢占式的
+
+5. Thread.Sleep() Thread.Sleep(0)
+
+sleep是当前线程告诉操作系统放弃cpu资源竞争多长时间，参数0的话，触发操作系统立刻重新进行一次CPU竞争，让其它线程有机会获取到CPU资源
+
+6. 如何用jstack分析程序？
+https://www.jianshu.com/p/dee9d02f11b3
+
+7. 如何用Java Dump分析堆内存？
