@@ -23,7 +23,7 @@ swap: 在k8s中最好禁用swap，以免发生集群无法调度问题
 
 flannel: 用来通信的网络插件。要符号CNI规范
 
-## k8s 用的的镜像
+## k8s 用的的镜像示例
 
 master节点
 
@@ -91,3 +91,7 @@ IfNotPresent
 
 Never
 只使用本地镜像，如果本地不存在，则pod运行失败
+
+## 固定node发布
+
+deploy上用选择器，就可以固定在一个node上

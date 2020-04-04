@@ -165,7 +165,7 @@ terminated 终止
 状态转换流程
 
 1. 线程创建，进入new状态
-2. 调用 start 或者 run 方法，进入 runnable 状态
+2. 调用 start 方法，进入 runnable 状态
 3. JVM 按照线程优先级及时间分片等执行 runnable 状态的线程。开始执行时，进入 running 状态
 4. 如果线程执行 sleep、wait、join，或者进入 IO 阻塞等。进入 wait 或者 blocked 状态
 5. 线程执行完毕后，线程被线程队列移除。最后为 terminated 状态

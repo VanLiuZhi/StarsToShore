@@ -208,7 +208,66 @@ public interface ConsumerRebalanceListener{
 
 ## 关于不信任包的问题
 
-先大致给下源码流程
+这个问题出现的原因是Java序列化安全考虑，下面按照出现情况和解决方法来总结一下
+
+官方参考地址: https://docs.spring.io/spring-boot/docs/2.0.4.RELEASE/reference/htmlsingle/#boot-features-kafka-extra-props
+
+1. 上面也说了是Java序列化安全的考虑，在producer发送数据的时候，如果是对象，默认是要发送对象的头信息。所以如果你关闭这个配置，消费者就不会做安全校验了
+
+配置这个属性关闭 `spring.json.add.type.headers=false`
+
+2. 消费者做不做安全校验，都需要指定对象类型，否则无法序列化
+
+```yaml
+properties:
+        spring:
+          json:
+            value:
+              default:
+                type: com.xc.mysql.information.entity.Processlist
+```
+但是我们一般在工厂中指定。默认是没有配置的，可以修改这个配置
+
+场景举例：
+
+生产者关闭headers，消费者可以不用配置只指明默认对象类型就可以反序列化到数据(跨包也可以)
+
+如果你关闭了headers=false，那么你消费者一定要配置默认类型，否则会报错没有默认类型(你在工厂中配和yaml中配置都是可以的，本质是一样的)
+
+在关闭了headers后，不需要配置安全包了，只要能正确解析对象类型就行
+
+
+3. 在分析了上面2种情况后，再来说说发生不信任包的情况
+
+会发生不信任包，原因是包路径没加入到一个信任列表。如果是消费者和生产者都在一个包内，不会发生这种情况(也不是绝对的，主要是看你包结构，取决于代码判断)
+
+消费者和生产者跨包，就是我们要处理的问题
+
+```yaml
+spring:
+	json:
+	type:
+		mapping: com.liuzhidream.kafka.demo.model.ProcesslistModel:com.xc.mysql.information.model.ProcesslistModel
+	trusted:
+		packages: com.liuzhidream.kafka.demo.model
+```
+
+配置如上
+
+包信任默认是当前包，可以去看源码
+
+mapping的配置: 就是跨包要解决的，需要配置，把消费者的对象映射到生产者这边。
+举例: 消费者和生产者是两个不同包下的，我们可以通过映射，把外部的包映射为当前的包，这样就是安全的了(因为当前包是安全的，trusted可以不用配置了)
+
+trusted就是信任包: 有些时候可能是不需要mapping的，看你包结构(比如都是一个path路径下)，这个时候我们需要配置信任包
+
+基本这两个配置能包括了所有的情况了，是不是跨包，如果不是跨包，是不是没加入到信任包
+
+4. 还有一点，就是Spring配置是读取yaml设置然后给到kafak，普通kafka也是这么配置的，具体可以看看官网
+
+5. 源码和总结，主要就是网上看了很多都没说到点上，然后我跟了源码其实很容易就解决问题了
+
+先大致给下源码流程，mapping的没给出，如果出现了这个问题，根据调用栈可以去跟下
 
 在序列化中的deserialize方法，this.typeMapper.toJavaType(headers)该语句
 
@@ -240,6 +299,4 @@ if (!isTrustedPackage(classId)) {
 				}
 ```
 
-这个地方判断
-
-解决办法，Spring中可以去设置它，如果是写一个普通类，可能需要我们继承序列化类去重新一些参数，把新的序列化类给consumer
+这个地方判断信任包

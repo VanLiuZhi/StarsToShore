@@ -83,7 +83,96 @@ rs = list(parallel_bulk(client, objects,
 
 举例了parallel_bulk的用法，这里需要迭代才会执行，使用list
 
-## 新内容
+## 版本总结
 
 es 7.0 对应  head 插件 5.x  这是我上次的坑 如果不用5.x 的head 会连不上es
+
+es7可以不指定index来搜索了，默认index是_doc，而7一下还是要通过index来区别数据
+
+es5可以指定多个type在一个index中，不建议这么做，es7不能再指定多个type
+
+可以 用*模糊index查询 ，比如 `abc-*` * 可以是用户表示，这样就全文查询所有用户了
+
+## restful 接口实例
+
+就是用_search 然后带上请求体，请求体由es特定的语法组成
+es7可以不指定index来搜索了，默认index是_doc，而7一下还是要通过index来区别数据
+
+- 查询所有的index
+
+curl -X GET 'http://125.124.23.121:9200/_cat/indices?v'
+curl -X GET 'http://127.0.0.1:9200/_cat/indices?v'
+
+- 查询所有的mapping，type
+
+curl 'localhost:9200/_mapping?pretty=true'
+
+- 查询所有记录
+
+curl 'localhost:9200/traffic-zjyzsd/edrtraffic/AW5oGoTioA_5X_ZtZ_53?pretty=true'
+curl 'localhost:9200/my_index/my_index2/_search?pretty=true'  /索引/type   不指定索引就是查询全部类型
+
+1. 使用match匹配，accounts索引下，type是person， 字段 是 desc ，字段内容包含 “软件的”
+
+$ curl 'localhost:9200/accounts/person/_search'  -d '
+{
+  "query" : { "match" : { "desc" : "软件" }}
+}'
+
+2. 默认是10条记录，from指定开始位置，默认是0，从头开始，以此做分页
+
+$ curl 'localhost:9200/accounts/person/_search'  -d '
+{
+  "query" : { "match" : { "desc" : "管理" }},
+  "from": 1,
+  "size": 1
+}'
+
+3. Elastic 认为它们是or关系，就是满足一个就行
+
+$ curl 'localhost:9200/accounts/person/_search'  -d '
+{
+  "query" : { "match" : { "desc" : "软件 系统" }}
+}'
+
+4. 如果要执行多个关键词的and搜索，必须使用布尔查询。
+
+$ curl 'localhost:9200/accounts/person/_search'  -d '
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "desc": "软件" } },
+        { "match": { "desc": "系统" } }
+      ]
+    }
+  }
+}'
+
+5. 根据id查询记录
+
+curl 'localhost:9200/accounts/person/1?pretty=true'
+
+- 导入数据
+
+curl -H 'Content-Type: application/x-ndjson'  -s -XPOST localhost:9200/_bulk --data-binary edr-test.json
+
+- 多条件查询
+
+curl 'localhost:9200/edr-*/edrdoc/_search?pretty=true'  -d '{"size":2, "query": {"bool": {"must": [{ "term": { "eventId" : "6002" } },{"term": { "kid":"KB3000483" } }]}}}'
+
+- 单条件查询，match和term
+
+curl 'localhost:9200/edr-*/edrdoc/_search?pretty=true' -d '{"query" : { "match" : { "kid" : "KB3000483" }}}'
+curl 'localhost:9200/edr-*/edrdoc/_search?pretty=true' -d '{"query" : { "term" : { "eventId" : "6002" }}}'
+
+- 时间范围查询
+
+curl 'localhost:9200/edr-*/edrdoc/_search?pretty=true' -d '{"size":10, "query": {"range": { "uploadtime": { "gte":1578436338552, "lte": 1578436338559} } }}'
+
+- 删除数据，条件删除和匹配删除
+
+curl -X Delete 'localhost:9200/edr-usertest/edrdoc/AXEvV--mxoIOfpIMeV0J
+
+curl -X POST 'localhost:9200/edr-usertest/edrdoc/_delete_by_query?pretty=true' -d '{"query": { "term" : { "id" : "9856519d-cd0b-486f-b8a8-17363159315f" }}}'
 

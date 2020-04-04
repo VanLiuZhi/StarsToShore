@@ -109,3 +109,5 @@ mysql> flush privileges;
 到这里密码已经修改成功，
 
 mysql -u root -p
+
+mysql -udbappwgs -p -h127.0.0.1 有些时候要知道host才能连接上
