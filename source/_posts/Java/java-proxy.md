@@ -56,7 +56,7 @@ class UserDao implements IUserDao {
 //public int delete(Integer pk) {
 //    System.out.println("transaction staring");
 //    System.out.println("删除的数据id是" + pk);
-//    System.out.println("transaction staring");
+//    System.out.println("transaction end");
 //    return pk;
 //}
 
@@ -125,6 +125,7 @@ public class ProxyFactory {
         return (Person) Proxy.newProxyInstance(ProxyFactory.class.getClassLoader(), xiaoMing.getClass().getInterfaces(), new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                // 这里只实现了其中一个方法，就是代理对象实例调用getProxy后，再去调用方法，就由这里的逻辑来处理
                 if (method.getName().equals("sing")) {
                     System.out.println("1000");
                     method.invoke(xiaoMing, args);
@@ -253,7 +254,7 @@ class User {
 
 ## 动态代理和cglib
 
-动态代理是jdk通过的，cglib是asm字节码操作框架实现的。都是动态代理
+动态代理是jdk通过API创建的的，cglib是asm字节码操作框架实现的。都是动态代理
 
 但是jdk动态代理，`目标对象要实现接口`，有一定的局限性。cglib `目标对象不用实现接口`
 
@@ -268,3 +269,4 @@ class User {
 使用AOP的作用: `关注点代码和核心代码分离`
 
 这样做的好处: 1. 关注点代码只用写一次  2. 开发者把工作放到核心代码上 3. 运行时期，执行核心业务代码时候动态植入关注点代码，也就是代理
+

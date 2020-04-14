@@ -139,6 +139,37 @@ public class CatBeanPostProcessor implements BeanPostProcessor {
 }
 ```
 
+## 关于生命周期
+
+如果bean 实现了BeanNameAware  接口，Spring  传递bean  的ID  到 setBeanName 方法。
+如果 Bean 实现了 BeanFactoryAware 接口， Spring 传递beanfactory 给 setBeanFactory 方 法 。
+如果有任何与 bean 相关联的 BeanPostProcessors，Spring 会在postProcesserBeforeInitialization()方法内调用它们。
+如果 bean 实现 IntializingBean 了，调用它的 afterPropertySet 方法， 如果 bean 声明了初始化方法，调用此初始化方法。
+如果有 BeanPostProcessors 和 bean 关联，这些 bean 的postProcessAfterInitialization() 方法将被调用。
+如果 bean 实现了 DisposableBean，它将调用 destroy()方法。
+
+## ioc 流程
+
+内置bean和我们自己的bean
+
+beanFactory
+
+DefaultListableBeanFactory 工厂实现类，bean就在里面
+
+注册内置bean给工厂，也就是加入 beanDefinitionMap 中
+
+//  ConfigurationClassPostProcessor
+//  AutowiredAnnotationBeanPostProcessor
+//  CommonAnnotationBeanPostProcessor
+// 	EventListenerMethodProcessor
+// 	DefaultEventListenerFactory
+
+添加2个后置处理器给工厂，这里是把class对象赋值到 beanFactory 的 beanPostProcessors 属性中，这个是一个CopyOnWriteArrayList类型的属性
+
+ApplicationContextAwareProcessor, 
+ApplicationListenerDetector
+
+
 ## 使用@Autowired注解警告Field injection is not recommended
 
 这个警告的意思是 `使用变量依赖注入的方式是不被推荐的`，属于不严谨的警告

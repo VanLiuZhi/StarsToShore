@@ -190,6 +190,33 @@ profiles:
 
 要记住上面两种写法是不一样的，第二种是”激活“的意思，就是激活哪个profiles文件，而第一个是准备多个profiles文件的时候用
 
+12. SpringBoot中获取ApplicationContext
+
+1. 通过注解 `@Autowired`
+
+2. 通过构造器注入
+
+3. 实现spring提供的接口 ApplicationContextAware
+
+spring 在bean 初始化后会判断是不是ApplicationContextAware的子类，调用setApplicationContext（）方法， 会将容器中ApplicationContext传入进去
+
+`org.springframework.context.support.ApplicationContextAwareProcessor#invokeAwareInterfaces` 源码在这里。就是利用了后置处理器，默认添加的`ApplicationContextAwareProcessor`， 在refresh方法中，调用prepareBeanFactory方法，去添加后置处理器，源码是这里: `beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));`
+
+使用举例:
+
+```java
+@Component
+public class Demo implements ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+}
+```
+
 ## 分布式事务
 
 tcc lcn mq atomik seata

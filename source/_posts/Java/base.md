@@ -1307,12 +1307,12 @@ getDeclaredField：所有已声明的成员变量。但不能得到其父类的�
 
 ```java
  public static void main(String[] args)
-            throws InvocationTargetException, IllegalAccessException,
+            throws IllegalAccessException,
             InstantiationException, NoSuchMethodException, InvocationTargetException {
         Class<UserBean> userBeanClass = UserBean.class;
-        //获取该类所有的方法，包括静态方法，实例方法。
-        //此处也包括了私有方法，只不过私有方法在用invoke访问之前要设置访问权限
-        //也就是使用setAccessible使方法可访问，否则会抛出异常
+        // 获取该类所有的方法，包括静态方法，实例方法。
+        // 此处也包括了私有方法，只不过私有方法在用invoke访问之前要设置访问权限
+        // 也就是使用setAccessible使方法可访问，否则会抛出异常
         // getDeclaredMethod*()获取的是类自身声明的所有方法，包含public、protected和private方法。
         // getMethod*()获取的是类的所有共有方法，这就包括自身的所有public方法，和从基类继承的、从接口实现的所有public方法。
         // IllegalAccessException的解释是
@@ -1322,11 +1322,12 @@ getDeclaredField：所有已声明的成员变量。但不能得到其父类的�
         // * executing method does not have access to the definition of
         // * the specified class, field, method or constructor.
         //IllegalAccessException的解释是 就是说，当这个类，域或者方法被设为私有访问，使用反射调用但是却没有权限时会抛出异常。
+
         Method[] methods = userBeanClass.getDeclaredMethods(); // 获取所有成员方法
         for (Method method : methods) {
             //反射可以获取方法上的注解，通过注解来进行判断
             if (method.isAnnotationPresent(Invoke.class)) { // 判断是否被 @Invoke 修饰
-                //判断方法的修饰符是是static
+                // 判断方法的修饰符是是static
                 // getModifiers获取方法的修饰
                 if (Modifier.isStatic(method.getModifiers())) { // 如果是 static 方法
                     //反射调用该方法
@@ -1471,7 +1472,7 @@ public @interface TestAnnotation {
 
 当注解中含有数组属性时，使用{}赋值，各个元素使用逗号分隔
 定义 `String[] parentsName();` 
-赋值 `@ParentsAnnotation(parentsName = {"1", "2"}`
+赋值 `@ParentsAnnotation(parentsName = {"1", "2"})`
 
 注解的属性可以是另外一个注解
 
@@ -1501,7 +1502,7 @@ public @interface ParentsAnnotation {
 
 使用
 ```java
-@MyAnnotation(name = "x", id = 1, parentsannotation = @ParentsAnnotation(parentsName = {"1", "2"}, parentsAge = 2))
+    @MyAnnotation(name = "x", id = 1, parentsannotation = @ParentsAnnotation(parentsName = {"1", "2"}, parentsAge = 2))
     public void test() {
 
     }

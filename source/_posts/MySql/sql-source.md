@@ -84,6 +84,22 @@ selete * from testtable limit 20, 30;
 selete * from testtable limit 30 offset 20;  
 ```
 
+## datetime 时间范围内查询
+
+datetime可以直接传递字符串，它本质就是存储字符串
+
+```sql
+select COUNT(a.ID) from mondata.processlist as a where COLLECT_TIME BETWEEN 
+STR_TO_DATE(
+        '2020-04-08 00:00:00',
+        '%Y-%m-%d %H'
+    )
+AND STR_TO_DATE(
+    '2020-04-09 00:00:00',
+    '%Y-%m-%d %H'
+);
+```
+
 ## 分组取最大值
 
 1. 推荐标准用法
