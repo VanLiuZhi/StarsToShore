@@ -235,3 +235,41 @@ pagination: {
 可能会遇到的错误`Warning: You cannot set a form field before rendering a field associated with the value.`，出现这种情况一般是dom还没渲染，或者是字段没注册，没被组件接管不能用API
 
 - 数据赋值
+
+## 后端组件
+
+grafana  可视化监控界面
+
+OpenResty Nginx配合lua的高性能web服务器
+
+elasticsearch-head  是用于监控 Elasticsearch 状态的客户端插件，使用node运行
+
+kafka 
+
+zookeeper
+
+logstash
+
+filebeat
+
+elasticsearch
+
+Redis-Desktop-Manager
+
+redis
+
+ZooInspector zk数据查看工具
+
+## 微服务带来的挑战
+
+服务部署的挑战
+服务伸缩的挑战
+服务高可用
+服务容错
+依赖关系
+服务监控
+
+## DevOps
+
+DevOps（Development和Operations的组合词）是一组过程、方法与系统的统称，用于促进开发（应用程序/软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合。
+

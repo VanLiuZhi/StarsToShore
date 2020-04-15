@@ -223,6 +223,13 @@ A项目
 
 上述的2点描述了dependencyManagement的作用，本来父pom文件定义的依赖，子pom继承，但是两个子pom可能版本号不一样，这就导致了同一个jar包有两个版本，而dependencyManagement就是解决这个问题的
 
+## maven optional
+
+俗称依赖传递，当pom A 依赖了 依赖 B之后，如果pom C 继承 pom A，那么依赖 B 也会传到 pom C中，如果我们不想要这个依赖，一个办法就是在
+pom C 中排除依赖 `exclusions`，还有一种办法就是用 optional，在依赖 B中设置 optional，这个依赖就只在当前pom生效，不会传递到 pom C
+
+如果使用了 optional 后，想在 pom C 中去使用这个依赖，按照常规方式声名就行了
+
 ## 项目属性
 
 ```xml
