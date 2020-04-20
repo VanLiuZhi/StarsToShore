@@ -50,23 +50,6 @@ GrantedAuthority 对认证主题的应用层面的授权，含当前用户的权
 UserDetails 构建Authentication对象必须的信息，可以自定义，可能需要访问DB得到
 UserDetailsService 通过username构建UserDetails对象，通过loadUserByUsername根据userName获取UserDetail对象 （可以在这里基于自身业务进行自定义的实现  如通过数据库，xml,缓存获取等）
 
-
-## OAuth 2.0
-
-OAuth 的核心就是向第三方应用颁发令牌，OAuth 2.0 规定了四种获得令牌的流程，可以选择一种方式颁发令牌
-
-授权码（authorization-code）  一般前后端分离用这种
-隐藏式（implicit）
-密码式（password）
-客户端凭证（client credentials）
-
-`在程序中，需要做相关的配置，使用上面的英文`
-
-注意，不管哪一种授权方式，第三方应用申请令牌之前，都必须先到系统备案，说明自己的身份，然后会拿到两个身份识别码：客户端 ID（client ID）和客户端密钥（client secret）。这是为了防止令牌被滥用，没有备案过的第三方应用，是不会拿到令牌的
-
-`在程序中也有这个配置，声名哪些服务能获取令牌`
-
-
 ## UserDetailsService
 
 这是一个接口，实现后需要返回一个框架自身的User类型对象，User又是UserDetails的实现
@@ -153,6 +136,8 @@ Security配置，是继承覆盖父类的形式，围绕着两个方面来
 
 1. 安全策略配置自定义
 2. 用户详情和密码加密方法自定义
+
+最简单的实现就是覆盖两个方法，一个负责对请求资源的权限设置，比如哪些路径需要登录。还有另外一个方法，配置认证，就是配置怎么去认证，输入的账号密码是否正确
 
 刚才对UserDetailService的实现在这里就用到了
 
@@ -308,6 +293,135 @@ protected final B getBuilder() {
 ```
 
 有2个and方法，有些方法会返回getBuilder，也和and一样，最后指向securityBuilder
+
+## OAuth 2.0
+
+项目源码数据库模型地址: https://github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/test/resources/schema.sql
+
+学习一个新技术，最好的方式莫过于直接看源码
+
+security的使用还是比较简单的，复杂的是Oauth2
+
+OAuth 的核心就是向第三方应用颁发令牌，OAuth 2.0 规定了四种获得令牌的流程，可以选择一种方式颁发令牌
+
+授权码（authorization-code）
+隐藏式（implicit）
+密码式（password）
+客户端凭证（client credentials）
+
+Authorization Code（授权码模式）：正宗的OAuth2的授权模式，客户端先将用户导向认证服务器，登录后获取授权码，然后进行授权，最后根据授权码获取访问令牌；
+Implicit（简化模式）：和授权码模式相比，取消了获取授权码的过程，直接获取访问令牌；
+Resource Owner Password Credentials（密码模式）：客户端直接向用户获取用户名和密码，之后向认证服务器获取访问令牌；
+Client Credentials（客户端模式）：客户端直接通过客户端认证（比如client_id和client_secret）从认证服务器获取访问令牌。
+
+这里说下自己的理解: 
+
+授权码模式安全级别最高，是因为，认证服务器，授权服务器都是自己信任的，而涉及到客户端获取用户账号密码，是不可信的。
+
+简单来说，假如我开发了一套大型系统，我提供给各个企业用，企业可以实现自己的访问客户端，但是用户数据在我这里，那么企业自己的客户端就是不可信的
+
+我们可以通过常见的qq第三方登录来说明。比如通过qq登录，客户端是第三方开发的，它支持qq登录，但是你不会直接把qq密码在客户端上输入，这是不安全的，qq提供认证服务器给客户端，客户端引导用户去qq的认证登录页面，由于这个页面是qq做的，所以它是安全的，你输入账号密码后，得到授权码，之后客户端通过授权码去获取令牌，这样后续qq的接口，比如获取用户详情等，客户端通常需要这些数据来创建自己的用户，之后的qq接口通过授权码访问即可。你会发现，客户端全程拿不到你的密码，所以授权码模式级别高，但是也复杂。只要理解了授权码模式，理解其它模式就简单了
+
+
+`在程序中，需要做相关的配置，使用上面的英文`
+
+注意，不管哪一种授权方式，第三方应用申请令牌之前，都必须先到系统备案，说明自己的身份，然后会拿到两个身份识别码：客户端 ID（client ID）和客户端密钥（client secret）。这是为了防止令牌被滥用，没有备案过的第三方应用，是不会拿到令牌的
+
+`在程序中也有这个配置，声名哪些服务能获取令牌`
+
+在架构设计中，一般存在三种角色
+
+1. 客户应用
+2. 资源服务器
+3. 授权服务器  
+
+authorization 授权 authentication 认证
+
+authentication证明你是你，authorization证明你有这个权限
+
+简单来说，身份验证是验证您的身份的过程，而授权是验证您有权访问的过程
+
+参考 https://www.lagou.com/lgeduarticle/44562.html
+
+客户应用要从资源服务器获取数据，资源服务器会提供API，但是这样的话不安全，所以客户服务器需要提供一个Access Token，资源服务器会校验这个token，来确认这个客户应用是否有访问权限
+
+那么问题也来了，客户应用的Access Token是怎么来的？这就需要授权服务器了，客户应用去授权服务器上申请Access Token
+
+### 涉及到的术语，概念
+
+复杂体现到术语和概念比较多，首先要理解这些东西，我们直接从代码去理解
+
+### 1. 资源服务器配置
+
+```java
+@EnableResourceServer
+ResourceServerConfigurerAdapter
+```
+
+通常我们会做上面的配置，使用注解，继承一个类，通过这两步来完成资源服务器的配置，下面一步一步的分析
+
+@EnableResourceServer引入 OAuth2AuthenticationProcessingFilter 过滤器，import的类ResourceServerConfiguration
+
+`主要覆盖方法`
+
+public void configure(ResourceServerSecurityConfigurer resources)
+
+public void configure(HttpSecurity http)
+
+```java
+@Configuration
+public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter implements Ordered
+```
+
+### 2. 授权服务配置
+
+```java
+@EnableAuthorizationServer
+AuthorizationServerConfigurerAdapter
+```
+
+`主要覆盖方法`
+
+public void configure(ClientDetailsServiceConfigurer clients)
+
+public void configure(AuthorizationServerSecurityConfigurer oauthServer)
+
+### 3. Security配置
+
+@EnableWebSecurity
+WebSecurityConfigurerAdapter
+
+`主要覆盖方法`
+
+protected void configure(HttpSecurity http)
+
+### refresh_token
+
+刷新模式，就是获取令牌的接口如果支持刷新模式，那么直接使用refresh_token就可以获取到令牌，该模式就不需要前面的繁琐流程，直接获取到令牌token，前提是你要有refresh_token，并且它没过期
+
+refresh_token一般是获取access token的时候返回的
+
+### 简单使用
+
+在一个服务上，可以同时实现 资源服务器配置 授权服务配置 Security配置
+
+一定要理解资源服务器，授权服务器，和security三个配置的职责
+
+`资源服务器`: 负责控制资源
+
+`授权服务器`: 发放令牌的
+
+`security`: 安全校验，比如登录校验，权限校验
+
+开始用的时候，总感觉有些是重合的，但是其实是各司其职的
+
+然后根据不同的模式(4种)去做
+
+授权码模式相对来说比较繁琐，密码模式比较简单
+
+
+
+
 
 
 

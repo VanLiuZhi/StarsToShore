@@ -265,7 +265,7 @@ JMM属于语言级的内存模型，它确保在不同的编译器和不同的�
 
 说了这么多，有没有发现有点CAP的影子，保证了可用性，缺牺牲了一致性，但是保证了最终一致性
 
-# 微服务
+## 事件多播器
 
 ## 让你去实现一个注册中心，你会怎么做？
 
@@ -344,6 +344,13 @@ MySQL 原理，存储引擎，innodb，索引，锁，事务，事务隔离
 
 框架结合: 读写分离配置，多数据源配置，事务声名怎么用，分布式事务怎么用
 
+优化，扩展
+
+innodb_flush_log_at_trx_commit MySql日志何时写入硬盘的参数
+load data infile 从文件把数据写入表中
+存储过程upset，适合去重，利用upset，有就更新，无就创建
+ETL，是英文Extract-Transform-Load的缩写，用来描述将数据从来源端经过抽取（extract）、转换（transform）、加载（load）至目的端的过程。ETL一词较常用在数据仓库，但其对象并不限于数据仓库。
+
 5. Redis
 
 集群，数据结构，红锁，分布式事务
@@ -356,5 +363,10 @@ kafka,rocketmq
 
 k8s, spring cloud ，dubbo
 
+8. 能力开放平台
+
+9. 分布式锁
+
 
 链接:https://pan.baidu.com/s/1pCViJ2lYrrl-k3-ic8ADZg  密码:mimx
+

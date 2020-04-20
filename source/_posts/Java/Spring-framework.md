@@ -294,6 +294,117 @@ mvnspring‐boot:run
 
 boot早期版本可能会是直接启动JarLauncher javaorg.springframework.boot.loader.JarLauncher
 
+## 关于swagger
+
+其实swagger是有两个版本的，而且区别还挺大的，一个是swagger-ui也就是swagger1;还有一个是springfox-swagger也就是swagger2;
+
+Swagger Spec 是一个规范。
+Swagger Api 是 Swagger Spec 规范 的一个实现，它支持 jax-rs, restlet, jersey 等等。
+Springfox libraries 是 Swagger Spec 规范 的另一个实现，专注于 spring 生态系统。
+Swagger.js and Swagger-ui 是 javascript 的客户端库，可以使用 Swagger Spec规范 。
+springfox-swagger-ui 仅仅是以一种方便的方式封装了 swagger-ui ，使得 Spring 服务可以提供服务。
+
+总结下来就是：
+
+Swagger 是一种规范。
+springfox-swagger 是基于 Spring 生态系统的该规范的实现。
+springfox-swagger-ui 是对 swagger-ui 的封装，使得其可以使用 Spring 的服务。
+
+常规用法
+
+```xml
+<!-- swagger -->
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>${swagger.version}</version>
+</dependency>
+
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>${swagger.version}</version>
+</dependency>
+```
+
+第三方UI实现
+
+```xml
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>${swagger.version}</version>
+</dependency>
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-bean-validators</artifactId>
+    <version>${swagger.version}</version>
+</dependency>
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>${swagger.version}</version>
+</dependency>
+<dependency>
+    <groupId>com.github.xiaoymin</groupId>
+    <artifactId>swagger-bootstrap-ui</artifactId>
+    <version>1.9.1</version>
+</dependency>
+```
+
+### swagger具体配置
+
+引入依赖后，需要进行配置
+
+使用@EnableSwagger2注解后，spring boot自动装配机制就会加载对应的bean
+
+编写一个配置类，注入配置bean，如下所示
+
+```java
+@Bean
+public Docket createRestApi(){
+    return new Docket(DocumentationType.SWAGGER_2)
+            .apiInfo(apiInfo())
+            .select()
+            // 为当前包下controller生成API文档
+            .apis(RequestHandlerSelectors.basePackage("com.XXX.controller"))
+            // 为有@Api注解的Controller生成API文档
+            // .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
+            // 为有@ApiOperation注解的方法生成API文档
+            // .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+            .paths(PathSelectors.any())
+            .build();
+}
+
+private ApiInfo apiInfo() {
+    return new ApiInfoBuilder()
+            .title("SwaggerUI演示")
+            .description("api")
+            .contact("macro")
+            .version("1.0")
+            .build();
+}
+```
+
+这样就完成了一个简单的aip接口文档配置，这里主要是要返回一个Docket对象，随便看了一下源码，好像是没有默认实现的，应该是要我们自己去实现，具体的要看源码和文档了，这里不追究了，不是讨论的重点
+
+### token
+
+原生的swagger是没有和鉴权相关的，针对这点，还需要调整配置
+
+大致的做法就是在创建Docket对象的时候，去配置它
+
+```java
+//添加登录认证
+.securitySchemes(securitySchemes())
+.securityContexts(securityContexts());
+两个方法返回数组
+
+或者用这种形式
+.globalOperationParameters(pars);
+```
+
+
 ## 关于日志的使用和配置
 
 首先先回顾和总结一下各个日志模块，以及它们之间的关系

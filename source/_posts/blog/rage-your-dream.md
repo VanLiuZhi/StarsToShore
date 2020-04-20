@@ -260,6 +260,12 @@ redis
 
 ZooInspector zk数据查看工具
 
+## 后端框架版本
+
+2.1.12.RELEASE
+
+Greenwich.SR5
+
 ## 微服务带来的挑战
 
 服务部署的挑战
@@ -272,4 +278,6 @@ ZooInspector zk数据查看工具
 ## DevOps
 
 DevOps（Development和Operations的组合词）是一组过程、方法与系统的统称，用于促进开发（应用程序/软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合。
+
+
 
