@@ -111,41 +111,6 @@ vue-cli3.0移除了配置文件目录：config和build文件夹(最外层已经�
 
 暂时使用sql文件的方式，对表的改动都基于sql文件
 
-## 权限设计
-
-RBAC设计思想
-
-基于角色的访问控制（Role-Based Access Control）
-有两种正在实践中使用的RBAC访问控制方式：隐式(模糊)的方式和显示(明确)的方式。
-
-隐式：假如用于属于管理员，在对账户操作的时候，就去判断用于是否是管理员角色，因为在常规的认知中，管理员一般都是能操作账号的，但是实际是否分配的这样的权限是未知的，这就是隐式的，是一种假设。
-显示：就是明确的权限判断
-
-### 设计实现
-
-1. 用户管理
-    - 新建用户
-    - 分配角色
-    - 删除用户
-    - 获取用户列表
-2. 角色管理
-    - 新建角色
-    - 分配权限
-    - 获取角色列表
-3. 权限管理
-    - 新建权限 （把权限完全最小粒度化，只有权限名，不做更多的关联，通过更为详细的权限命名来扩展）
-    - 获取权限列表
-    - 删除权限
-
-
-### 表结构
-
-1. user 用户表
-2. role 角色表
-3. permission 权限表
-4. user_role 用户和角色关联表
-5. role_permission 角色和权限关联表
-
 ## main.js
 
 程序主入口，一般会导入各种配置文件，前端的路由和后端的接口URL不是一个概念，路由的URL跳转不会去和后端交互
@@ -161,7 +126,6 @@ RBAC设计思想
 2. 无
 
 白名单直接登录，否则跳转到登录页面，登录页面表单接受用户名和密码，调用`store`中`user`的`actions`中的`Login`，在Login中去请求真正的登录接口
-
 
 ## table组件
 
@@ -236,7 +200,7 @@ pagination: {
 
 - 数据赋值
 
-## 后端组件
+## 后端技术栈
 
 grafana  可视化监控界面
 
@@ -262,9 +226,9 @@ ZooInspector zk数据查看工具
 
 ## 后端框架版本
 
-2.1.12.RELEASE
+spring boot 2.1.12.RELEASE
 
-Greenwich.SR5
+spring cloud Greenwich.SR5
 
 ## 微服务带来的挑战
 
@@ -278,6 +242,158 @@ Greenwich.SR5
 ## DevOps
 
 DevOps（Development和Operations的组合词）是一组过程、方法与系统的统称，用于促进开发（应用程序/软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合。
+
+## 权限设计
+
+RBAC设计思想
+
+基于角色的访问控制（Role-Based Access Control）
+有两种正在实践中使用的RBAC访问控制方式：隐式(模糊)的方式和显示(明确)的方式。
+
+隐式：假如用于属于管理员，在对账户操作的时候，就去判断用于是否是管理员角色，因为在常规的认知中，管理员一般都是能操作账号的，但是实际是否分配的这样的权限是未知的，这就是隐式的，是一种假设。
+显示：就是明确的权限判断
+
+### 设计实现
+
+1. 用户管理
+    - 新建用户
+    - 分配角色
+    - 删除用户
+    - 获取用户列表
+2. 角色管理
+    - 新建角色
+    - 分配权限
+    - 获取角色列表
+3. 权限管理
+    - 新建权限 （把权限完全最小粒度化，只有权限名，不做更多的关联，通过更为详细的权限命名来扩展）
+    - 获取权限列表
+    - 删除权限
+
+
+### 表结构
+
+1. user 用户表
+2. role 角色表
+3. permission 权限表
+4. user_role 用户和角色关联表
+5. role_permission 角色和权限关联表
+
+## 数据库与ORM
+
+`主要分析，数据配置，与orm框架结合，连接池，多数据源配置等如何使用`
+
+### mybatis
+
+数据库ORM使用mybatis，通常情况，引入mybatis的spring boot风格的依赖，还有MySQL connect依赖就会自动装配，相关bean就会注入容器，此时如果不配置MySQL，是会有错误日志的
+
+```xml
+<!--mybatis Spring boot 支持-->
+<dependency>
+    <groupId>org.mybatis.spring.boot</groupId>
+    <artifactId>mybatis-spring-boot-starter</artifactId>
+</dependency>
+
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+</dependency>
+```
+
+数据源配置比较简单，这里使用默认的连接池配置
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:5506}/${DB_AUTH:rrd_store}?useUnicode=true&allowMultiQueries=true&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:root123}
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+```
+
+### 连接池
+
+当然这样用的太基础了，实际还要加上分页插件，连接池等配置，还有数据库性能监控，或者使用mybatis-plus增强功能
+
+Springboot默认的连接池Hikari，实际情况，会考虑使用Druid
+
+依赖
+
+```xml
+<dependency>
+   <groupId>com.alibaba</groupId>
+   <artifactId>druid-spring-boot-starter</artifactId>
+   <version>1.1.10</version>
+</dependency>
+```
+
+还有一种依赖是这个，使用这种的话要自己创建配置类，所以还是用spring-boot风格的吧，就是上面一种
+
+```xml
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>druid</artifactId>
+    <version>1.1.3</version>
+</dependency>
+```
+
+```yaml
+spring:
+  datasource:
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      # 省略...
+```
+
+也就是把参数写在druid下面，对于type的配置，可以不写，引入依赖就用Druid，具体需要源码验证，不放心就显示配置
+
+druid自带了监控页面，以及防止sql注入配置，多数据源配置，具体看文档
+
+druid监控页面 去广告https://blog.csdn.net/chouya3495/article/details/100661794
+
+### mybatis-plus
+
+把依赖替换，注意mybatis-plus的配置名称和mybatis不同，但是配置的内容大同小异
+
+```xml
+<dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus-boot-starter</artifactId>
+    <version>3.0.7</version>
+</dependency>
+<dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus</artifactId>
+    <version>3.0.7</version>
+</dependency>
+<dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus-generator</artifactId>
+    <version>3.0.7</version>
+</dependency>
+```
+
+### 多数据
+
+多数据源指的是使用多个数据库
+
+不知道你有没有注意到一点，假设我的数据源配置是 jdbc:mysql://127.0.0.1:9906/rrd_store
+我在mybatis中是 from `honor-user-center`.sys_user，能正常访问到数据库
+
+rrd_store 和 honor-user-center 都是 9906连接下的两个数据库，也就是说连接上后，是可以去访问不同的数据库的
+
+但是假如我有多个连接，比较9906，7706，做读写分离，那么上面的小技巧就没用了，这种情况就是多数据源，需要我们去连接不同地址的数据库
+
+具体做法大致有2种，涉及到很多底层的东西，先知道一个概念，就是数据源对象
+
+1. 配置多个连接对象，每个连接对象都是不同的配置，直接和mybatis映射绑定
+
+2. 配置一个连接对象，但是里面有多个数据源对象，通过注解切换数据源对象
+
+
+
 
 
 

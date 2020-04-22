@@ -419,6 +419,21 @@ refresh_token一般是获取access token的时候返回的
 
 授权码模式相对来说比较繁琐，密码模式比较简单
 
+直接使用cloud的依赖，比较适合cloud的项目
+
+```xml
+<!--oauth2依赖-->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-oauth2</artifactId>
+</dependency>
+<!--security依赖-->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-security</artifactId>
+</dependency>
+```
+
 
 
 

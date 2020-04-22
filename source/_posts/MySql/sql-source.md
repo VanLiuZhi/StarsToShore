@@ -28,6 +28,12 @@ select * from table_a a full outer join table_b b on a.key = b.key where a.key i
 ```
 查询的效果就是取两张表的join结果，有不同的join方法，字段会被组合在一行中，也就是笛卡尔积。
 
+在某些数据库中，FULL JOIN 称为 FULL OUTER JOIN。
+
+左连接以左边表为准，由于结果是两张表的字段，没匹配上的为null。 右连接类推，FULL JOIN 是 左右连接合并
+
+inner join 取笛卡尔积
+
 ### 一些例子
 
 select a.id from app_info a right join agents_profit_setting b on a.id = b.id;

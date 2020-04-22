@@ -217,6 +217,12 @@ public class Demo implements ApplicationContextAware {
 }
 ```
 
+13. @ConditionalOnProperty(name = "spring.redis.cluster.nodes", matchIfMissing = false)
+
+是条件装配，配置属性有spring.redis.cluster.nodes才装配，matchIfMissing是: 该属性为true时，配置文件中缺少对应的value或name的对应的属性值，也会注入成功，也就是说，如果设置true，没有spring.redis.cluster.nodes也会装配成功
+
+havingValue = "true" 可以配置这个属性，表明name=spring.redis.cluster.nodes获取到的是否和havingValue相同，相同才装配
+
 ## 分布式事务
 
 tcc lcn mq atomik seata
@@ -320,4 +326,8 @@ docker run -p 5506:3306 --name mysql-5.7-docker \
 
 可以用TZ改时区，默认是UTC TZ=Asia/Shanghai 改成CST
 记得一定加default-time_zone
+
+## 常用方法
+
+`public boolean equalsIgnoreCase(String anotherString)` 字符串对象调用，和一个字符串比较，不区分大小写
 

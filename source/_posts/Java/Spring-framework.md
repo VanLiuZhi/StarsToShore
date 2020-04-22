@@ -420,7 +420,7 @@ Java提供的日志类是 `java.util.logging`，创建实例，然后调用对�
 
 spring boot中主要使用SLF4J 和 Logback
 
-依赖是这个`spring-boot-starter-logging`，已经在父依赖中默认依赖了，所以不需要显示的依赖。日志很少去定制什么，我们关注如何配置就行了
+依赖是这个`spring-boot-starter-logging`，已经在父依赖中默认依赖了，所以不需要显示的依赖。日志很少去定制什么(打脸了，如果是搭建日志中心，需要理解比较深)，我们关注如何配置就行了
 
 通过spring properties配置或者xml配置，都是为了读取文件给到logback工厂类创建日志，由于配置内容很多，一般都是用xml做，所以最好不要在properties中去设置了，都在xml中设置
 
