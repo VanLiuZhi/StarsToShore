@@ -35,7 +35,6 @@ Spring Cloud版本演进计划：https://github.com/spring-cloud/spring-cloud-re
 `Zuul`: 提供服务网关
 `Config`: 提供统一服务配置
 `Sleuth`: 提供服务调用链，用于排查问题，和ZipKin配合使用，ZipKin提供可视化页面
-
 `Consul`: 是一个服务网格（微服务间的 TCP/IP，负责服务之间的网络调用、限流、熔断和监控）解决方案，它是一个一个分布式的，高度可用的系统，而且开发使用都很简便。它提供了一个功能齐全的控制平面，主要特点是：服务发现、健康检查、键值存储、安全服务通信、多数据中心
 `Gateway`: Spring-cloud 的网关服务
 

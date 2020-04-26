@@ -30,7 +30,6 @@ swap: 在k8s中最好禁用swap，以免发生集群无法调度问题
 flannel: 用来通信的网络插件。要符号CNI规范
 
 
-
 ## k8s 用的的镜像示例
 
 master节点
@@ -105,3 +104,24 @@ Never
 ## 固定node发布
 
 deploy上用选择器，就可以固定在一个node上
+
+## 资源删除
+
+一般是 delete -f .yaml 删除对应的资源，然后apply再应用，资源生效
+
+删除pod: 先删除pod，然后再删除deployment。 只删除pod，去查看的时候pod还是存在的，再去删除dep，查看pod消失
+
+## service 和 deployment
+
+deployment 负责创建 pod，只有de存在，pod就会维持住，pod被删除了也会被dev拉起。这样pod的服务是不确定的，它的ip一直在变化
+
+所以需要service
+
+Service 是 Kubernetes 中的一种服务发现机制：
+
+Pod 有自己的 IP 地址
+Service 被赋予一个唯一的 dns name
+Service 通过 label selector 选定一组 Pod
+Service 实现负载均衡，可将请求均衡分发到选定这一组 Pod 中
+
+

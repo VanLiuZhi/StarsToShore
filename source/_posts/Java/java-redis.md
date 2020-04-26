@@ -2,7 +2,7 @@
 title: Java Redis
 date: 2018-04-05 00:00:00
 author: vanliuzh
-top: true
+top: false
 cover: false
 toc: true
 mathjax: false
