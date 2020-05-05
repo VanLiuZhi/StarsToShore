@@ -11,7 +11,6 @@ tags: [Java, Note]
 reprintPolicy: cc_by
 ---
 
-
 1. 先删缓存再改数据库
 
 可能会有这样的问题
@@ -170,4 +169,6 @@ k8s, spring cloud ，dubbo
 
 
 链接:https://pan.baidu.com/s/1pCViJ2lYrrl-k3-ic8ADZg  密码:mimx
+
+vanliuzhi.github.io
 

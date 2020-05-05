@@ -34,6 +34,11 @@ select * from table_a a full outer join table_b b on a.key = b.key where a.key i
 
 inner join 取笛卡尔积
 
+mysql: left join, left out join是一个东西，加上 inner join，只有3种，full不支持
+用union 可以连接两张表，就是把B表拼接到A表后面，但是A,B必须字段数量相同
+select table_a.id, table_a.table_b_id from table_a union select table_b.id, table_b.b_name from table_b;
+这个例子用，虽然a表用的是table_b_id，b表是b_name，但是都是2个字段，这样就能拼接，但是b_name的数据被算到table_b_id这一列下
+
 ### 一些例子
 
 select a.id from app_info a right join agents_profit_setting b on a.id = b.id;

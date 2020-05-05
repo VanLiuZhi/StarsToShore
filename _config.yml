@@ -104,6 +104,12 @@ deploy:
   branch: master
   message: deploy
 
+# deploy:
+#   type: git
+#   repo: https://gitee.com/vanliuzhi/learn_programing.git
+#   branch: master
+#   message: deploy
+
 # 看板配置
 # live2d:
 #   enable: false
