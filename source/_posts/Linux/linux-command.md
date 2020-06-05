@@ -39,7 +39,6 @@ scp -r /Users/liuzhi/PycharmProjects/weixin_ip root@1.1.1.1:/root/app/
 
 scp -r /Users/liuzhi/Downloads/DBUtils-1.3.tar.gz zdhadmin@:/app
 
-
 ## cp
 
 1. 复制指定目录下的全部文件到另一个目录中
@@ -58,7 +57,6 @@ cp a.py /app/
 
 在终端输入命令：rm ./*
 解释：删除文件用rm命令，.点号代表当前目录，*星号是匹配符代表所有文件
-
 
 ## grep
 
@@ -500,3 +498,19 @@ echo "最近1小时内存和交换空间的统计统计"
 echo "----------------------------------"
 sar -r -s `date -d "1 hour ago" +%H:%M:%S`
 echo 
+
+## sftp
+
+cd 路径                        更改远程目录到“路径”
+lcd 路径                       更改本地目录到“路径”
+ls [选项] [路径]               显示远程目录列表
+lls [选项] [路径]              显示本地目录列表
+put 本地路径                   上传文件
+get 远程路径                   下载文件
+
+下载服务器文件夹，上传也是类似
+
+get -r logstash/.
+put -r logstash/.
+
+rz
