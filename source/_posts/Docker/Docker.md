@@ -482,6 +482,13 @@ source /etc/profile
 
 默认是60秒，可以改长一点
 
+## config文件位置
+
+docker inspect 命令可以查看容器在启动后传递的参数，具体配置文件在这里
+
+`/var/lib/docker/containers/container_id/config.json`
+
+
 
 
 
