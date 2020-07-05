@@ -488,8 +488,50 @@ docker inspect 命令可以查看容器在启动后传递的参数，具体配�
 
 `/var/lib/docker/containers/container_id/config.json`
 
+## 清理Docker占用的磁盘空间
 
+df -h 查看磁盘占用
 
+docker system df 查看docker的资源占用
 
+`docker system prune` 命令可以用于清理磁盘，删除关闭的容器、无用的数据卷和网络，以及dangling镜像(即无tag的镜像)
+`docker system prune -a` 命令清理得更加彻底，可以将没有容器使用Docker镜像都删掉
 
+这两个命令会把你`暂时关闭的容器`，以及暂时没有用到的Docker镜像都删掉了
 
+## docker启动报错：standard_init_linux.go:211: exec user process caused "no such file or directory"
+
+出现这个错误主要是两点：
+
+1. 使用的镜像问题，但是一般都是基于alpine镜像构建，查到的资料说换其它镜像可以解决，未测试过
+2. Dockerfile文件模式(fileformat)问题，一般文件是unix，但是在windows上编辑的可能是doc模式。在linux上用vim打开文件，如果是doc模式可以看出来，
+改成unix即可 vim 执行命令 `set ff=unix`
+
+这也是一个比较坑的问题
+
+## Alpine Linux构建镜像
+
+一般生成用Alpine Linux来构建镜像
+
+Alpine Linux，一个只有5M的Docker镜像。是一个面向安全的轻型Linux发行版。不同于通常Linux发行版，Alpine Linux采用了musl libc和busybox以减小系统的体积和运行时资源消耗。在保持瘦身的同时，Alpine Linux还提供了自己的包管理工具apk，可以在其网站上查询，或者直接通过apk命令查询和安装
+
+示例：
+
+换源，然后更新，使用apk add命令安装软件，默认是sh，所以我们可以安装一个bash
+
+```sh
+# Build with:
+# docker build -t alpine-bash:3.8 .
+
+FROM alpine:3.8
+
+RUN \
+    echo "http://mirrors.aliyun.com/alpine/v3.8/main" > /etc/apk/repositories && \
+    echo "http://mirrors.aliyun.com/alpine/v3.8/community" >> /etc/apk/repositories  && \
+    apk update upgrade && \
+    apk add --no-cache procps curl bash && \
+    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone
+
+CMD ["bash"]
+```
