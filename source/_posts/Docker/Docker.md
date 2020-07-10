@@ -539,3 +539,28 @@ CMD ["bash"]
 ## Dockerfile 配置指令补充
 
 有一些指令还在用到了才知道，这里做一下补充
+
+### VOLUME
+
+这个是挂载指令，`VOLUME /tmp` 可以在构建镜像的时候声明一个匿名挂载目录，当我们的应用往这个目录写数据的时候，不会把数据写到容器的存储层，这样容器实例大小不会增加
+
+run命令的时候可以指定 /tmp 的映射，这样匿名数据卷就被覆盖了，使用我们定义的映射，如果不指定，默认会挂载到docker的安装目录 `/var/lib/docker/volumes` 下
+
+### ENTRYPOINT
+
+ENTRYPOINT 中的参数始终会被使用，而 CMD 的额外参数可以在容器启动时动态替换掉
+
+比如 CMD echo "hello world"，直接docker run，会打印hello world，但是docker run -it /bin/bash 那么CMD的命令被覆盖
+
+如果是 ENTRYPOINT ["/bin/echo", "hello"] ，则 docker run 打印 hello, docker run Van ，打印 hello Van，参数被加上了
+
+同时使用
+
+```sh
+ENTRYPOINT ["/bin/echo", "hello"]  
+CMD ["world"]
+```
+
+docker run 打印 hello world，docker run van 打印 hello van
+
+记住`ENTRYPOINT 中的参数始终会被使用，而 CMD 的额外参数可以在容器启动时动态替换掉`
