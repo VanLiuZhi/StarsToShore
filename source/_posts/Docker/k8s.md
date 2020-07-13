@@ -158,3 +158,7 @@ nodeName: 指定主机名称，比如 k8s-09
 使用logs命令，加上pod实例，如果pod里面有多个容器，还要加上容器名称，举例如下：
 
 kubectl -n kube-system logs alertmanager-54f5b4447b-2jvzz prometheus-alertmanager
+
+## Taints与Tolerations 污点和容忍
+
+
