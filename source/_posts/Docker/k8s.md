@@ -109,7 +109,7 @@ deploy上用选择器，就可以固定在一个node上
 
 一般是 delete -f .yaml 删除对应的资源，然后apply再应用，资源生效
 
-删除pod: 先删除pod，然后再删除deployment。 只删除pod，去查看的时候pod还是存在的，再去删除dep，查看pod消失
+删除pod: 先删除pod，然后再删除deployment。只删除pod，去查看的时候pod还是存在的，再去删除dep，查看pod消失
 
 ## service 和 deployment
 
@@ -124,4 +124,37 @@ Service 被赋予一个唯一的 dns name
 Service 通过 label selector 选定一组 Pod
 Service 实现负载均衡，可将请求均衡分发到选定这一组 Pod 中
 
+## 标签操作
 
+kubectl get pods --show-labels　　#查看pod所有标签信息
+kubectl get pods -l app　　#过滤包含app的标签
+kubectl get pods -l app    #过滤包含app的标签及显示值
+kubectl label pods pod-demo release=canary　　#给pod-demo增加标签
+kubectl label pods pod-demo release=stable --overwrite　　#修改标签
+
+通过标签来过滤资源
+
+kubectl get pods -l run=myapp
+kubectl get pods -l run=myapp --show-labels
+kubectl get pods -l run!=client --show-labels
+
+## 通过标签部署到指定节点
+
+nodeSelector 写上标签，调度的时候就只会调度到这几个有标签的节点
+
+nodeName: 指定主机名称，比如 k8s-09
+
+`kubernetes.io/hostname=k8s-09` 一般节点都会打上这个标签，描述了主机名称信息
+
+## 命名空间
+
+资源创建的时候，可以指定命名空间，命名空间内各资源可以互相访问
+如果pod和service在不同的命名空间，是不能直接访问的，这时候要跨命名空间访问
+
+使用 服务加命名空间的方式  比如服务 是 oap，那么web-b命名空间想访问web-f命名空间的 oap service，使用`oap.web-f`
+
+## 查看pod日志
+
+使用logs命令，加上pod实例，如果pod里面有多个容器，还要加上容器名称，举例如下：
+
+kubectl -n kube-system logs alertmanager-54f5b4447b-2jvzz prometheus-alertmanager
