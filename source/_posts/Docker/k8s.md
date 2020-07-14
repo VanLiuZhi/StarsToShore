@@ -197,6 +197,26 @@ metadata.namespace : pod 所在的namespace
 
 https://github.com/kubernetes/kubernetes/issues/24657
 
+
+## 单个文件的方式挂载 configMap 
+
+主要是用了subPath这个配置，另外记得volumes挂载不要用驼峰命名，可以用横杆加小写
+
+```yaml
+volumeMounts:
+- mountPath: /skywalking/config/application.yml
+    name: config
+    subPath: application.yml
+
+volumes:
+- configMap:
+    defaultMode: 420
+    name: oap-config
+    items:
+    - key: application.yml
+      path: application.yml
+```
+
 ## Taints与Tolerations 污点和容忍
 
 
