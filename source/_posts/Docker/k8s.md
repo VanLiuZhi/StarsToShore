@@ -159,6 +159,44 @@ nodeName: 指定主机名称，比如 k8s-09
 
 kubectl -n kube-system logs alertmanager-54f5b4447b-2jvzz prometheus-alertmanager
 
+## 引用pod的信息
+
+```yaml
+env:
+    - name: MY_NODE_NAME
+        valueFrom:
+        fieldRef:
+            fieldPath: spec.nodeName
+    - name: MY_POD_NAME
+        valueFrom:
+        fieldRef:
+            fieldPath: metadata.name
+    - name: MY_POD_NAMESPACE
+        valueFrom:
+        fieldRef:
+            fieldPath: metadata.namespace
+    - name: MY_POD_IP
+        valueFrom:
+        fieldRef:
+            fieldPath: status.podIP
+    - name: MY_POD_SERVICE_ACCOUNT
+        valueFrom:
+        fieldRef:
+            fieldPath: spec.serviceAccountName
+```
+
+通过环境变量，引用当前pod的container的信息注入到外部
+
+spec.nodeName ： pod所在节点的IP、宿主主机IP
+
+status.podIP ：pod IP
+
+metadata.namespace : pod 所在的namespace
+
+更多参数：https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/
+
+https://github.com/kubernetes/kubernetes/issues/24657
+
 ## Taints与Tolerations 污点和容忍
 
 

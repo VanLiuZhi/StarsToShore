@@ -564,3 +564,7 @@ CMD ["world"]
 docker run 打印 hello world，docker run van 打印 hello van
 
 记住`ENTRYPOINT 中的参数始终会被使用，而 CMD 的额外参数可以在容器启动时动态替换掉`
+
+## 查看容器内存
+
+docker stats $(docker ps --format={{.Names}})

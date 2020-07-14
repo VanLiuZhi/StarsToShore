@@ -213,10 +213,3 @@ vanliuzhi.github.io
 实现往往依赖于队列，请求到达如果队列未满则直接放入队列，然后有一个处理器按照固定频率从队列头取出请求进行处理。如果请求量大，则会导致队列满，那么新来的请求就会被抛弃；
 令牌桶和漏桶算法的算法思想大体类似，漏桶算法作为令牌桶限流算法的改进版本。
 令牌桶算法和漏桶算法，在某些场景下（内存消耗、应对突发流量），这两种算法会优于时间窗口算法成为首选。
-
-
-https://www.one-tab.com/page/XTLB2bJHR5SBDXZeO8KuhA
-
-https://www.one-tab.com/page/Bfs3QSO0T7eEB7Me9TMGYA
-
-https://www.one-tab.com/page/FJKXP9ReTcWDFHAXNPp89g
