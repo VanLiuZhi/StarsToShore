@@ -169,9 +169,9 @@ docker run --name mysql2 -p 3506:3306 \
 --default-time_zone='+8:00'
 
 docker run -p 5506:3306 --name mysql-5.7-docker \
--v /Users/liuzhi/mydata/mysql/log:/var/log/mysql \
--v /Users/liuzhi/mydata/mysql/data:/var/lib/mysql \
--v /Users/liuzhi/mydata/mysql/conf:/etc/mysql \
+-v /mysql-docker/log:/var/log/mysql \
+-v /mysql-docker/data:/var/lib/mysql \
+-v /mysql-docker/conf:/etc/mysql \
 -e MYSQL_ROOT_PASSWORD=root123  \
 -d mysql:5.7 \
 --default-time_zone='+8:00'
