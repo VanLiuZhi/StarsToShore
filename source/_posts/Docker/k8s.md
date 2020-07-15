@@ -84,7 +84,7 @@ kubectl get nodes -o json | jq ".items[] | {name: .metadata.name} + .status.node
 
 ## 镜像拉取策略
 
-默认值是IfNotPresent
+默认值是IfNotPresent(在initContainers中，发现不配置并不会去使用本地的，所以最好显示的配置一下)
 
 Always
 总是拉取：
@@ -140,7 +140,7 @@ kubectl get pods -l run!=client --show-labels
 
 ## 通过标签部署到指定节点
 
-nodeSelector 写上标签，调度的时候就只会调度到这几个有标签的节点
+nodeSelector 写上标签，调度的时候就只会调度到这几个有标签的节点(该特性在官方准备在新版本中去除了)
 
 nodeName: 指定主机名称，比如 k8s-09
 
@@ -164,25 +164,25 @@ kubectl -n kube-system logs alertmanager-54f5b4447b-2jvzz prometheus-alertmanage
 ```yaml
 env:
     - name: MY_NODE_NAME
-        valueFrom:
+      valueFrom:
         fieldRef:
-            fieldPath: spec.nodeName
+          fieldPath: spec.nodeName
     - name: MY_POD_NAME
-        valueFrom:
+      valueFrom:
         fieldRef:
-            fieldPath: metadata.name
+          fieldPath: metadata.name
     - name: MY_POD_NAMESPACE
-        valueFrom:
+      valueFrom:
         fieldRef:
-            fieldPath: metadata.namespace
+          fieldPath: metadata.namespace
     - name: MY_POD_IP
-        valueFrom:
+      valueFrom:
         fieldRef:
-            fieldPath: status.podIP
+          fieldPath: status.podIP
     - name: MY_POD_SERVICE_ACCOUNT
-        valueFrom:
+      valueFrom:
         fieldRef:
-            fieldPath: spec.serviceAccountName
+          fieldPath: spec.serviceAccountName
 ```
 
 通过环境变量，引用当前pod的container的信息注入到外部
@@ -193,7 +193,8 @@ status.podIP ：pod IP
 
 metadata.namespace : pod 所在的namespace
 
-更多参数：https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/
+更多参数：
+https://kubernetes.io/docs/tasks/inject-data-application/environment-variable-expose-pod-information/
 
 https://github.com/kubernetes/kubernetes/issues/24657
 

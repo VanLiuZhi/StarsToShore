@@ -229,7 +229,7 @@ One of created, restarting, running, removing, paused, exited, or dead
 
 ## 容器导入导出
 
-    docker save imageID > filename.tar
+    docker save imageID > filename.tar 最好不要用 imageID，使用镜像名称加tag，这样 load 恢复的时候，容器名称会自动命名，如果使用id来save，load后容器没有名称
     docker load < filename.tar
 
     docker export imageID > filename.tar
@@ -243,7 +243,7 @@ One of created, restarting, running, removing, paused, exited, or dead
 
 save 和 export区别：
 1. save 保存镜像所有的信息-包含历史
-2. export 只导出当前的信息
+2. export 只导出当前的信息，这个就是当前层，无法直接使用的（列如启动命令会消失，需要自己启动的时候加入），如果是拷贝镜像用save
 
 ## Dockerfile 使用
 
@@ -568,3 +568,15 @@ docker run 打印 hello world，docker run van 打印 hello van
 ## 查看容器内存
 
 docker stats $(docker ps --format={{.Names}})
+
+## docekr mysql 数据库从映射文件中恢复
+
+在使用docker部署mysql后，映射出data目录，如果容器销毁后，本地目录还在，如何把数据恢复？
+
+如果直接启动一个新的容器实例，把映射目录指向原来的目录，会导致容器无法启动，正确的操作步骤应该是这样：
+
+1. 启动一个新容器，data目录映射到一个空的目录
+2. 容器启动成功，相关文件被初始化到data目录中
+3. 把原来的data目录中，要恢复的数据库目录找到，以及一个 ibdata1 文件。假如数据库是DevConfigDB，
+把数据库文件夹DevConfigDB 和 ibdata1 文件复制到新容器的data目录
+4. 重启新容器，数据库就恢复了

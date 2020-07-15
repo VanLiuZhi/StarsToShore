@@ -87,23 +87,6 @@ Spring-boot-statrte-data-redis
 
 velocity freemarker 模板引擎
 
-## @Component 需不需要 @Autowired
-
-该问题还没解决，我自定义一个普通的类，用component注解
-`private MyUser myUser;` 去使用报空指针错误，必须要加上Autowired注解
-
-如果我在构造器中
-
-```java
-public MyUser(RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
-```
-
-RedisTemplate是框架带的，加了这个后，可以不用Autowired注解访问
-
-这个问题值得探讨，以前全都用Autowired，后来我发现有些人的不用也行，但是不是全部这样的，猜测是有依赖可以
-
 ## 基本服务容器配置
 
 ### nnginx
