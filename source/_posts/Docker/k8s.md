@@ -146,6 +146,13 @@ nodeName: 指定主机名称，比如 k8s-09
 
 `kubernetes.io/hostname=k8s-09` 一般节点都会打上这个标签，描述了主机名称信息
 
+```yaml
+spec:
+  # priorityClassName: system-cluster-critical
+  nodeSelector:
+    kubernetes.io/hostname: k8s-worker06
+```
+
 ## 命名空间
 
 资源创建的时候，可以指定命名空间，命名空间内各资源可以互相访问
@@ -218,8 +225,46 @@ volumes:
       path: application.yml
 ```
 
+## 调度策略PriorityClass
+
+参考：https://www.ibm.com/support/knowledgecenter/zh/bluemix_stage/containers/cs_pod_priority.html
+
+除了常用的nodeSelector，k8s还提供了优先级调度，也就是抢占式调度，优先级高的pod会先调度，在资源不足的情况下会牺牲掉低优先级的pod先把高优先级的pod先调度
+
+具体做法就是在资源定义的时候关联一个PriorityClass对象，这个对象会设置优先级
+
+```yaml
+apiVersion: scheduling.k8s.io/v1alpha1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 1000000
+globalDefault: false
+description: "This priority class should be used for XYZ service pods only."
+```
+
+```
+globalDefault
+
+	可选：将此字段设置为 true 可将此优先级类设置为全局缺省值，此缺省值将应用于安排的未指定 priorityClassName 值的每个 pod。集群中只能有 1 个优先级类可设置为全局缺省值。如果没有全局缺省值，那么没有指定 priorityClassName 的 pod 的优先级为零 (0)。
+
+缺省优先级类不会设置 globalDefault。如果在集群中创建了其他优先级类，那么可以通过运行 kubectl describe priorityclass <name>.
+```
+
+在containers配置中加上 `priorityClassName: high-priority`
+
+系统默认的优先级类
+
+```
+名称	设置方	优先级值	用途
+system-node-critical	Kubernetes	2000001000	选择在创建集群时部署到 kube-system 名称空间中的 pod 会使用此优先级类来保护工作程序节点的关键功能，例如联网、存储器、日志记录、监视和度量值 pod。
+system-cluster-critical	Kubernetes	2000000000	选择在创建集群时部署到 kube-system 名称空间中的 pod 会使用此优先级类来保护集群的关键功能，例如联网、存储器、日志记录、监视和度量值 pod。
+ibm-app-cluster-critical	IBM	900000000	选择在创建集群时部署到 ibm-system 名称空间中的 pod 会使用此优先级类来保护应用程序的关键功能，例如负载均衡器 pod
+```
+
+`kubectl get priorityclasses`
+`kubectl get priorityclass <priority_class> -o yaml > Downloads/priorityclass.yaml`
+
 ## Taints与Tolerations 污点和容忍
 
-## 调度策略
 
-kubernetes调度之 PriorityClass
