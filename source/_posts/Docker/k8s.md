@@ -220,4 +220,6 @@ volumes:
 
 ## Taints与Tolerations 污点和容忍
 
+## 调度策略
 
+kubernetes调度之 PriorityClass
