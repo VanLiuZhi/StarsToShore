@@ -80,6 +80,9 @@ jrebel xrebel 有2个东西，xrebel是分析程序用的，jrebel是热部署
 
 百度一下安装和激活：两个要分别激活，激活后大都改用离线模式，可以用好几个月
 
+只为了热部署：百度一下 jrebel 激活，需要一个服务器地址，和一个uuid，这两个组合，加上自己的邮箱就行了
+
+
 ## gradle 编译，只运行所选测试
 
 Delegate IDE build开启，选择 reun tests using下拉选项
