@@ -35,7 +35,10 @@ mybatis 学习笔记和基础概念，在spring boot中的使用配置总结
 
 
 Spring Boot 会自动加载 spring.datasource.* 相关配置，数据源就会自动注入到 sqlSessionFactory 中，sqlSessionFactory 会自动注入到 Mapper 中。
-在启动类中添加对 mapper 包扫描 `@MapperScan`
+在启动类中添加对 mapper 包扫描 `@MapperScan`，指定mapper类
+
+@MapperScan 和 @Mapper，@Mapper注解表明这个类是一个映射类，要对应到xml中，生成一个实体类，这样每个映射类都要加@Mapper，所以一般用@MapperScan指明扫描路径
+省去了@Mapper注解
 
 spring boot配置文件
 

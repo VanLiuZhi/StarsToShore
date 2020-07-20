@@ -26,13 +26,15 @@ application/x-www-form-urlencoded 方式提交数据
 POST http://www.example.com HTTP/1.1
 Content-Type: application/x-www-form-urlencoded;charset=utf-8
 
+`下面是浏览器传递时数据的格式`
 name=qwe&pwd=123
 
-2. multipart/form-data
+2. multipart/form-data，和第一种类似，但是如果是文件上传，那么要用这个enctype
 
 Request URL:http://127.0.0.1:8000/index/
 Content-Type:multipart/form-data; boundary=----WebKitFormBoundaryExT8avmSnrECoDbP
 
+`下面是浏览器传递时数据的格式，可以看到加了很多内容`
 ------WebKitFormBoundaryExT8avmSnrECoDbP
 Content-Disposition: form-data; name="name"
 

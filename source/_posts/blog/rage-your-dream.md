@@ -360,7 +360,7 @@ druid监控页面 去广告https://blog.csdn.net/chouya3495/article/details/1006
 ```xml
 <dependency>
     <groupId>com.baomidou</groupId>
-    <artifactId>mybatis-plus-boot-starter</artifactId>
+    <artifactId>mybatis-plus-boot-starter</artifactId>      
     <version>3.0.7</version>
 </dependency>
 <dependency>

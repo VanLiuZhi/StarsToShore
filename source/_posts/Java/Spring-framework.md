@@ -401,6 +401,11 @@ public class Demo implements ApplicationContextAware {
 
 havingValue = "true" 可以配置这个属性，表明name=spring.redis.cluster.nodes获取到的是否和havingValue相同，相同才装配
 
+14. @RequestBody 使用和不使用的区别
+
+使用：处理application/json 的数据，就是json类型的，框架会自动帮我们转换json数据为实体类
+不使用：处理 multipart/form-data 和 application/x-www-form-urlencoded 的数据，就是表单提交的
+
 ## 关于属性的含义与idea
 
 可以点击进去查看源码注释
