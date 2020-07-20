@@ -210,19 +210,32 @@ https://github.com/kubernetes/kubernetes/issues/24657
 
 主要是用了subPath这个配置，另外记得volumes挂载不要用驼峰命名，可以用横杆加小写
 
+挂载多个文件
+
 ```yaml
 volumeMounts:
 - mountPath: /skywalking/config/application.yml
     name: config
     subPath: application.yml
+- mountPath: /skywalking/config/alarm-settings.yml
+    name: alarm-config
+    subPath: alarm-settings.yml
 
 volumes:
-- configMap:
+- name: application-config
+  configMap:
     defaultMode: 420
     name: oap-config
     items:
-    - key: application.yml
-      path: application.yml
+      - key: application.yml
+        path: application.yml
+- name: alarm-config
+  configMap:
+    defaultMode: 420
+    name: oap-config
+    items:
+      - key: alarm-settings.yml
+        path: alarm-settings.yml
 ```
 
 ## 调度策略PriorityClass

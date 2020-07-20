@@ -152,11 +152,11 @@ docker run --name mysql2 -p 3506:3306 \
 --default-time_zone='+8:00'
 
 docker run -p 5506:3306 --name mysql-5.7-docker \
--v /mysql-docker/log:/var/log/mysql \
--v /mysql-docker/data:/var/lib/mysql \
--v /mysql-docker/conf:/etc/mysql \
--e MYSQL_ROOT_PASSWORD=root123  \
--d mysql:5.7 \
+-v /data/mysql-docker/log:/var/log/mysql \
+-v /data/mysql-docker/data:/var/lib/mysql \
+-v /data/mysql-docker/conf:/etc/mysql \
+-e MYSQL_ROOT_PASSWORD=root123456  \
+-d hub.eos.h3c.com/base/mysql:5.7.24 \
 --default-time_zone='+8:00'
 
 可以用TZ改时区，默认是UTC TZ=Asia/Shanghai 改成CST
