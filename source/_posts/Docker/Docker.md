@@ -565,6 +565,14 @@ docker run 打印 hello world，docker run van 打印 hello van
 
 记住`ENTRYPOINT 中的参数始终会被使用，而 CMD 的额外参数可以在容器启动时动态替换掉`
 
+两种写法格式：
+
+ENTRYPOINT ["executable", "param1", "param2"] (exec格式，推荐使用此格式)
+ENTRYPOINT command param1 param2 (shell 格式)
+
+要注意，如果要使用环境变量，比如$HOME，那么ENTRYPOINT ["echo", "$HOME"] 是不会替换环境变量的，只能使用shell模式
+ENTRYPOINT echo $HOME
+
 ## 查看容器内存
 
 docker stats $(docker ps --format={{.Names}})
@@ -658,3 +666,71 @@ do
     fi
 done
 ```
+
+## 修改已启动容器的端口
+
+要实现这个操作，需要先把容器停止了，然后把docker服务停止了，去修改配置文件，再重启docker服务
+
+1. 停止docker容器，两个命令都可以
+
+docker stop $(docker ps -a | awk '{ print $1}' | tail -n +2)
+docker stop `docker ps -aq`
+
+2. 停止docker服务
+
+service docker stop
+
+3. 修改config.v2.json文件
+
+docker inspect 命令找到配置文件
+
+如果是改端口映射，改这两个文件
+hostconfig.json 
+
+```json
+"PortBindings": {
+  "6379/tcp": [
+      {
+          "HostIp": "",
+          "HostPort": "6388"
+      }
+  ]
+},
+```
+
+config.v2.json 
+
+```json
+"Ports": {
+  "6379/tcp": [
+      {
+          "HostIp": "0.0.0.0",
+          "HostPort": "6388"
+      }
+  ]
+}
+```
+
+如果是改存储映射，改这两个文件
+hostconfig.json Binds
+config.v2.json MountPoints
+
+可以格式化文件后再修改
+
+4. 启动docker服务
+
+service docker start
+
+启动所有的容器
+sudo docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
+
+总结：多测试一下，大部分都能改，记得要把容器停止了，然后停止docker服务，再去修改配置，这样才能生效
+
+## 修改容器启动方式
+
+如果机器宕机重启后，由于docker服务一般是开机启动的，所以我们可以把容器也设置成随服务启动，这样机器宕机后再次启动，容器也会跟着启动
+
+`docker container update --restart=always mysql-5.7-docker`
+
+mysql-5.7-docker为容器名称
+

@@ -514,3 +514,18 @@ get -r logstash/.
 put -r logstash/.
 
 rz
+
+## sh -c
+
+把数据写入文件
+
+echo "信息" > test.asc
+
+但是如果test.asc是root才能执行的，这个时候 sudo echo "信息" > test.asc 就报错了
+
+原因是sudo只是将echo有了root权限，但是重定向符号 “>” 和 ">>" 也是 bash 的命令，还是没有权限
+
+解决办法：
+
+利用 "sh -c" 命令，它可以让 bash 将一个字串作为完整的命令来执行，这样就可以将 sudo 的影响范围扩展到整条命令。具体用法如下：
+$ sudo sh -c 'echo "又一行信息" >> test.asc'
