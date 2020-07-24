@@ -715,6 +715,9 @@ config.v2.json
 hostconfig.json Binds
 config.v2.json MountPoints
 
+如果是改环境变量，修改
+config.v2.json 里面找到ENV
+
 可以格式化文件后再修改
 
 4. 启动docker服务
@@ -733,4 +736,18 @@ sudo docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
 `docker container update --restart=always mysql-5.7-docker`
 
 mysql-5.7-docker为容器名称
+
+
+docker  run \
+--name nacos -d \
+-p 8848:8848 \
+--privileged=true \
+--restart=always \
+-e JVM_XMS=256m \
+-e JVM_XMX=256m \
+-e MODE=standalone \
+-e PREFER_HOST_MODE=hostname \
+-v /data/nacos/logs:/home/nacos/logs \
+-v /data/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties \
+nacos/nacos-server
 

@@ -406,6 +406,15 @@ havingValue = "true" 可以配置这个属性，表明name=spring.redis.cluster.
 使用：处理application/json 的数据，就是json类型的，框架会自动帮我们转换json数据为实体类
 不使用：处理 multipart/form-data 和 application/x-www-form-urlencoded 的数据，就是表单提交的
 
+15. server.use-forward-headers 配置
+
+这个配置和HTTP协议的 X-Forwarded-For，X-Forwarded-Proto 属性有关
+
+当客户端请求服务器，如果经过了负载均衡服务器到达应用服务器
+server.use-forward-headers = false 应用服务器获取到的IP是负载均衡服务器的
+server.use-forward-headers = true  应用服务器获取到的IP是客户端的
+以上是资料查到的，没有做太多的测试，留个记录
+
 ## 关于属性的含义与idea
 
 可以点击进去查看源码注释

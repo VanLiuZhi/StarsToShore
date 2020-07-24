@@ -176,3 +176,6 @@ curl -X Delete 'localhost:9200/edr-usertest/edrdoc/AXEvV--mxoIOfpIMeV0J
 
 curl -X POST 'localhost:9200/edr-usertest/edrdoc/_delete_by_query?pretty=true' -d '{"query": { "term" : { "id" : "9856519d-cd0b-486f-b8a8-17363159315f" }}}'
 
+## 批量删除
+
+直接在kibana 上执行 DELETE xx_sw* 索引可以用通配符，用来统一删除数据
