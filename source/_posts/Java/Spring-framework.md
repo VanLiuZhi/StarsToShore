@@ -419,6 +419,14 @@ server.use-forward-headers = true  应用服务器获取到的IP是客户端的
 
 spring提供的bean拷贝工具 BeanUtils.copyProperties(源对象，目标对象)  目标对象的字段在源对象中存在，那么就会把源对象的值赋值给目标对象
 
+17. Spring 中@NotNull, @NotEmpty和@NotBlank之间的区别是什么
+
+```s
+@NotNull://CharSequence, Collection, Map 和 Array 对象不能是 null, 但可以是空集（size = 0）。  
+@NotEmpty://CharSequence, Collection, Map 和 Array 对象不能是 null 并且相关对象的 size 大于 0。  
+@NotBlank://String 不是 null 且去除两端空白字符后的长度（trimmed length）大于 0，也就是传 “” 会报错。 
+```
+
 ## 关于属性的含义与idea
 
 可以点击进去查看源码注释
