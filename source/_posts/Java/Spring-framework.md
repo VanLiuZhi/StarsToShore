@@ -424,7 +424,7 @@ spring提供的bean拷贝工具 BeanUtils.copyProperties(源对象，目标对�
 ```s
 @NotNull://CharSequence, Collection, Map 和 Array 对象不能是 null, 但可以是空集（size = 0）。  
 @NotEmpty://CharSequence, Collection, Map 和 Array 对象不能是 null 并且相关对象的 size 大于 0。  
-@NotBlank://String 不是 null 且去除两端空白字符后的长度（trimmed length）大于 0，也就是传 “” 会报错。 
+@NotBlank://String 不是 null 且去除两端空白字符后的长度（trimmed length）大于 0，也就是传 “” 会报错
 ```
 
 ## 关于属性的含义与idea
