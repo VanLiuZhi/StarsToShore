@@ -30,7 +30,7 @@ mybatis 学习笔记和基础概念，在spring boot中的使用配置总结
     整体概述：
     配entity，是一个包，包含实体类
     配mapper，映射文件
-    mybatis设置，例如map-underscore-to-camel-case-repository
+    mybatis设置，例如map-underscore-to-camel-case-repository 开启驼峰功能，实体类的驼峰字段和数据的下划线风格做映射 （不过一般自己定义resultMap来处理）
     src：要有一个实体类，一个DAO接口类(mapper类) -> 由XML做映射
 
 
