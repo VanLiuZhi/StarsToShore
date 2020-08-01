@@ -1,8 +1,8 @@
 ---
 title: MySQL Sql sentence
 date: 2019-3-07 00:00:00
-tags: [database, note]
-categories: database
+tags: [DataBase, Note]
+categories: DataBase
 ---
 
 原生语句的使用与学习

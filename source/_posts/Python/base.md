@@ -1,8 +1,8 @@
 ---
 title: python 学习笔记
 date: 2018-10-23 00:00:00
-tags: [python, note]
-categories: python编程
+tags: [Python, Note]
+categories: Python编程
 top: 1
 ---
 

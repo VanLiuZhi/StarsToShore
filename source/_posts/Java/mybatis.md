@@ -1,7 +1,7 @@
 ---
 title: mybatis 配置使用总结
 date: 2019-07-25 00:00:00
-tags: [Java, note]
+tags: [Java, Note]
 categories: Java
 ---
 

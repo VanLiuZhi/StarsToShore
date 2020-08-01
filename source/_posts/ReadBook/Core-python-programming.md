@@ -1,8 +1,8 @@
 ---
 title: Core-python-programming 读书笔记
 date: 2018-10-22 00:00:00
-tags: [readbook]
-categories: readbook
+tags: [ReadBook]
+categories: ReadBook
 ---
 
 Python 核心编程 读书笔记，节选部分内容

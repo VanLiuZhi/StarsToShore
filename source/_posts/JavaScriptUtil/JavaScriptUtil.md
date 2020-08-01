@@ -1,8 +1,8 @@
 ---
 title: JavaScriptUtil 常用实现
 date: 2018-10-22 00:00:00
-tags: [util, javascript]
-categories: util
+tags: [Util, JavaScript]
+categories: Util
 ---
 
 常见的JavaScript 相关设计

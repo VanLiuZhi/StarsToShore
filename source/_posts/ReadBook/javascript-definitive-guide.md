@@ -1,8 +1,8 @@
 ---
 title: javascript-definitive-guide 读书笔记
 date: 2018-10-22 00:00:00
-tags: [readbook]
-categories: readbook
+tags: [ReadBook]
+categories: ReadBook
 ---
 
 JavaScript 权威指南 读书笔记，节选部分内容

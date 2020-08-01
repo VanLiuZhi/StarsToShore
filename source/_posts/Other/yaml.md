@@ -1,8 +1,8 @@
 ---
 title: yaml 标记语言
 date: 2018-10-22 00:00:00
-tags: [yaml, other]
-categories: other
+tags: [Yaml, Other]
+categories: Other
 ---
 
 yaml 语言

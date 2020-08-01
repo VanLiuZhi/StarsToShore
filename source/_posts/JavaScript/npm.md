@@ -1,8 +1,8 @@
 ---
 title: npm JavaScript 包管理工具
 date: 2018-10-22 00:00:00
-tags: [nodejs, note]
-categories: nodejs
+tags: [Node.js, Note]
+categories: Node.js
 ---
 
 npm是node的包管理工具，不建议使用任何第三方的工具，也不建议换源，这些操作解决一时问题也带来其它问题。关于网络问题，是在不行用手机热点，如果你们公司的网络都下不了，那公司不用待了。第三方工具也是，开始npm确实比不上第三方工具，不过现在渐渐好多了，官方也意识到这些问题了。

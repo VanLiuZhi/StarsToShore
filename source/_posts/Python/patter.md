@@ -1,8 +1,8 @@
 ---
 title: python-patter 相关设计模式
 date: 2018-10-22 00:00:00
-tags: [python, note]
-categories: python编程
+tags: [Python, Note]
+categories: Python编程
 ---
 
 Python常见设计模式总结

@@ -1,8 +1,8 @@
 ---
 title: 利用Docker快速构建开发环境
 date: 2018-10-22 00:00:00
-tags: [docker, linux, technology]
-categories: technology 技术
+tags: [Docker, Linux, Technology]
+categories: Technology技术
 ---
 
 Docker是很不错的容器技术，利用Docker可用快速构建一个开发环境，这样的好处在于一台新的电脑，只要安装了Docker软件，搭建环境就是几个命令的事，这样整个开发团队都会在同样的环境下进行，而且部署的时候，运维的同学只需要针对安全性做一些调整即可上线。

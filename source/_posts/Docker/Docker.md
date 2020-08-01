@@ -1,8 +1,8 @@
 ---
 title: Docker 容器在 web 开发中的运用
 date: 2018-10-22 00:00:00
-tags: [linux, docker, note]
-categories: web开发
+tags: [Linux, Docker, Note]
+categories: Web开发
 ---
 
 docker 容器技术学习笔记
@@ -550,9 +550,9 @@ run命令的时候可以指定 /tmp 的映射，这样匿名数据卷就被覆�
 
 ENTRYPOINT 中的参数始终会被使用，而 CMD 的额外参数可以在容器启动时动态替换掉
 
-比如 CMD echo "hello world"，直接docker run，会打印hello world，但是docker run -it /bin/bash 那么CMD的命令被覆盖
+比如 `CMD echo "hello world"`，直接docker run，会打印hello world，但是`docker run -it /bin/bash` 那么CMD的命令被覆盖
 
-如果是 ENTRYPOINT ["/bin/echo", "hello"] ，则 docker run 打印 hello, docker run Van ，打印 hello Van，参数被加上了
+如果是 `ENTRYPOINT ["/bin/echo", "hello"]` ，则 docker run 打印 hello, docker run Van ，打印 hello Van，参数被加上了
 
 同时使用
 
@@ -567,15 +567,17 @@ docker run 打印 hello world，docker run van 打印 hello van
 
 两种写法格式：
 
-ENTRYPOINT ["executable", "param1", "param2"] (exec格式，推荐使用此格式)
-ENTRYPOINT command param1 param2 (shell 格式)
+`ENTRYPOINT ["executable", "param1", "param2"] (exec格式，推荐使用此格式)`
+`ENTRYPOINT command param1 param2 (shell 格式)`
 
-要注意，如果要使用环境变量，比如$HOME，那么ENTRYPOINT ["echo", "$HOME"] 是不会替换环境变量的，只能使用shell模式
-ENTRYPOINT echo $HOME
+要注意，如果要使用环境变量，比如`$HOME`，那么`ENTRYPOINT ["echo", "$HOME"]`是不会替换环境变量的，只能使用shell模式
+`ENTRYPOINT echo $HOME`
 
 ## 查看容器内存
 
+```sh
 docker stats $(docker ps --format={{.Names}})
+```
 
 ## docekr mysql 数据库从映射文件中恢复
 
@@ -673,8 +675,8 @@ done
 
 1. 停止docker容器，两个命令都可以
 
-docker stop $(docker ps -a | awk '{ print $1}' | tail -n +2)
-docker stop `docker ps -aq`
+`docker stop $(docker ps -a | awk '{ print $1}' | tail -n +2)`
+`docker stop` `docker ps -aq`
 
 2. 停止docker服务
 
@@ -725,7 +727,7 @@ config.v2.json 里面找到ENV
 service docker start
 
 启动所有的容器
-sudo docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
+`sudo docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)`
 
 总结：多测试一下，大部分都能改，记得要把容器停止了，然后停止docker服务，再去修改配置，这样才能生效
 
@@ -737,7 +739,7 @@ sudo docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
 
 mysql-5.7-docker为容器名称
 
-
+```s
 docker  run \
 --name nacos -d \
 -p 8848:8848 \
@@ -750,4 +752,5 @@ docker  run \
 -v /data/nacos/logs:/home/nacos/logs \
 -v /data/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties \
 nacos/nacos-server
+```
 

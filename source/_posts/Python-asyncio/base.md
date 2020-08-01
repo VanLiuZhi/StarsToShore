@@ -1,8 +1,8 @@
 ---
 title: Python-异步与协程
 date: 2018-10-22 00:00:00
-tags: [python, note]
-categories: python编程
+tags: [Python, Note]
+categories: Python编程
 ---
 
 异步编程是一个很难的点，不同于同步编程，编程模型将变得复杂。下文引用理查德·史蒂文斯（William Richard (Rich) Stevens，1951年2月5日－1999年9月1日）所编写的《UNIX网络编程》关于I/O Models 部分内容，并结合个人以及网络上的内容做的整理，关于Linux编程遇到的函数，由于没有太多的接触，先做个理解。

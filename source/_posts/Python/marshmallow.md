@@ -1,8 +1,8 @@
 ---
 title: 用 marshmallow 模块序列化数据
 date: 2018-10-23 00:00:00
-tags: [python, note]
-categories: python编程
+tags: [Python, Note]
+categories: Python编程
 ---
 
 在接口开发中，从数据库查询得到的数据通常是需要转换的，或者从一个对象序列化需要的特定数据，可以为此写一个方法，为何不尝试使用marshmallow模块呢，它提供了非常全面的数据处理方案。

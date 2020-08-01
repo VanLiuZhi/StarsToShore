@@ -1,8 +1,8 @@
 ---
 title: Vue 渐进式前端框架
 date: 2018-10-22 00:00:00
-tags: [javascript, framework, note, Vue]
-categories: javascript
+tags: [JavaScript, Framework, Note, Vue]
+categories: JavaScript
 ---
 
 Vue是MVVM框架，一个构建数据驱动的 web 界面的渐进式框架。Vue.js 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合的视图组件。它不仅易于上手，还便于与第三方库或既有项目整合。

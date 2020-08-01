@@ -1,8 +1,8 @@
 ---
 title: HomeBrew mac-os 软件管理工具
 date: 2018-10-22 00:00:00
-tags: [mac, util]
-categories: mac
+tags: [Mac, Util]
+categories: Mac
 ---
 
 用mac电脑，你需要学会HomeBrew

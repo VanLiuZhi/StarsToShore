@@ -1,8 +1,8 @@
 ---
 title: Algorithm 算法学习
 date: 2018-10-22 00:00:00
-tags: [algorithm, note]
-categories: algorithm算法
+tags: [Algorithm, Note]
+categories: Algorithm算法
 ---
 
 算法相关，对于非科班出身的人来说，只能慢慢学习和体会了

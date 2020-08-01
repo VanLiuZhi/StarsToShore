@@ -1,8 +1,8 @@
 ---
 title: python 2/3 str unicode bytes 区别详解
 date: 2019-02-24 00:00:00
-tags: [python, web, technology]
-categories: technology 技术
+tags: [Python, Web, Technology]
+categories: Technology技术
 ---
 
 str unicode bytes 在 2/3 版本中概念是不同的，需要详细理解它

@@ -1,8 +1,8 @@
 ---
 title: Collect 站点收藏
 date: 2018-10-22 00:00:00
-tags: [water]
-categories: collect
+tags: [Water]
+categories: Collect
 ---
 
 常用内容收集整理，内容来自网络与个人整理

@@ -1,8 +1,8 @@
 ---
 title: element-UI 前端 Vue UI 组件
 date: 2018-10-22 00:00:00
-tags: [javascript, framework, Vue]
-categories: javascript
+tags: [JavaScript, Framework, Note]
+categories: JavaScript
 ---
 
 饿了么前端团队出品的Vue UI框架

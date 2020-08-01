@@ -1,8 +1,8 @@
 ---
 title: Flask 框架学习笔记
 date: 2018-10-22 00:00:00
-tags: [python, note, framework]
-categories: python编程
+tags: [Python, Framework, Note]
+categories: Python编程
 ---
 
 Flask框架学习笔记

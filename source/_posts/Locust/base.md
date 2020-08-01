@@ -1,8 +1,8 @@
 ---
 title: Locust测试工具
 date: 2018-10-22 00:00:00
-tags: [python, web]
-categories: web开发
+tags: [Python, Web]
+categories: Web开发
 ---
 
 locust 是一个简单易用的测试工具。

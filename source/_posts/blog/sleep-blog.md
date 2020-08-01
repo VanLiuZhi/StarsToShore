@@ -1,8 +1,8 @@
 ---
 title: 为什么那么多成功的人，他们每天只睡几个小时？
 date: 2018-10-22 00:00:00
-tags: [causerie]
-categories: causerie
+tags: [Causerie]
+categories: Causerie
 ---
 
 这是个值得思考的问题

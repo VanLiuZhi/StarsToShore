@@ -1,8 +1,8 @@
 ---
 title: python-virtualenv 虚拟环境使用总结
 date: 2018-10-22 00:00:00
-tags: [python, note]
-categories: python编程
+tags: [Python, Note]
+categories: Python编程
 ---
 
 python 虚拟环境总结，总有一款适合你

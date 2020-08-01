@@ -1,8 +1,8 @@
 ---
 title: Python-multiprocessing 多进程
 date: 2018-10-22 00:00:00
-tags: [python, note]
-categories: python编程
+tags: [Python, Note]
+categories: Python编程
 ---
 
 python多进程学习笔记

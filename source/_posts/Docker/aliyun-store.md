@@ -1,8 +1,8 @@
 ---
 title: 使用阿里云容器镜像服务
 date: 2019-05-01 00:00:00
-tags: [linux, docker, note]
-categories: web开发
+tags: [Linux, Docker, Note]
+categories: Web开发
 ---
 
 Kubernetes(k8s)搭建的时候，需要翻墙，一般像几十块这种VPN开了小飞机也是没有用的，可以使用阿里云提供的容器镜像服务，速度快，还可以不用翻墙

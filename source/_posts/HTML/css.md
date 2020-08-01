@@ -1,8 +1,8 @@
 ---
 title: css 在 web 开发中常见操作与学习总结
 date: 2018-10-22 00:00:00
-tags: [css, html]
-categories: css
+tags: [Css, Html]
+categories: Css
 ---
 
 css总结笔记，不属于ECMAScript的知识点一般整理到此，可能包括浏览器对象模型，DOM等

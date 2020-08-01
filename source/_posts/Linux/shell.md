@@ -1,7 +1,7 @@
 ---
 title: Linux 开发环境 shell 配置
 date: 2019-04-13 00:00:00
-tags: [linux, note]
+tags: [Linux, Note]
 categories: 操作系统
 ---
 

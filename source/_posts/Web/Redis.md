@@ -6,7 +6,7 @@ top: false
 cover: false
 toc: true
 mathjax: true
-categories: DataBase
+categories: database
 tags: [Web, Note, DataBase, Python]
 reprintPolicy: cc_by
 ---

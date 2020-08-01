@@ -1,7 +1,7 @@
 ---
 title: linux-question
 date: 2018-10-22 00:00:00
-tags: [linux, note]
+tags: [Linux, Note]
 categories: 操作系统
 ---
 

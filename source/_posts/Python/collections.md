@@ -1,8 +1,8 @@
 ---
 title: collections 模块使用
 date: 2018-10-22 00:00:00
-tags: [python, note]
-categories: python编程
+tags: [Python, Note]
+categories: Python编程
 ---
 
 collections模块是python的内建模块，提供类很多实用的集合类。有时候很多数据结构其实标准库已经实现了，不妨来这里找找有没有你想要的。内容参考官方文档。

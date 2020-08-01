@@ -1,11 +1,8 @@
 ---
 title: linux-shell 环境变量
 date: 2018-10-22 00:00:00
-tags: 
-    - linux
-    - note
-categories: 
-    - 操作系统
+tags: [Linux, Note]
+categories: 操作系统
 ---
 
 linux shell学习笔记

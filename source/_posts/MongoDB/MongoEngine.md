@@ -1,8 +1,8 @@
 ---
 title: MongoEngine 官方文档学习笔记
 date: 2018-10-22 00:00:00
-tags: [database, note, python]
-categories: database
+tags: [DataBase, Note, Python]
+categories: DataBase
 ---
 
 文档[http://docs.mongoengine.org/index.html](http://docs.mongoengine.org/index.html)

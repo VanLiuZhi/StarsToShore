@@ -1,8 +1,8 @@
 ---
 title: jQuery 学习笔记
 date: 2018-10-22 00:00:00
-tags: [javascript, note]
-categories: javascript
+tags: [JavaScript, Note]
+categories: JavaScript
 ---
 
 javascript封装，快速编写前端代码，不过在MVVM框架的势头下，jQuery慢慢的不再需要了

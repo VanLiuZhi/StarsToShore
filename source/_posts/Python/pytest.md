@@ -1,8 +1,8 @@
 ---
 title: pytest web 开发中的单元测试工具
 date: 2018-10-22 00:00:00
-tags: [python, note]
-categories: python编程
+tags: [Python, Note]
+categories: Python编程
 ---
 
 pytest，Python的单元测试工具，用于web开发中做测试，使用也比较简单。关于测试又是一个大的分支，编写测试代码也有一定的套路，比如测试细节步骤，测试各个接口，但是个人认为测试一个整体的模块结果会比较容易。

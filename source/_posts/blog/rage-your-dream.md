@@ -1,8 +1,8 @@
 ---
 title: Rage Your Dream
 date: 2019-07-14 00:00:00
-tags: [javascript, technology]
-categories: technology 技术
+tags: [Technology]
+categories: Technology技术
 ---
 
 Rage Your Dream 项目开发笔记

@@ -1,8 +1,8 @@
 ---
 title: gunicorn python 应用服务器
 date: 2018-10-22 00:00:00
-tags: [python, note, linux]
-categories: python编程
+tags: [Python, Linux, Note]
+categories: Python编程
 ---
 
 Gunicorn 'Green Unicorn' is a Python WSGI HTTP Server for UNIX. It's a pre-fork worker model. The Gunicorn server is broadly compatible with various web frameworks, simply implemented, light on server resources, and fairly speedy.

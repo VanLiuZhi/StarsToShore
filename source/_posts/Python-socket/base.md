@@ -1,8 +1,8 @@
 ---
 title: Python-socket
 date: 2018-10-22 00:00:00
-tags: [python, note]
-categories: python编程
+tags: [Python, Note]
+categories: Python编程
 ---
 
 python网络编程笔记

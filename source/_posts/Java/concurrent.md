@@ -1,7 +1,7 @@
 ---
 title: Java 并发
 date: 2019-01-05 00:00:00
-tags: [java, note]
+tags: [Java, Note]
 categories: Java
 ---
 

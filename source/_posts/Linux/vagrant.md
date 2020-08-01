@@ -1,7 +1,7 @@
 ---
 title: vagrant 运用
 date: 2019-04-05 00:00:00
-tags: [linux, note]
+tags: [Linux, Note]
 categories: 操作系统
 ---
 

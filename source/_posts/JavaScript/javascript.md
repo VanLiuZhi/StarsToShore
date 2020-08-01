@@ -1,8 +1,8 @@
 ---
 title: JavaScript 学习笔记
 date: 2018-10-22 00:00:00
-tags: [javascript, note]
-categories: javascript
+tags: [JavaScript, Note]
+categories: JavaScript
 ---
 
 javascript学习笔记

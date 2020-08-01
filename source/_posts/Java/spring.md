@@ -1,7 +1,7 @@
 ---
 title: Spring
 date: 2019-04-05 00:00:00
-tags: [Java, note]
+tags: [Java, Note]
 categories: Java
 ---
 

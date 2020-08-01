@@ -1,8 +1,8 @@
 ---
 title: MySQL install-problem
 date: 2018-10-22 00:00:00
-tags: [database, note]
-categories: database
+tags: [DataBase, Note]
+categories: DataBase
 ---
 
 安装MySQL遇到的问题

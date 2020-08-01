@@ -1,8 +1,8 @@
 ---
 title: Iterm2 终端工具
 date: 2018-10-22 00:00:00
-tags: [mac, util, note]
-categories: mac
+tags: [Mac, Util]
+categories: Mac
 ---
 
 不错的终端软件

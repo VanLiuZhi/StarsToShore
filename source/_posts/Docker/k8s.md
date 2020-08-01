@@ -1,8 +1,8 @@
 ---
 title: Kubernetes 笔记
 date: 2019-04-05 00:00:00
-tags: [linux, docker, note]
-categories: web开发
+tags: [Linux, Docker, Note]
+categories: Web开发
 ---
 
 Kubernetes 笔记

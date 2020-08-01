@@ -6,8 +6,8 @@ top: true
 cover: false
 toc: true
 mathjax: false
-categories: Java
 tags: [Java, Note]
+categories: Java
 reprintPolicy: cc_by
 ---
 

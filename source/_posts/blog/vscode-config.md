@@ -1,8 +1,8 @@
 ---
 title: vscode 配置
 date: 2019-07-15 00:00:01
-tags: [technology]
-categories: technology 技术
+tags: [Technology]
+categories: Technology技术
 ---
 
 vscode 配置

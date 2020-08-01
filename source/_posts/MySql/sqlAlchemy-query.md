@@ -1,8 +1,8 @@
 ---
 title: sqlAlchemy-query 常见操作总结
 date: 2018-10-22 00:00:00
-tags: [database, note, python]
-categories: database
+tags: [DataBase, Note, Python]
+categories: DataBase
 ---
 
 MySQL 的 Python 版 ORM

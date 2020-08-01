@@ -1,8 +1,8 @@
 ---
 title: Django的默认服务器
 date: 2019-02-26 14:45:00
-tags: [python, web, technology]
-categories: technology 技术
+tags: [Python, Web, Technology]
+categories: Technology技术
 ---
 
 很多web框架都会自带服务器，今天就来看看Django的默认服务器是怎么运行的，本次使用的Django版本为2.1.7

@@ -1,8 +1,8 @@
 ---
 title: Mysql 数据库基本
 date: 2018-10-22 00:00:00
-tags: [database, note]
-categories: database
+tags: [DataBase, Note]
+categories: DataBase
 ---
 
 mysql学习笔记

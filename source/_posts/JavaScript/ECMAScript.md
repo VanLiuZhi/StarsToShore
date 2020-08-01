@@ -1,8 +1,8 @@
 ---
 title: ECMAScript6 学习笔记
 date: 2018-10-22 00:00:00
-tags: [javascript, note]
-categories: javascript
+tags: [JavaScript, Note]
+categories: JavaScript
 ---
 
 ECMAScript6 是 JavaScript 的第六版本，是一个标准，主要增加了面向对象的支持和一些新特性。

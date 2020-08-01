@@ -6,8 +6,8 @@ top: true
 cover: true
 toc: true
 mathjax: false
+tags: [Python, Framework, Note]
 categories: Python编程
-tags: [python, Note, FrameWork]
 reprintPolicy: cc_by
 ---
 

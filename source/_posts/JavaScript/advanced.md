@@ -1,8 +1,8 @@
 ---
 title: ECMAScript 高级
 date: 2019-03-11 00:00:00
-tags: [javascript, note]
-categories: javascript
+tags: [JavaScript, Note]
+categories: JavaScript
 ---
 
 ECMAScript 高级话题

@@ -1,8 +1,8 @@
 ---
 title: 计算机基础知识补充
 date: 2019-10-20 00:00:00
-tags: [technology]
-categories: technology 技术
+tags: [Note]
+categories: Technology技术
 ---
 
 计算机基础知识补充，基础是重中之重

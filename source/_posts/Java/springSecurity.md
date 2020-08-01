@@ -7,8 +7,8 @@ cover: false
 toc: true
 mathjax: false
 summary: springSecurity安全框架 Spring Security is a powerful and highly customizable authentication and access-control framework. It is the de-facto standard for securing Spring-based applications.
-categories: Java
 tags: [Java, Note]
+categories: Java
 reprintPolicy: cc_by
 ---
 

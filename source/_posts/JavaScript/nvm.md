@@ -1,8 +1,8 @@
 ---
 title: nvm 环境管理工具
 date: 2018-10-22 00:00:00
-tags: [nodejs, note]
-categories: nodejs
+tags: [Node.js, Note]
+categories: Node.js
 ---
 
 nvm 是 node的环境管理工具，可以同时安装多个node版本，具体实现是通过修改环境变量切换到对应的node上，不同的node版本拥有独立的包文件。

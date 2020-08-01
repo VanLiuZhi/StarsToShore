@@ -1,7 +1,7 @@
 ---
 title: vim 编辑器操作
 date: 2018-10-22 00:00:00
-tags: [linux, note]
+tags: [Linux, Note]
 categories: 操作系统
 ---
 

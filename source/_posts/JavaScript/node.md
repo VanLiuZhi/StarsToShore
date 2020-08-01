@@ -1,8 +1,8 @@
 ---
-title: Node.js 服务端的Javascript
+title: Node.js 服务端的JavaScript
 date: 2018-10-22 00:00:00
-tags: [nodejs, javascript, note]
-categories: nodejs
+tags: [JavaScript, Node.js, Note]
+categories: Node.js
 ---
 
 服务端的javascript，Nodejs是一个Javascript运行环境(runtime environment)，让js可以运行在服务端

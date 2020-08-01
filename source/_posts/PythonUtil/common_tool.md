@@ -1,8 +1,8 @@
 ---
 title: python常用方法
 date: 2018-10-22 00:00:00
-tags: [python, note]
-categories: python编程
+tags: [Python, Note]
+categories: Python编程
 ---
 
 记录python常用方法

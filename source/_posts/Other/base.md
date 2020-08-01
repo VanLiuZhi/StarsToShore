@@ -1,8 +1,8 @@
 ---
 title: 计算机知识补充
 date: 2018-10-22 00:00:00
-tags: [learn, other]
-categories: other
+tags: [Learn, Other]
+categories: Other
 ---
 
 计算机知识补充

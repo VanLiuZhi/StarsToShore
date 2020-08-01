@@ -1,8 +1,8 @@
 ---
 title: 博客迁移
 date: 2018-10-22 00:00:00
-tags: [water]
-categories: water
+tags: [Water]
+categories: Water
 toc: true
 ---
 

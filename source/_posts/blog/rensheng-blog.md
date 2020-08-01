@@ -1,8 +1,8 @@
 ---
 title: 人生的意义
 date: 2018-10-22 00:00:00
-tags: [causerie]
-categories: causerie
+tags: [Causerie]
+categories: Causerie
 ---
 
 胡适说，人生应该有梦，否则人生不是太不丰富吗？

@@ -1,7 +1,7 @@
 ---
 title: svn 版本控制工具
 date: 2018-10-22 00:00:00
-tags: [web, note, svn]
+tags: [Web, Note, Svn]
 categories: 操作系统
 ---
 
