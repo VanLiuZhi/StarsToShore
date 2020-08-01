@@ -1,0 +1,1757 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Flask 框架学习笔记, Java，Python，JavaScript，Linux">
+    <meta name="description" content="Flask框架学习笔记
+Flask 也是Python web 开发中很重要的框架，相比Django来说，它体现在一个“微型”上，只提供核心功能，其余功能由模块来扩展。拥有很强大的灵活性，通过核心来不断的扩展实现需求。
+
+
+Flask
+关于扩">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Flask 框架学习笔记 | VanLiuZhi</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">VanLiuZhi</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">VanLiuZhi</div>
+        <div class="logo-desc">
+            
+            个人技术博客，Java，Python，JavaScript，Docker
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			Contact
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Flask 框架学习笔记
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Note/">
+                                <span class="chip bg-color">Note</span>
+                            </a>
+                        
+                            <a href="/tags/Framework/">
+                                <span class="chip bg-color">Framework</span>
+                            </a>
+                        
+                            <a href="/tags/Python/">
+                                <span class="chip bg-color">Python</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Python%E7%BC%96%E7%A8%8B/" class="post-category">
+                                Python编程
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-10-22
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-08-01
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    12 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>Flask框架学习笔记</p>
+<p>Flask 也是Python web 开发中很重要的框架，相比Django来说，它体现在一个“微型”上，只提供核心功能，其余功能由模块来扩展。拥有很强大的灵活性，通过核心来不断的扩展实现需求。</p>
+<a id="more"></a>
+
+<h1 id="Flask"><a href="#Flask" class="headerlink" title="Flask"></a>Flask</h1><p><img src="/images/Python/Flask.png" alt="image"></p>
+<h2 id="关于扩展"><a href="#关于扩展" class="headerlink" title="关于扩展"></a>关于扩展</h2><p>通过安装对应的扩展包，可以扩展框架的很多功能（这些扩展和框架会有结合，有点想开启框架的功能一样），Flask的扩展都暴露在flask.ext命名空间下，你可以在环境中通过pip安装好相应扩展，然后再在程序中导入相应的包即可使用扩展。</p>
+<p>在新的版本中，引入flask扩展不能再从flask.ext导入了，直接从安装模块导入，比如 <code>from flask_sqlalchemy import SQLAlchemy</code></p>
+<h2 id="自定义url转换器"><a href="#自定义url转换器" class="headerlink" title="自定义url转换器"></a>自定义url转换器</h2><p>在路由中，使用&lt;&gt;来获取动态参数，默认是字符串类型的，如果想要指定参数类型，需要标记成<code>&lt;converter:variable_name&gt;</code> 这样的格式，类似 <code>&lt;int:quantity&gt;</code>，使用any可以指定多种路径，类似<code>&lt;any(a, b:page_name)&gt;</code>。像any，int做为类型可以自定义，比如定义list类型，代码如下：</p>
+<pre class="line-numbers language-python"><code class="language-python">
+<span class="token keyword">from</span> urllib <span class="token keyword">import</span> parse
+
+<span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+<span class="token keyword">from</span> werkzeug<span class="token punctuation">.</span>routing <span class="token keyword">import</span> BaseConverter
+
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">ListConverter</span><span class="token punctuation">(</span>BaseConverter<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> url_map<span class="token punctuation">,</span> separator<span class="token operator">=</span><span class="token string">'+'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        super<span class="token punctuation">(</span>ListConverter<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span>url_map<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>separator <span class="token operator">=</span> parse<span class="token punctuation">.</span>unquote<span class="token punctuation">(</span>separator<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># unquote 对url进行解码</span>
+
+    <span class="token keyword">def</span> <span class="token function">to_python</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> value<span class="token punctuation">.</span>split<span class="token punctuation">(</span>self<span class="token punctuation">.</span>separator<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">to_url</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> values<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>separator<span class="token punctuation">.</span>join<span class="token punctuation">(</span>BaseConverter<span class="token punctuation">.</span>to_url<span class="token punctuation">(</span>self<span class="token punctuation">,</span> value<span class="token punctuation">)</span>
+                                <span class="token keyword">for</span> value <span class="token keyword">in</span> values<span class="token punctuation">)</span>
+
+
+app<span class="token punctuation">.</span>url_map<span class="token punctuation">.</span>converters<span class="token punctuation">[</span><span class="token string">'list'</span><span class="token punctuation">]</span> <span class="token operator">=</span> ListConverter
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/list1/&lt;list:page_names>/'</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">list1</span><span class="token punctuation">(</span>page_names<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>page_names<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token string">'Separator: {} {}'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span><span class="token string">'+'</span><span class="token punctuation">,</span> page_names<span class="token punctuation">)</span>
+
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/list2/&lt;list(separator=u"|"):page_names>/'</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">list2</span><span class="token punctuation">(</span>page_names<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">'Separator: {} {}'</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span><span class="token string">'|'</span><span class="token punctuation">,</span> page_names<span class="token punctuation">)</span>
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span>host<span class="token operator">=</span><span class="token string">'0.0.0.0'</span><span class="token punctuation">,</span> port<span class="token operator">=</span><span class="token number">9000</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="唯一url"><a href="#唯一url" class="headerlink" title="唯一url"></a>唯一url</h2><p>在路由的装饰器中，如果指定了结尾的反斜杠，类似这样的路径 <code>\page\</code>，那么浏览器访问地址以反斜杠结尾，或者没有反斜杠都可以访问(访问一个不以反斜杠结尾的url会被重定向到到反斜杠的url上)，如果路由是<code>\page</code>，那么浏览器访问以反斜杠结尾会报错。</p>
+<h2 id="扩展响应"><a href="#扩展响应" class="headerlink" title="扩展响应"></a>扩展响应</h2><p>这是一个很常见的需求，对返回对象进行包装，比如返回一个ORM的查询实例，这个是不能被json序列化的，通过扩展返回数据，可以对特定对象进行处理。另一种情况，是重写响应类，<code>app.response = JSONResponse</code></p>
+<h2 id="静态文件管理"><a href="#静态文件管理" class="headerlink" title="静态文件管理"></a>静态文件管理</h2><p>在创建flask实例的时候，通过static_folder修改默认静态文件路径，<code>Flask(__name__, static_folder='/tmp')</code></p>
+<h2 id="关于视图"><a href="#关于视图" class="headerlink" title="关于视图"></a>关于视图</h2><p>通常使用函数视图，但是这样就发挥不出类的作用了，比如继承一个基类，定义一些基础的东西，flask也可以使用基于类的视图</p>
+<h3 id="标准类视图"><a href="#标准类视图" class="headerlink" title="标准类视图"></a>标准类视图</h3><p>标准类视图是继承自 <code>flask.views.View</code>，并且在子类中必须实现 <code>dispatch_request</code> 方法，这个方法类似于视图函数，也要返回一个基于Response或者其子类的对象。通过 <code>app.add_url_rule(url_rule, view_func)</code> 来进行注册</p>
+<pre class="line-numbers language-python"><code class="language-python">
+<span class="token keyword">from</span> flask<span class="token punctuation">.</span>views <span class="token keyword">import</span> View
+<span class="token keyword">class</span> <span class="token class-name">PersonalView</span><span class="token punctuation">(</span>View<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">dispatch_request</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">"hello"</span>
+
+app<span class="token punctuation">.</span>add_url_rule<span class="token punctuation">(</span><span class="token string">'/users/'</span><span class="token punctuation">,</span>view_func<span class="token operator">=</span>PersonalView<span class="token punctuation">.</span>as_view<span class="token punctuation">(</span><span class="token string">'personalview'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="基于调度方法的视图"><a href="#基于调度方法的视图" class="headerlink" title="基于调度方法的视图"></a>基于调度方法的视图</h3><p>继承自 <code>flask.views.MethodView</code>，可以对不同的HTTP方法执行对应的函数，使用方法的小写名。在类视图中定义一个属性叫做decorators，然后存储装饰器。以后每次调用这个类视图的时候，就会执行这个装饰器</p>
+<pre class="line-numbers language-python"><code class="language-python">
+<span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask<span class="token punctuation">,</span> jsonify
+<span class="token keyword">from</span> flask<span class="token punctuation">.</span>views <span class="token keyword">import</span> MethodView
+<span class="token keyword">from</span> flask <span class="token keyword">import</span> session
+
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">login_required</span><span class="token punctuation">(</span>func<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">wrapper</span><span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> session<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"user_id"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string">'auth failure'</span>
+        <span class="token keyword">return</span> func<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> wrapper
+
+
+<span class="token keyword">class</span> <span class="token class-name">UserAPI</span><span class="token punctuation">(</span>MethodView<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    decorators <span class="token operator">=</span> <span class="token punctuation">[</span>login_required<span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">get</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> jsonify<span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token string">'username'</span><span class="token punctuation">:</span> <span class="token string">'fake'</span><span class="token punctuation">,</span>
+            <span class="token string">'avatar'</span><span class="token punctuation">:</span> <span class="token string">'http://lorempixel.com/100/100/nature/'</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">post</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">'UNSUPPORTED!'</span>
+
+
+app<span class="token punctuation">.</span>add_url_rule<span class="token punctuation">(</span><span class="token string">'/user'</span><span class="token punctuation">,</span> view_func<span class="token operator">=</span>UserAPI<span class="token punctuation">.</span>as_view<span class="token punctuation">(</span><span class="token string">'userview'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span>host<span class="token operator">=</span><span class="token string">'0.0.0.0'</span><span class="token punctuation">,</span> port<span class="token operator">=</span><span class="token number">9000</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="使用命令行接口"><a href="#使用命令行接口" class="headerlink" title="使用命令行接口"></a>使用命令行接口</h2><p>和Django一样，flask框架也提供了很多命令，flask命令需要添加都环境变量，这个一般在安装后就有了。然后需要设置flask应用的环境变量，可以使用 <code>export FLASK_APP='app.py path'</code> 。</p>
+<p>也可以自定义命令，比如 <code>flask run_test</code> 执行一个测试脚本，代码如下：</p>
+<pre class="line-numbers language-python"><code class="language-python">
+@app<span class="token punctuation">.</span>cli<span class="token punctuation">.</span>command<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">run_test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'this is a test script'</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><p>理解请求上下文和应用上下文。</p>
+<h2 id="werkzeug"><a href="#werkzeug" class="headerlink" title="werkzeug"></a>werkzeug</h2><p>WSGI 协议工具集</p>
+<h2 id="配置参数讲解"><a href="#配置参数讲解" class="headerlink" title="配置参数讲解"></a>配置参数讲解</h2><p>创建app需要传递配置参数，以供各个模块使用</p>
+<p>SECRET_KEY：密码加盐的参数，推荐设置成系统变量</p>
+<h2 id="扩展模块"><a href="#扩展模块" class="headerlink" title="扩展模块"></a>扩展模块</h2><p>扩展模块很多是基于现有的模块做扩展，封装成flask的扩展，比如把实例加入请求上下文中；模块的更多用法可以参考原模块。</p>
+<p>需要分析用法的模块，列出项目地址。</p>
+<h3 id="flask-script"><a href="#flask-script" class="headerlink" title="flask_script"></a>flask_script</h3><p>用来自定义命令的，不过模块没有维护了，官方也推荐不要再使用它了，推荐使用 <code>@app.cli.command</code> 的形式来添加命令。然后配置环境变量，通过flask command的形式来执行命令。</p>
+<p>可以使用装饰器，和类来添加命令。装饰器：<code>@manager.command</code>；类：继承Command类，实现run方法。</p>
+<p>由于是弃用的模块，不再赘述。</p>
+<h3 id="flask-migrate"><a href="#flask-migrate" class="headerlink" title="flask_migrate"></a>flask_migrate</h3><p>Flask-Migrate是用于处理SQLAlchemy 数据库迁移的扩展工具。当Model出现变更的时候，通过migrate去管理数据库变更。依赖alembic模块。</p>
+<p>用法：</p>
+<pre class="line-numbers language-python"><code class="language-python">
+<span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+<span class="token keyword">from</span> flask_sqlalchemy <span class="token keyword">import</span> SQLAlchemy
+<span class="token keyword">from</span> flask_migrate <span class="token keyword">import</span> Migrate
+
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>config<span class="token punctuation">[</span><span class="token string">'SQLALCHEMY_DATABASE_URI'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'sqlite:///app.db'</span>
+
+db <span class="token operator">=</span> SQLAlchemy<span class="token punctuation">(</span>app<span class="token punctuation">)</span>
+migrate <span class="token operator">=</span> Migrate<span class="token punctuation">(</span>app<span class="token punctuation">,</span> db<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>命令：</p>
+<ol>
+<li><p>初始化<br>flask db init<br>这个命令会在当前目录下生成一个migrations文件夹。这个文件夹也需要和其他源文件一起，添加到版本控制。</p>
+</li>
+<li><p>生成最初的迁移<br>flask db migrate<br>此命令会在migrations下生成一个version文件夹，下面包含了对应版本的数据库操作py脚本。</p>
+</li>
+<li><p>数据库升级<br>flask db upgrade<br>最后一步。此命令相当于执行了version文件夹下的相应py版本，对数据库进行变更操作。此后，对model有变更，只要重复migrate和upgrade操作即可。</p>
+</li>
+</ol>
+<p>由于migrate并不一定全部发现你对model的所有改动，因此生成的py脚本需要review, 有错的话则需要edit。</p>
+<p>例如目前知道的，表名称表更，列名称变更，或给constraints命名等，migreate都不能发现的。更多限制细节见此：Alembic autogenerate documentation。</p>
+<p>在Alembic 中，数据库迁移用迁移脚本表示。脚本中有两个函数，分别是upgrade() 和downgrade()。upgrade() 函数把迁移中的改动应用到数据库中，downgrade() 函数则将改动删除。Alembic 具有添加和删除改动的能力，因此数据库可重设到修改历史的任意一点。</p>
+<p>我们可以使用revision 命令手动创建Alembic 迁移，也可使用migrate 命令自动创建。手动创建的迁移只是一个骨架，upgrade() 和downgrade() 函数都是空的，开发者要使用Alembic 提供的Operations 对象指令实现具体操作。自动创建的迁移会根据模型定义和数据库当前状态之间的差异生成upgrade() 和downgrade() 函数的内容。自动创建的迁移不一定总是正确的，有可能会漏掉一些细节。自动生成迁移脚本后一定要进行检查。</p>
+<p>查看帮助文档：flask db –help</p>
+<p>运行flask db init后，提示配置日志输出，默认输出到终端，应该配置日志到文件，方便以后排查问题（看看是谁动了数据库）</p>
+<h3 id="flask-logging"><a href="#flask-logging" class="headerlink" title="flask_logging"></a>flask_logging</h3><p><a href="https://github.com/dgilland/flask-logconfig" target="_blank" rel="noopener">GitHub地址</a></p>
+<p>用来快速实现登录验证。在User模型中，通过继承UserMixin实现以下属性：</p>
+<ol>
+<li><p>is_authenticated 属性，用来判断是否是已经授权了，如果通过授权就会返回true</p>
+</li>
+<li><p>is_active 属性，判断是否已经激活</p>
+</li>
+<li><p>is_anonymous 属性，判断是否是匿名用户</p>
+</li>
+<li><p>get_id() 方法，返回用户的唯一标识</p>
+</li>
+</ol>
+<p>模块提供了login_required, login_user, logout_user等方法，验证成功后，通过login_user设置session。</p>
+<h3 id="flask-sqlalchemy"><a href="#flask-sqlalchemy" class="headerlink" title="flask_sqlalchemy"></a>flask_sqlalchemy</h3><p>配置参数：</p>
+<ul>
+<li><code>SQLALCHEMY_DATABASE_URI</code>：配置数据库连接</li>
+</ul>
+<p><code>sqlite:////tmp/test.db 或 mysql://username:password@server/db</code></p>
+<ul>
+<li><p>SQLALCHEMY_BINDS：用来绑定多个数据库，例如：</p>
+<pre><code>SQLALCHEMY_DATABASE_URI = 'postgres://localhost/main'
+SQLALCHEMY_BINDS = {
+  'users':        'mysqldb://localhost/users',
+  'appmeta':      'sqlite:////path/to/appmeta.db'
+}</code></pre><p>多个数据库在创建数据库或在模型中声名使用哪个，比如在模型中 <code>__bind_key__ = 'users'</code></p>
+</li>
+<li><p><code>SQLALCHEMY_ECHO</code>：值为Boolean（默认为False），设置为True，会把查询语句输出到stderr</p>
+</li>
+<li><p><code>SQLALCHEMY_RECORD_QUERIES</code>：可以用于显式地禁用或者启用查询记录。查询记录 在调试或者测试模式下自动启用。<br>一般我们不设置。</p>
+</li>
+<li><p><code>QLALCHEMY_NATIVE_UNICODE</code>：可以用于显式地禁用支持原生的unicode。</p>
+</li>
+<li><p><code>SQLALCHEMY_POOL_SIZE</code>：数据库连接池的大小。默认是数据库引擎的默认值（通常是 5）。当用户需要访问数据库时，并非建立一个新的连接，而是从连接池中取出一个已建立的空闲连接对象。使用完毕后，用户也并非将连接关闭，而是将连接放回连接池中，以供下一个请求访问使用。而连接的建立、断开都由连接池自身来管理。</p>
+</li>
+<li><p><code>SQLALCHEMY_POOL_TIMEOUT</code>：指定数据库连接池的超时时间。默认是10。</p>
+</li>
+<li><p><code>SQLALCHEMY_POOL_RECYCLE</code>：自动回收连接的秒数（1200即为2小时）。这对MySQL是必须的，默认情况下MySQL会自动移除闲置8小时或者以上的连接，Flask-SQLAlchemy会自动地设置这个值为2小时。也就是说如果连接池中有连接2个小时被闲置，那么其会被断开和抛弃。</p>
+</li>
+<li><p><code>SQLALCHEMY_MAX_OVERFLOW</code>：控制在连接池达到最大值后可以创建的连接数。当这些额外的连接使用后回收到连接池后将会被断开和抛弃。保证连接池只有设置的大小。</p>
+</li>
+<li><p><code>SQLALCHEMY_TRACK_MODIFICATIONS</code>：如果设置成 True (默认情况)，Flask-SQLAlchemy 将会追踪对象的修改并且发送信号。这需要额外的内存，如果不必要的可以禁用它。</p>
+</li>
+</ul>
+<p>常用字段</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Integer</td>
+<td align="left">int普通整数，一般是32位</td>
+</tr>
+<tr>
+<td>SmallInteger</td>
+<td align="left">int取值范围小的整数，一般是16位</td>
+</tr>
+<tr>
+<td>BigInteger</td>
+<td align="left">int或long不限制精度的整数</td>
+</tr>
+<tr>
+<td>Float</td>
+<td align="left">float浮点数</td>
+</tr>
+<tr>
+<td>Numeric</td>
+<td align="left">decimal.Decimal普通整数，一般是32位</td>
+</tr>
+<tr>
+<td>String</td>
+<td align="left">str变长字符串</td>
+</tr>
+<tr>
+<td>Text</td>
+<td align="left">str变长字符串，对较长或不限长度的字符串做了优化</td>
+</tr>
+<tr>
+<td>Unicode</td>
+<td align="left">unicode变长Unicode字符串</td>
+</tr>
+<tr>
+<td>UnicodeText</td>
+<td align="left">unicode变长Unicode字符串，对较长或不限长度的字符串做了优化</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td align="left">bool布尔值</td>
+</tr>
+<tr>
+<td>Date</td>
+<td align="left">datetime.date时间</td>
+</tr>
+<tr>
+<td>Time</td>
+<td align="left">datetime.datetime日期和时间</td>
+</tr>
+<tr>
+<td>LargeBinary</td>
+<td align="left">str二进制文件</td>
+</tr>
+<tr>
+<td>Enum</td>
+<td align="left">enum枚举类型</td>
+</tr>
+</tbody></table>
+<p>字段选项</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>primary_key</td>
+<td align="left">如果为True，代表表的主键</td>
+</tr>
+<tr>
+<td>unique</td>
+<td align="left">如果为True，代表这列不允许出现重复的值</td>
+</tr>
+<tr>
+<td>index</td>
+<td align="left">如果为True，为这列创建索引，提高查询效率</td>
+</tr>
+<tr>
+<td>nullable</td>
+<td align="left">如果为True，允许有空值，如果为False，不允许有空值</td>
+</tr>
+<tr>
+<td>default</td>
+<td align="left">为这列定义默认值，如default=1</td>
+</tr>
+</tbody></table>
+<p>flask_sqlalchemy的db实例提供了创建数据库的方法，不过这个是把当前上下文的模型创建数据库，如果是大型项目，那么就是把所有模型创建数据库，它的使用也有局限性，一般做为外部使用（一个测试工具，在这个上下文中创建db实例，对指定的模型来创建表）。所以应该使用迁移工具来管理数据库。</p>
+<p>常用的过滤器</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>filter()</td>
+<td align="left">把过滤器添加到原查询上，返回一个新查询</td>
+</tr>
+<tr>
+<td>filter_by()</td>
+<td align="left">把等值过滤器添加到原查询上，返回一个新查询</td>
+</tr>
+<tr>
+<td>limit()</td>
+<td align="left">使用指定的值限定原查询返回的结果</td>
+</tr>
+<tr>
+<td>offset()</td>
+<td align="left">偏移原查询返回的结果，返回一个新查询</td>
+</tr>
+<tr>
+<td>order_by()</td>
+<td align="left">根据指定条件对原查询结果进行排序，返回一个新查询</td>
+</tr>
+<tr>
+<td>group_by()</td>
+<td align="left">根据指定条件对原查询结果进行分组，返回一个新查询</td>
+</tr>
+</tbody></table>
+<p>执行器</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>all()</td>
+<td align="left">以列表形式返回查询的所有结果</td>
+</tr>
+<tr>
+<td>first()</td>
+<td align="left">返回查询的第一个结果，如果未查到，返回None</td>
+</tr>
+<tr>
+<td>first_or_404()</td>
+<td align="left">返回查询的第一个结果，如果未查到，返回404</td>
+</tr>
+<tr>
+<td>get()</td>
+<td align="left">返回指定主键对应的行，如不存在，返回None</td>
+</tr>
+<tr>
+<td>get_or_404()</td>
+<td align="left">返回指定主键对应的行，如不存在，返回404</td>
+</tr>
+<tr>
+<td>count()</td>
+<td align="left">返回查询结果的数量</td>
+</tr>
+<tr>
+<td>paginate()</td>
+<td align="left">返回一个Paginate对象，它包含指定范围内的结果</td>
+</tr>
+</tbody></table>
+<h2 id="应用调度"><a href="#应用调度" class="headerlink" title="应用调度"></a>应用调度</h2><p><code>werkzeug.wsgi.DispatcherMiddleware</code> 可以把特定的请求分配到对应的一个新的flask应用上，这可以用来组织多个flask应用。需要注意的是新的flask应用和之前的是相互独立的，比如登录，使用的secret_key(可以使用不同的配置)等，所以要解耦项目，需要考虑这个问题，例如把接口的请求用新的app来处理，如果这些接口是需要登录才能使用的，那么在用户登录后，请求接口仍然需要登录</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> werkzeug<span class="token punctuation">.</span>wsgi <span class="token keyword">import</span> DispatcherMiddleware
+<span class="token keyword">from</span> frontend_app <span class="token keyword">import</span> application <span class="token keyword">as</span> frontend
+<span class="token keyword">from</span> backend_app <span class="token keyword">import</span> application <span class="token keyword">as</span> backend
+
+application <span class="token operator">=</span> DispatcherMiddleware<span class="token punctuation">(</span>frontend<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token string">'/backend'</span><span class="token punctuation">:</span>     backend
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.liuzhidream.com" rel="external nofollow noreferrer">Liu Zhi</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.liuzhidream.com/2018/10/22/Python/Flask/">https://www.liuzhidream.com/2018/10/22/Python/Flask/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://www.liuzhidream.com" target="_blank">Liu Zhi</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Note/">
+                                    <span class="chip bg-color">Note</span>
+                                </a>
+                            
+                                <a href="/tags/Framework/">
+                                    <span class="chip bg-color">Framework</span>
+                                </a>
+                            
+                                <a href="/tags/Python/">
+                                    <span class="chip bg-color">Python</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'TrgMYtOvFMkmldCQQgeJDWBH-gzGzoHsz',
+        appKey: 'LQz1LEfGYVaY55ajzxnRufcH',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'monsterid',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '写下你的评论...'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/10/22/Python/Django/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Django 框架学习笔记">
+                        
+                        <span class="card-title">Django 框架学习笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            django学习笔记 🎉 🎉
+对文档阅读的大致补充，框架拥有功能的概述，详细内容查阅文档。
+在使用前后端分离的项目中，模版相关的内容基本没什么用了，对于Django如果不是快速开发的应用，基本也不用它提供的功能（认证，表单等），使用较多
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-10-22
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Python%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    Python编程
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Note/">
+                        <span class="chip bg-color">Note</span>
+                    </a>
+                    
+                    <a href="/tags/Framework/">
+                        <span class="chip bg-color">Framework</span>
+                    </a>
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/10/22/Python/virtualenv/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="python-virtualenv 虚拟环境使用总结">
+                        
+                        <span class="card-title">python-virtualenv 虚拟环境使用总结</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            python 虚拟环境总结，总有一款适合你
+使用虚拟环境是很有必要的，另外在windows和Linux上还是有区别的，windows上的支持要差些，我用过的虚拟环境太多了，和IDE的配合也很熟练了，总结下来虚拟环境还是只能用来创建运行环境，
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-10-22
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Python%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    Python编程
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Note/">
+                        <span class="chip bg-color">Note</span>
+                    </a>
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">年份</span>
+            <a href="https://www.liuzhidream.com" target="_blank">Liu Zhi</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">256.3k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    window.setTimeout("siteTime()", 1000);
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2017";
+                    var startMonth = "6";
+                    var startDate = "15";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+            <span id="icp"><img src="/medias/icp.png" style="vertical-align: text-bottom;" />
+                <a href="" target="_blank">滇ICP19000681</a>
+            </span>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/VanLiuZhi" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:vanliuzhi@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1441765847" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1441765847" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
