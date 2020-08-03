@@ -1180,6 +1180,7 @@ T(U 或 S): 表示任意类型
 4. 类型限制
 
 extends 关键字来限制泛型参数的超类 <T extends Comparable> 这样实际类型参数就必须是Comparable的子类
+<? super T> 表示类型下界（Java Core中叫超类型限定），表示参数化类型是此类型的超类型（父类型），直至Object
 
 5. 类型擦除
 

@@ -499,6 +499,11 @@ docker system df 查看docker的资源占用
 
 这两个命令会把你`暂时关闭的容器`，以及暂时没有用到的Docker镜像都删掉了
 
+## 清理Docker containers 占用日志
+
+`/var/lib/docker/containers/` 目录中，存放着容器的一些数据，找到某个容器cd进去，有个-json.log结尾的文件，这个文件特别大的时候，会把硬盘占满
+执行`cat /dev/null > *-json.log`把日志文件清空，也可以直接删除了，会再次创建，建议使用清空内容的做法(遇到过es产生的日志占了20个GB的，把硬盘完全占满了)
+
 ## docker启动报错：standard_init_linux.go:211: exec user process caused "no such file or directory"
 
 出现这个错误主要是两点：
