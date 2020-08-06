@@ -504,6 +504,17 @@ docker system df 查看docker的资源占用
 `/var/lib/docker/containers/` 目录中，存放着容器的一些数据，找到某个容器cd进去，有个-json.log结尾的文件，这个文件特别大的时候，会把硬盘占满
 执行`cat /dev/null > *-json.log`把日志文件清空，也可以直接删除了，会再次创建，建议使用清空内容的做法(遇到过es产生的日志占了20个GB的，把硬盘完全占满了)
 
+## 修改日志限制
+
+容器控制台产生的日志会被存储到服务器 var 目录下，文件太大会把空间占满，可以调整大小限制
+
+```sh
+cat /etc/sysconfig/docker 
+
+OPTIONS='--log-driver=json-file --log-opt max-size=50m --log-opt max-file=5'
+```
+
+
 ## docker启动报错：standard_init_linux.go:211: exec user process caused "no such file or directory"
 
 出现这个错误主要是两点：
