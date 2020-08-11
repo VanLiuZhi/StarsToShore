@@ -568,13 +568,15 @@ vgs 查看centos组下是否有剩余空间，如果有说明以上步骤操作�
 5. 扩容
 
 把var目录扩容，根目录就用 root
-`lvextend -L +50G /dev/centos/var  `
+`lvextend -L +50G /dev/centos/var`
 
 6. 更新分区表
 
-`xfs_growfs /dev/centos/var `
+`xfs_growfs /dev/centos/var`
 df -h 就能查看到扩容的大小了(如果不更新的话，显示还是原来的，但是fdisk -l可以查看到修改后的大小)
 
 查看分区table文件
 `cat /etc/fstab`
+
+扩容完成后，fdisk -l 硬盘显示是分散的，重启后，就并列展示了。一般不需要刻意重启
 
