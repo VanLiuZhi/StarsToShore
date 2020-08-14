@@ -162,6 +162,19 @@ docker run -p 5506:3306 --name mysql-5.7-docker \
 可以用TZ改时区，默认是UTC TZ=Asia/Shanghai 改成CST
 记得一定加default-time_zone
 
+### nacos
+
+docker  run \
+--name nacos2 -d \
+-p 8848:8848 \
+--privileged=true \
+--restart=always \
+-e JVM_XMS=256m \
+-e JVM_XMX=256m \
+-e MODE=standalone \
+-e PREFER_HOST_MODE=hostname \
+hub.eos.h3c.com/nacos/nacos-server:1.3.1
+
 ## 常用方法
 
 `public boolean equalsIgnoreCase(String anotherString)` 字符串对象调用，和一个字符串比较，不区分大小写
