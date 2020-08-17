@@ -578,7 +578,7 @@ spec:
           - name: "LOGGING_OUTPUT"
             value: "logstash"
           - name: "LOGSTASH_HOST"
-            value: "10.90.16.159"
+            value: "10.90.x.x"
           - name: "LOGSTASH_PORT"
             value: "5044"
           - name: "LOGSTASH_LOADBALANCE"
