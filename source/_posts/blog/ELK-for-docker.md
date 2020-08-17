@@ -300,6 +300,101 @@ docker pull kibana:7.5.0
 
 docker run -d --name kibana  -p 5601:5601 -v /data/es/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml  -v /data/es/kibana/plugins:/usr/share/kibana/plugins:rw  --name kibana kibana:7.5.0
 
+### 命令行工具使用
+
+```yaml
+# 节点如果有未分片的，可以通过这个命令找到，一般是网络问题导致分片失败并一直无法恢复。关闭分片再开启可以解决问题
+GET /_cluster/allocation/explain
+
+# 解决索引某个shard无法恢复的问题
+POST /_cluster/reroute?retry_failed=true
+```
+
+### 创建索引生命周期策略
+
+直接通过页面填写表单即可，一般会创建删除策略，在模板配置的时候和策略关联上
+
+### 索引模板使用
+
+创建索引模板k8s-template，设置索引匹配模式
+
+索引设置
+
+```json
+{
+  "index": {
+    "lifecycle": {
+      "name": "k8s-logs-delete-policy" // 关联生命周期策略
+    },
+    "refresh_interval": "30s",
+    "number_of_shards": "1",
+    "number_of_replicas": "1"
+  }
+}
+```
+
+映射设置
+
+```json
+{
+  "dynamic_templates": [
+    {
+      "message_field": {
+        "path_match": "message",
+        "mapping": {
+          "norms": false,
+          "type": "text"
+        },
+        "match_mapping_type": "string"
+      }
+    },
+    {
+      "string_fields": {
+        "mapping": {
+          "norms": false,
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "ignore_above": 256,
+              "type": "keyword"
+            }
+          }
+        },
+        "match_mapping_type": "string",
+        "match": "*"
+      }
+    }
+  ],
+  "properties": {
+    "@timestamp": {
+      "type": "date"
+    },
+    "geoip": {
+      "dynamic": true,
+      "properties": {
+        "ip": {
+          "type": "ip"
+        },
+        "latitude": {
+          "type": "half_float"
+        },
+        "location": {
+          "type": "geo_point"
+        },
+        "longitude": {
+          "type": "half_float"
+        }
+      }
+    },
+    "@version": {
+      "type": "keyword"
+    }
+  }
+}
+```
+
+如果需要使用生命周期，滚动策略要创建别名
+
 ## logstash 部署
 
 docker pull logstash:7.5.0
@@ -404,7 +499,7 @@ xpack.monitoring.elasticsearch.hosts: ["http://10.90.x.x:9200","http://10.90.x.x
 
 ## 前端可视化工具cerebro
 
-docker run -d -p 9000:9000 -v /data/cerebro/application.conf:/opt/cerebro/conf/application.conf --name es-cerebro hub.eos.h3c.com/lmenezes/cerebro:latest
+docker run -d -p 9000:9000 -v /data/cerebro/application.conf:/opt/cerebro/conf/application.conf --name es-cerebro lmenezes/cerebro:latest
 
 ## log-pilot 采集k8s日志
 
@@ -439,7 +534,122 @@ aliyun.logs.$name.tags：上报日志时，额外增加的字段，格式为 k1=
 
 PILOT_LOG_PREFIX: "aliyun,custom" 通过修改这个环境变量能改变lable的前缀，默认是aliyun(有些版本不适用了)
 
-docker pull hub.eos.h3c.com/kubernetes/log-pilot:0.9.6-filebeat
+docker pull log-pilot:0.9.6-filebeat
+
+部署yaml
+
+```yaml
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: log-pilot
+  namespace: kube-system
+  labels:
+    k8s-app: log-pilot
+    kubernetes.io/cluster-service: "true"
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: log-es
+        kubernetes.io/cluster-service: "true"
+        version: v1.22
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      serviceAccountName: dashboard-admin
+      containers:
+      - name: log-pilot
+        # 版本请参考https://github.com/AliyunContainerService/log-pilot/releases
+        image: log-pilot:latest
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        env:
+          - name: "NODE_NAME"
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: "LOGGING_OUTPUT"
+            value: "logstash"
+          - name: "LOGSTASH_HOST"
+            value: "10.90.16.159"
+          - name: "LOGSTASH_PORT"
+            value: "5044"
+          - name: "LOGSTASH_LOADBALANCE"
+            value: "true"
+          #- name: "FILEBEAT_OUTPUT"
+          #  value: "elasticsearch"
+          #- name: "ELASTICSEARCH_HOST"
+          #  value: "elasticsearch"
+          #- name: "ELASTICSEARCH_PORT"
+          #  value: "9200"
+          #- name: "ELASTICSEARCH_USER"
+          #  value: "elastic"
+          #- name: "ELASTICSEARCH_PASSWORD"
+          #  value: "changeme"
+        volumeMounts:
+        - name: sock
+          mountPath: /var/run/docker.sock
+        - name: root
+          mountPath: /host
+          readOnly: true
+        - name: varlib
+          mountPath: /var/lib/filebeat
+        - name: varlog
+          mountPath: /var/log/filebeat
+        securityContext:
+          capabilities:
+            add:
+            - SYS_ADMIN
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: sock
+        hostPath:
+          path: /var/run/docker.sock
+      - name: root
+        hostPath:
+          path: /
+      - name: varlib
+        hostPath:
+          path: /var/lib/filebeat
+          type: DirectoryOrCreate
+      - name: varlog
+        hostPath:
+          path: /var/log/filebeat
+          type: DirectoryOrCreate
+```
+
+deployment 注入环境变量配置，假设应用名称叫做 monitor-center
+
+```yaml
+- name: aliyun_logs_monitor-center-stdout
+  # 采集控制台
+  value: "stdout"
+- name: aliyun_logs_monitor-center-tomcat
+  # 采集指定目录
+  value: "/usr/local/tomcat/logs/*.log"
+- name: aliyun_logs_monitor-center-netcore
+  # 采集指定目录
+  value: "/app/logs/*.log"
+- name: aliyun_logs_monitor-center-java
+  # 采集指定目录
+  value: "/logs/*.log"
+- name: aliyun_logs_monitor-center-stdout_tags
+  # 为 aliyun_logs_monitor-center-stdout 采集 控制台 配置打上标签，下面类似
+  value: "app=monitor-center,lang=all,sourceType=stdout"
+- name: aliyun_logs_monitor-center-tomcat_tags
+  value: "app=monitor-center,lang=java,sourceType=log"
+- name: aliyun_logs_monitor-center-netcore_tags
+  value: "app=monitor-center,lang=net,sourceType=log"
+- name: aliyun_logs_monitor-center-java_tags
+  value: "app=monitor-center,lang=java,sourceType=log"
+```
 
 ### 排查filebeat配置是否正确
 
@@ -578,4 +788,7 @@ PUT /_cluster/settings
 ### 修改默认放回值条目
 
 index.max_result_window: 1000000  默认只能返回10000，可能调用链太长需要修改这个配置(skywalking)
+
+ELK 架构参考 https://www.one-tab.com/page/tto_XdDeQlS44BY-ziLvKg
+ELK 搭建 https://www.one-tab.com/page/Fb3B3qd2Q9yR9W92dZ2pYQ
 
