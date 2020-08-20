@@ -1126,4 +1126,17 @@ public class TreadPoolConfigTest implements AsyncConfigurer
 
 2. 定义异步任务，@Async注解即可，然后去调用这个bean
 
+## restTemplate
 
+```java
+RestTemplate restTemplate = new RestTemplate();
+HttpHeaders headers = new HttpHeaders();
+MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+headers.setContentType(type);
+headers.add("Accept", MediaType.APPLICATION_JSON.toString());
+ObjectMapper objectMapper = new ObjectMapper();
+String s = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(swQueryDTO);
+
+HttpEntity<String> formEntity = new HttpEntity<String>(s, headers);
+String result = restTemplate.postForObject("http://xxx", formEntity, String.class);
+```

@@ -11,7 +11,7 @@ categories: Technology技术
 reprintPolicy: cc_by
 ---
 
-日志处理作为系统基础设施的一环，有着举足轻重的作用，一般常用ELK作为日志处理平台。ELK是ElEasticsearch、Logstash、Kibana的简称，这三者是核心套件，但是随着功能的迭代和组件的更替，也出现了ELKF，其中的F指的是filebeat，也可以在ELK中加入Kafka组件，以满足复杂场景的需求，所以我们通常说的ELK泛指与之相关的各种组件
+日志处理作为系统基础设施的一环，有着举足轻重的作用，一般常用ELK作为日志处理平台。ELK是ElasticSearch、Logstash、Kibana的简称，这三者是核心套件，但是随着功能的迭代和组件的更替，也出现了ELKF，其中的F指的是filebeat，也可以在ELK中加入Kafka组件，以满足复杂场景的需求，所以我们通常说的ELK泛指与之相关的各种组件
 
 ## 概述
 
@@ -23,7 +23,7 @@ reprintPolicy: cc_by
 
 2. 当上到分布式系统的时候，一个业务的完成流程可能由多个服务参与，日志文件也是散落在各个服务器上的，需要把日志统一到一起才方便排查问题
 
-ELK就提供了这样的解决方案，整体的思路是通过Logstash把日志采集后，统一发到ElEasticsearch，ElEasticsearch是一个高效的搜索引擎，然后我们通过官方提供的Kibana UI组件，去获取ElEasticsearch中的数据
+ELK就提供了这样的解决方案，整体的思路是通过Logstash把日志采集后，统一发到ElasticSearch，ElasticSearch是一个高效的搜索引擎，然后我们通过官方提供的Kibana UI组件，去获取ElasticSearch中的数据
 
 下面我们来搭建一套ELK环境，全部采用Docker部署，之后采集k8s容器的日志到ES中，通过logstash处理日志，在kibana页面上查看日志
 
@@ -42,9 +42,9 @@ logstash 1台（可以和kibana共用一台）
 
 提前安装好Docker服务
 
-## ElEasticsearch 部署
+## ElasticSearch 部署
 
-通过官方镜像来部署，Easticsearch可以很容易扩容，通过集群的能力提高系统对数据的处理能力，我们部署3台节点
+通过官方镜像来部署，ElasticSearch可以很容易扩容，通过集群的能力提高系统对数据的处理能力，我们部署3台节点
 
 各个版本的镜像地址说明，参考 ELK官方 docker 镜像地址: https://www.docker.elastic.co/
 
@@ -472,7 +472,7 @@ pipelines.yml
 
 部署完成后，访问地址验证：
 
-10.90.15.34:9600
+10.90.xx.xx:9600
 
 ### 监控配置
 
