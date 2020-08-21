@@ -280,4 +280,61 @@ ibm-app-cluster-critical	IBM	900000000	选择在创建集群时部署到 ibm-sys
 
 ## Taints与Tolerations 污点和容忍
 
+## Jsonnet
+
+Jsonnet 是一个帮助你定义JSON的数据的特殊配置语言。Jsonnet 可以对JSON结构里面的元素进行运算，就像模版引擎给纯文本带来好处一样
+
+```Jsonnet
+// Jsonnet Example
+{
+    person1: {
+        name: "Alice",
+        welcome: "Hello " + self.name + "!",
+    },
+    person2: self.person1 { name: "Bob" },
+}
+```
+
+转换编译成JSON是如下：
+
+```json
+{
+   "person1": {
+      "name": "Alice",
+      "welcome": "Hello Alice!"
+   },
+   "person2": {
+      "name": "Bob",
+      "welcome": "Hello Bob!"
+   }
+}
+```
+
+谷歌：建议你们使用Jsonnet来增强JSON。我们的Jsonnet是完全向后兼容JSON的，而且我还给你们引入了很多新特效，譬如注释、引用、算术运算、条件操作符，数组和对象内含，引入，函数，局部变量，继承等
+
+## Kubernetes Custom Resources
+
+自定义资源，在kubernetes中，我们用资源来概括部署在集群中各种东西，比如deployment就是一种资源
+
+在生命deployment这种资源的时候，有一个kind的配置，表明了资源类型
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+```
+
+Kubernetes Custom Resources 就是自定义资源用的，可以扩展k8s，不过这属于比较高级的话题，目前在Prometheus-operator中有见到过
+
+```yaml
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+```
+
+它会定义一些CustomResourceDefinition之类的yaml文件，所以当我们看到kind不是我们熟悉的类型的时候，很可能就是做了扩展
+
+由于平时也不用，不做展开了，官方参考
+
+https://kubernetes.io/zh/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/
+
+
 
