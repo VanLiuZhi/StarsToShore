@@ -233,9 +233,9 @@ spec:
 #   namespace: kube-system
 # subsets:
 #   - addresses:
-#       - ip: 10.90.14.170
-#       - ip: 10.90.14.171
-#       - ip: 10.90.14.172
+#       - ip: 10.90.xx.170
+#       - ip: 10.90.xx.171
+#       - ip: 10.90.xx.172
 #     ports:
 #     - name: https-metrics
 #       port: 10252
@@ -271,9 +271,9 @@ spec:
 #   namespace: kube-system
 # subsets:
 #   - addresses:
-#       - ip: 10.90.14.170
-#       - ip: 10.90.14.171
-#       - ip: 10.90.14.172
+#       - ip: 10.90.xx.170
+#       - ip: 10.90.xx.171
+#       - ip: 10.90.xx.172
 #     ports:
 #     - name: http-metrics
 #       port: 10251
@@ -446,7 +446,7 @@ stringData:
       - url: 'http://api.eos-ts.h3c.com/eos-health-blue/sw/prometheus'
     
     route:
-      group_by:
+      group_by:             # 分组标签从自定义标签中选择，也可以从原始数据的标签中选择
       - job
       group_interval: 10s
       group_wait: 30s
@@ -493,8 +493,8 @@ prometheus 中关于告警的配置
 alert：告警规则的名称。
 expr：基于PromQL表达式告警触发条件，用于计算是否有时间序列满足该条件。
 for：评估等待时间，可选参数。用于表示只有当触发条件持续一段时间后才发送告警。在等待期间新产生告警的状态为pending。
-labels：自定义标签，允许用户指定要附加到告警上的一组附加标签。
-annotations：用于指定一组附加信息，比如用于描述告警详细信息的文字等，annotations的内容在告警产生时会一同作为参数发送到Alertmanager（在利用Java DTO接收数据的时候，annotations这个对象的成员变量就必须定义好，否则无法解析数据）
+labels：自定义标签，允许用户指定要附加到告警上的一组附加标签，在接收数据的时候，可以把原生告警中的标签数据也取出来
+annotations：用于指定一组附加信息，比如用于描述告警详细信息的文字等，annotations的内容在告警产生时会一同作为参数发送到Alertmanager（在利用Java DTO接收数据的时候，annotations这个对象的成员变量就必须定义好，否则无法解析数据，可以通过内置的占位符替换变量，可以获取到原始数据的标签内容）
 ```
 
 告警的计算周期默认是1分钟
@@ -507,6 +507,23 @@ pending: 告警已经产生，进入这种状态，但是还不发送告警
 
 firing: 告警有等待时间，假设是1分钟，说明1分钟内告警仍然持续，就会转为firing状态，发送告警
 
+### 内置告警规则
+
+对几个常用的告警规则做说明
+
+Watchdog 看门狗服务，该告警一直处于报警状态
+KubeContainerWaiting 获取处于等待状态的容器
+KubeDeploymentGenerationMismatch 部署失败，但尚未成功回滚
+KubeDeploymentReplicasMismatch 副本数不匹配
+KubePodCrashLooping 容器处于重启循环中
+KubePodNotReady pod未进入准备状态
+KubeClientErrors k8s API server client 发生错误
+CPUThrottlingHigh 
+KubeControllerManagerDown 控制器服务宕机
+KubeNodeNotReady 节点未进入就绪状态
+KubeNodeUnreachable 节点不可达
+KubeletDown Kubelet服务宕机
+KubeSchedulerDown 调度服务宕机
 
 
 ## 总结
