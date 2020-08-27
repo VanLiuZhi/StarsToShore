@@ -1,3 +1,10 @@
+---
+title: kube-prometheus 监控 kubernets 总结
+date: 2020-08-27 00:00:00
+tags: [Linux, Docker, Note, Cloud]
+categories: Cloud-Native
+---
+
 ## 概述
 
 云原生是近年讨论热度非常高的话题，kubernetes作为容器编排的事实标准被广泛运用，对于k8s的监控也是企业云服务建设的重要一环
@@ -5,32 +12,34 @@
 
 ## 流程总结
 
+总体概况一下要做的事情
+
 1. 替换镜像(如果需要)
 
 2. 调整yaml文件
 
 3. 部署 promethues，grafana，alertManager，node-exporter(批量部署即可)
 
-4. 数据持久化
+4. 数据持久化，配置调整
 
 ## 关于kube-prometheus
 
-prometheus是非常流行的监控服务，但是对于k8s的监控需要做很多接口，这导致了prometheus监控K8s比较复杂，官方就出了kube-prometheus这么一个项目，是Prometheus Operator的定制版，如果我们想获取完整的k8s服务监控指标，推荐采用kube-prometheus的方式
+prometheus是非常流行的监控服务，但是对于k8s的监控需要做很多接口，这导致了prometheus监控K8s比较复杂，官方就出了`kube-prometheus`这么一个项目，是`Prometheus Operator`的定制版，如果我们想获取完整的k8s服务监控指标，推荐采用kube-prometheus的方式
 
-这里需要我们先引申2个概念Jsonnet和CRD，看了官方文档就知道，kube-prometheus可以通过Jsonnet去修改定制的服务，不过一般也不需要这么做，这是给想去改源码的同学准备的。
+这里需要我们先引申2个概念Jsonnet和CRD，通过官方文档的介绍了解到，kube-prometheus可以通过Jsonnet去修改定制的服务，不过一般也不需要这么做，这是给想去改源码的同学准备的
 而CRD是对kuberneters资源的一种扩展(个人觉得CRD虽然在云原生提及的很多，但是这有一定的学习成本，目前感觉不是很好用)
 
 ## 关于版本
 
 我们通过github搜索 prometheus，发现有好多的版本
 
-详细大家比较熟知的还是Prometheus仓库下的版本，当时去网上一搜，找到的也是用这个仓库的来部署的，但是后来发现，这个部署的有问题，虽然说监控k8s，但是你会发现很多指标都没有，基本就是一些cpu和内存的指标，比如你想知道容器状态等指标都是没有的
+相信大家比较熟知的还是Prometheus仓库下的版本，当时去网上一搜，找到的也是用这个仓库的来部署的，但是后来发现，这个部署的有问题，虽然说监控k8s，但是你会发现很多指标都没有，基本就是一些cpu和内存的指标，比如你想知道容器状态等指标都是没有的
 
-一开始我一度以为是版本太低，后来我升级的版本后，发现指标是多了，但是依然没有关键的数据
+一开始我以为是版本太低，后来我升级的版本后，发现指标是多了，但是依然没有关键的数据
 
-直到后来我发现，官方还有一个prometheus-operator的仓库，这名字一看，不就是为了监控kubernetes
+直到后来我发现，官方还有一个prometheus-operator的仓库，这名字一看，明显是为了监控kubernetes
 
-仓库分为两个版本 Prometheus Operator和kube-prometheus
+仓库分为两个版本 `Prometheus Operator`和`kube-prometheus`
 
 这是原文比较
 
@@ -75,9 +84,9 @@ Jsonnet 是一个帮助你定义JSON的数据的特殊配置语言。Jsonnet 可
 }
 ```
 
-官方的说法是: 建议你们使用Jsonnet来增强JSON。我们的Jsonnet是完全向后兼容JSON的，而且我还给你们引入了很多新特效，譬如注释、引用、算术运算、条件操作符，数组和对象内含，引入，函数，局部变量，继承等
+官方的说法是: 建议使用Jsonnet来增强JSON。Jsonnet是完全向后兼容JSON的，引入了很多新特效，譬如注释、引用、算术运算、条件操作符，数组和对象内含，引入，函数，局部变量，继承等
 
-不过我个人觉得这个东西搞的太复杂了
+个人觉得这个东西搞的太复杂了
 
 ### Kubernetes Custom Resources
 
@@ -146,6 +155,8 @@ my-register/quay.io/coreos/configmap-reload:v0.0.1
 | `release-0.6`         | ✗               | ✗               | ✗               | ✗               | ✔               | ✗               |
 | `HEAD`                | ✗               | ✗               | ✗               | ✗               | ✔               | ✗               |
 
+根据k8s版本对照，采用release-0.3版本
+
 ## 部署和卸载
 
 参考官方的文档来部署即可
@@ -174,7 +185,7 @@ kubectl delete --ignore-not-found=true -f manifests/ -f manifests/setup
 `monitoring/kube-controller-manager`
 `monitoring/kube-scheduler`
 
-关于监控是由ServiceMonitor类型的资源对象来实现的，找到和这两个相关的
+关于监控是由ServiceMonitor类型的资源对象来实现的，找到和这两个相关的yaml
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
@@ -324,7 +335,7 @@ vim prometheus-service.yaml   # 修改同上
 
 官方采用StorageClass来进行持久化的
 
-这里可能就要展开 pv pvc storageClass的区别和概念了。参考这篇博文 https://www.cnblogs.com/rexcheny/p/10925464.html
+这里可能就要展开 `pv` `pvc` `storageClass` 的区别和概念了。参考这篇博文 https://www.cnblogs.com/rexcheny/p/10925464.html
 
 总的来说要使用StorageClass并不容易，它需要nfs服务，nfs插件服务(提供kubernetes去动态创建pvc,pc的能力)
 
@@ -355,7 +366,7 @@ storage:
 修改完成后，更新prometheus-prometheus.yaml，pv和pvc就会自动创建了，这就是StorageClass的作用
 
 
-Kube-Prometheus数据持久时间，通过retention参数来实现
+Kube-Prometheus数据持久时间，通过`retention`参数来实现
 
 其它配置参考：https://github.com/coreos/prometheus-operator/blob/0e6ed120261f101e6f0dc9581de025f136508ada/Documentation/prometheus.md
 
@@ -426,7 +437,7 @@ prometheus和alertmanager的pod中都有监控configmap/secrets的container，�
 
 可以明文发布，也可以加密成base64。这样配置的流程就和常规的yaml文件接轨了
 
-如果要新增告警规则的话，去修改./prometheus-rules.yaml这个文件即可
+如果要新增告警规则的话，去修改`./prometheus-rules.yaml`这个文件即可
 
 ```yaml
 apiVersion: v1
@@ -443,7 +454,7 @@ stringData:
     receivers:
     - name: 'web.hook'
       webhook_configs:
-      - url: 'http://api.eos-ts.h3c.com/eos-health-blue/sw/prometheus'
+      - url: 'http://xxx/xx/sw/prometheus'
     
     route:
       group_by:             # 分组标签从自定义标签中选择，也可以从原始数据的标签中选择
@@ -522,7 +533,7 @@ CPUThrottlingHigh
 KubeControllerManagerDown 控制器服务宕机
 KubeNodeNotReady 节点未进入就绪状态
 KubeNodeUnreachable 节点不可达
-KubeletDown Kubelet服务宕机
+KubeletDown Kubelet 服务宕机
 KubeSchedulerDown 调度服务宕机
 
 

@@ -347,6 +347,8 @@ authentication证明你是你，authorization证明你有这个权限
 
 那么问题也来了，客户应用的Access Token是怎么来的？这就需要授权服务器了，客户应用去授权服务器上申请Access Token
 
+**AuthenticationManager，AccessDecisionManager，AbstractSecurityInterceptor属于spring security框架的基础铁三角**
+
 ### 涉及到的术语，概念
 
 复杂体现到术语和概念比较多，首先要理解这些东西，我们直接从代码去理解
@@ -385,6 +387,11 @@ AuthorizationServerConfigurerAdapter
 public void configure(ClientDetailsServiceConfigurer clients)
 
 public void configure(AuthorizationServerSecurityConfigurer oauthServer)
+
+ClientDetailsServiceConfigurer：用来配置客户端详情服务，客户端详情信息在这里进行初始化，你能够把客户端详情信息写死在这里或者是通过数据库来存储调取详情信息。客户端就是指第三方应用
+AuthorizationServerSecurityConfigurer：用来配置令牌端点(Token Endpoint)的安全约束.
+AuthorizationServerEndpointsConfigurer：用来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)。
+
 
 ### 3. Security配置
 
