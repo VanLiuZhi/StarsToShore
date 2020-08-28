@@ -280,6 +280,8 @@ ibm-app-cluster-critical	IBM	900000000	选择在创建集群时部署到 ibm-sys
 
 ## Taints与Tolerations 污点和容忍
 
+## 亲和性和非亲和性
+
 ## Jsonnet
 
 Jsonnet 是一个帮助你定义JSON的数据的特殊配置语言。Jsonnet 可以对JSON结构里面的元素进行运算，就像模版引擎给纯文本带来好处一样
@@ -310,7 +312,7 @@ Jsonnet 是一个帮助你定义JSON的数据的特殊配置语言。Jsonnet 可
 }
 ```
 
-谷歌：建议你们使用Jsonnet来增强JSON。我们的Jsonnet是完全向后兼容JSON的，而且我还给你们引入了很多新特效，譬如注释、引用、算术运算、条件操作符，数组和对象内含，引入，函数，局部变量，继承等
+谷歌：建议使用Jsonnet来增强JSON。Jsonnet是完全向后兼容JSON的，引入了很多新特效，譬如注释、引用、算术运算、条件操作符，数组和对象内含，引入，函数，局部变量，继承等
 
 ## Kubernetes Custom Resources
 
@@ -335,6 +337,24 @@ kind: Prometheus
 由于平时也不用，不做展开了，官方参考
 
 https://kubernetes.io/zh/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/
+
+## Kubernetes中的开放接口CRI、CNI、CSI
+
+参考 https://zhuanlan.zhihu.com/p/33390023
+
+CRI（Container Runtime Interface）：容器运行时接口，提供计算资源
+CNI（Container Network Interface）：容器网络接口，提供网络资源
+CSI（Container Storage Interface）：容器存储接口，提供存储资源
+
+## 容器重启策略
+
+Pod 的 spec 中包含一个 restartPolicy 字段，其可能取值包括 Always、OnFailure 和 Never。默认值是 Always
+
+restartPolicy 适用于 Pod 中的所有容器
+restartPolicy 仅针对同一节点上 kubelet 的容器重启动作
+当 Pod 中的容器退出时，kubelet 会按指数回退 方式计算重启的延迟（10s、20s、40s、...），其最长延迟为 5 分钟。 一旦某容器执行了 10 分钟并且没有出现问题，kubelet 对该容器的重启回退计时器执行 重置操作
+
+参考 https://kubernetes.io/zh/docs/concepts/workloads/pods/pod-lifecycle/
 
 
 
