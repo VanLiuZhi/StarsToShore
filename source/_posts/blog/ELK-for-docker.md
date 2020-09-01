@@ -499,6 +499,7 @@ xpack.monitoring.elasticsearch.hosts: ["http://10.90.x.x:9200","http://10.90.x.x
 
 ## 前端可视化工具cerebro
 
+docker run -d -p 9000:9000 --name es-cerebro lmenezes/cerebro:latest
 docker run -d -p 9000:9000 -v /data/cerebro/application.conf:/opt/cerebro/conf/application.conf --name es-cerebro lmenezes/cerebro:latest
 
 ## log-pilot 采集k8s日志

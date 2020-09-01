@@ -280,6 +280,47 @@ ibm-app-cluster-critical	IBM	900000000	选择在创建集群时部署到 ibm-sys
 
 ## Taints与Tolerations 污点和容忍
 
+```
+kubectl taint node [node] key=value[effect]   
+     其中[effect] 可取值: [ NoSchedule | PreferNoSchedule | NoExecute ]
+      NoSchedule: 一定不能被调度
+      PreferNoSchedule: 尽量不要调度
+      NoExecute: 不仅不会调度, 还会驱逐Node上已有的Pod
+
+kubectl taint node node1 key1=value1:NoSchedule
+kubectl taint node node1 key1=value1:NoExecute
+kubectl taint node node1 key2=value2:NoSchedule
+```
+
+kubectl describe node node1
+
+删除
+
+kubectl taint node node1 key1:NoSchedule-  # 这里的key可以不用指定value
+kubectl taint node node1 key1:NoExecute-
+# kubectl taint node node1 key1-  删除指定key所有的effect
+kubectl taint node node1 key2:NoSchedule-
+
+master节点设置
+
+kubectl taint nodes master1 node-role.kubernetes.io/master=:NoSchedule
+
+
+容忍tolerations主节点的taints
+
+以上面为 master1 设置的 taints 为例, 你需要为你的 yaml 文件中添加如下配置, 才能容忍 master 节点的污点
+
+在 pod 的 spec 中设置 tolerations 字段
+
+```
+tolerations:
+- key: "node-role.kubernetes.io/master"
+  operator: "Equal"
+  value: ""
+  effect: "NoSchedule"
+```
+
+
 ## 亲和性和非亲和性
 
 ## Jsonnet
@@ -356,5 +397,17 @@ restartPolicy 仅针对同一节点上 kubelet 的容器重启动作
 
 参考 https://kubernetes.io/zh/docs/concepts/workloads/pods/pod-lifecycle/
 
+## pod 调度不均衡
 
+https://www.cnblogs.com/rancherlabs/p/12228019.html
+
+https://cloud.tencent.com/developer/article/1671811
+
+## 静态Pod
+
+静态 Pod 在指定的节点上由 kubelet 守护进程直接管理，不需要 API 服务器 监管。 与由控制面管理的 Pod（例如，Deployment） 不同；kubelet 监视每个静态 Pod（在它崩溃之后重新启动）。
+
+静态 Pod 永远都会绑定到一个指定节点上的 Kubelet。
+
+kubelet 会尝试通过 Kubernetes API 服务器为每个静态 Pod 自动创建一个 镜像 Pod。 这意味着节点上运行的静态 Pod 对 API 服务来说是不可见的，但是不能通过 API 服务器来控制
 
