@@ -43,3 +43,73 @@ categories: Technology技术
 在后续的下一次总结中，计划做一个有实际业务需求的，其实我本来也搞过，不过在数据上玩脱了，没有数据写的东西不太有价值，当时是看了很多公司提供的API来作为数据源的，不过要不就是需要翻墙，要么就是接口变的不提供数据了，唯一可用的GitHub的API接口实在是过于繁琐了，使用了最新的 GraphQL 接口风格，是Facebook开发的用于 API 的查询语言，要完全运用还得花时间。所以最好的数据来源还是用爬虫吧，准备学习一下爬虫，做一个数据分析的项目，把所学的东西都调度起来。
 
 搞IT就是要能折腾，看别人怎么写，看官方的文档，从中总结，把别人讲解的变成自己的，多去实践。
+
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+base = """---
+weight: 1
+title: "{title}"
+date: 2020-08-16T14:00:00+08:00
+lastmod: 2020-08-16T14:00:00+08:00
+draft: false
+author: "VanLiuZhi"
+authorLink: "https://www.liuzhidream.com"
+description: "{title}"
+resources:
+- name: "base-image"
+  src: "base-image.jpg"
+
+tags: {tags}
+categories: {categories}
+
+lightgallery: true
+
+toc:
+  auto: false
+---
+"""
+
+
+def read():
+    name = "advanced-python-web-01.md"
+    with open(name, "r+", encoding='UTF-8') as f:
+        # f.seek(3)
+        f.readline()
+        loop_flag = True
+        tag = ""
+        while loop_flag:
+            s = f.readline()
+            if "tags" in s:
+                _t = s
+                tag = _t[len("tags: "):-1]
+            if "categories" in s:
+                return "[{0}]".format(s[len("categories: "):-1])
+            if "title" in s:
+                return s[len("title: "):-1]
+            if s == "---\n":
+                loop_flag = False
+        res = f.read()
+        with open("a.md", "r+", encoding="utf-8") as fff:
+            fff.write(base)
+            fff.write(res)
+
+
+# def tag(s):
+#     if "tags" in s:
+#         return s[len("tags: "):-1]
+#
+#
+# def categories(s):
+#     if "categories" in s:
+#         return "[{0}]".format(s[len("categories: "):-1])
+#
+#
+# def title(s):
+#     if "title" in s:
+#         return s[len("title: "):-1]
+
+
+if __name__ == '__main__':
+    read()
